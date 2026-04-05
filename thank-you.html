@@ -1,51 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <title>Message Sent - Nexloria</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #0a0e1a;
-      color: #e2e8f0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 20px;
-    }
-    .container {
-      max-width: 500px;
-    }
-    h1 {
-      font-size: 2rem;
-      color: #fff;
-      margin-bottom: 12px;
-    }
-    p {
-      color: #94a3b8;
-      font-size: 1rem;
-      line-height: 1.6;
-      margin-bottom: 24px;
-    }
-    a {
-      color: #a78bfa;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-  </style>
+<title>Message Sent - Nexloria</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+
+<style>
+.container {
+  max-width: 500px;
+  margin: auto;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+p {
+  color: #aaa;
+  margin-bottom: 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid #333;
+  border-radius: 10px;
+  color: white;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: rgba(255,255,255,0.1);
+}
+</style>
+
 </head>
 <body>
-  <div class="container">
-    <h1>Message Sent!</h1>
-    <p>Thanks for reaching out. You'll hear back soon.</p>
-    <a href="/">Back to Nexloria</a>
-  </div>
+
+<div class="cursor" id="cursor"></div>
+
+<nav>
+<a href="/">Home</a>
+<a href="/services.html">Services</a>
+<a href="/contact.html">Contact</a>
+</nav>
+
+<div class="container">
+<h1>Message Sent ✓</h1>
+<p>Thanks for reaching out. I’ll get back to you soon.</p>
+
+<a href="/" class="btn">Back to Home</a>
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>
