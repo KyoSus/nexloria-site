@@ -2,10 +2,109 @@
 <html>
 <head>
   <title>Nexloria</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
-    body { font-family: Arial; background:#0a0e1a; color:white; text-align:center; padding:80px; }
-    a { color:#a78bfa; margin:10px; text-decoration:none; }
-    .btn { display:inline-block; margin-top:20px; padding:12px 24px; background:#8b5cf6; border-radius:8px; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: white;
+      background: #0a0e1a;
+      overflow-x: hidden;
+    }
+
+    /* Animated glow background */
+    body::before {
+      content: "";
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, #8b5cf6, transparent 70%);
+      top: -200px;
+      left: -200px;
+      animation: moveGlow 10s infinite alternate;
+      filter: blur(100px);
+      z-index: -1;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, #6366f1, transparent 70%);
+      bottom: -200px;
+      right: -200px;
+      animation: moveGlow2 12s infinite alternate;
+      filter: blur(100px);
+      z-index: -1;
+    }
+
+    @keyframes moveGlow {
+      from { transform: translate(0,0); }
+      to { transform: translate(200px,200px); }
+    }
+
+    @keyframes moveGlow2 {
+      from { transform: translate(0,0); }
+      to { transform: translate(-200px,-150px); }
+    }
+
+    nav {
+      text-align: center;
+      padding: 20px;
+    }
+
+    nav a {
+      color: #a78bfa;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .container {
+      text-align: center;
+      padding: 120px 20px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      background: linear-gradient(90deg, #a78bfa, #6366f1);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .btn {
+      display: inline-block;
+      margin: 15px;
+      padding: 12px 24px;
+      background: #8b5cf6;
+      border-radius: 8px;
+      text-decoration: none;
+      color: white;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      box-shadow: 0 0 20px #8b5cf6;
+    }
+
+    /* Scroll animation */
+    .fade {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease;
+    }
+
+    .fade.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section {
+      padding: 100px 20px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -16,11 +115,41 @@
   <a href="/contact.html">Contact</a>
 </nav>
 
-<h1>Nexloria</h1>
-<p>Fast. Affordable. Reliable digital services.</p>
+<div class="container fade">
+  <h1>Nexloria</h1>
+  <p>Premium digital services, simplified.</p>
+  <a href="/services.html" class="btn">View Services</a>
+  <a href="/contact.html" class="btn">Contact</a>
+</div>
 
-<a href="/services.html" class="btn">View Services</a>
-<a href="/contact.html" class="btn">Contact</a>
+<div class="section fade">
+  <h2>Fast</h2>
+  <p>Lightning quick delivery on all services.</p>
+</div>
+
+<div class="section fade">
+  <h2>Secure</h2>
+  <p>Safe and reliable transactions.</p>
+</div>
+
+<div class="section fade">
+  <h2>Global</h2>
+  <p>Available anywhere, anytime.</p>
+</div>
+
+<script>
+  const fades = document.querySelectorAll('.fade');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  });
+
+  fades.forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
