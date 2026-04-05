@@ -263,29 +263,29 @@ document.querySelectorAll('a, .card, button').forEach(el => {
 });
 
 function copyText(text) {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+
+  // prevent scroll jump
+  textarea.style.position = "fixed";
+  textarea.style.top = "-9999px";
+
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+
   try {
-    // modern method
-    navigator.clipboard.writeText(text).then(showPopup).catch(fallback);
-  } catch {
-    fallback();
-  }
-
-  function fallback() {
-    // old-school method (always works)
-    const textarea = document.createElement("textarea");
-    textarea.value = text;
-    document.body.appendChild(textarea);
-    textarea.select();
     document.execCommand("copy");
-    document.body.removeChild(textarea);
-    showPopup();
+  } catch (err) {
+    console.log("Copy failed");
   }
 
-  function showPopup() {
-    const popup = document.getElementById("popup");
-    popup.classList.add("show");
-    setTimeout(() => popup.classList.remove("show"), 1500);
-  }
+  document.body.removeChild(textarea);
+
+  // popup
+  const popup = document.getElementById("popup");
+  popup.classList.add("show");
+  setTimeout(() => popup.classList.remove("show"), 1500);
 }
 </script>
 </body>
