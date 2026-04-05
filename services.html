@@ -1,260 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Services - Nexloria</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    * { cursor: none; }
-
-    body {
-      margin: 0;
-      font-family: Arial;
-      background: #000;
-      color: white;
-    }
-
-    /* Sleek cursor */
-    .cursor {
-      position: fixed;
-      width: 8px;
-      height: 8px;
-      background: white;
-      border-radius: 50%;
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-      z-index: 9999;
-    }
-
-    .cursor::after {
-      content: "";
-      position: absolute;
-      width: 24px;
-      height: 24px;
-      border: 1px solid rgba(255,255,255,0.4);
-      border-radius: 50%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    nav {
-      text-align: center;
-      padding: 20px;
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(10px);
-    }
-
-    nav a {
-      color: #aaa;
-      margin: 0 15px;
-      text-decoration: none;
-    }
-
-    nav a:hover {
-      color: white;
-    }
-
-    h1 {
-      text-align: center;
-      margin-top: 40px;
-      letter-spacing: 2px;
-    }
-
-    .grid {
-      max-width: 900px;
-      margin: 40px auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 20px;
-    }
-
-    .card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      padding: 20px;
-      border-radius: 14px;
-      transition: 0.3s;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 20px rgba(255,255,255,0.1);
-    }
-
-    .price {
-      margin-top: 10px;
-      color: #ccc;
-    }
-
-    .payments {
-      max-width: 800px;
-      margin: 60px auto;
-      padding: 20px;
-    }
-
-    .payment-card {
-      position: relative;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 14px;
-      padding: 18px;
-      margin: 12px 0;
-      transition: 0.3s;
-      overflow: hidden;
-    }
-
-    .payment-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 0 20px rgba(255,255,255,0.15);
-    }
-
-    .payment-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 14px;
-      background: linear-gradient(120deg, transparent, white, transparent);
-      opacity: 0;
-    }
-
-    .payment-card:hover::before {
-      opacity: 0.5;
-      animation: glowMove 2s linear infinite;
-    }
-
-    @keyframes glowMove {
-      0% { background-position: 0% }
-      100% { background-position: 200% }
-    }
-
-    .pay-row {
-      margin-top: 10px;
-    }
-
-    input {
-      width: 100%;
-      background: #111;
-      border: 1px solid #222;
-      color: white;
-      padding: 10px;
-      border-radius: 6px;
-      font-family: monospace;
-    }
-
-    input:focus {
-      outline: none;
-      border-color: white;
-    }
-
-    #popup {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%) scale(0.8);
-      background: white;
-      color: black;
-      padding: 10px 18px;
-      border-radius: 8px;
-      opacity: 0;
-      transition: 0.3s;
-      z-index: 9999;
-    }
-
-    #popup.show {
-      opacity: 1;
-      transform: translateX(-50%) scale(1);
-    }
-
-  </style>
+<title>Services</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="cursor" id="cursor"></div>
 
 <nav>
-  <a href="/">Home</a>
-  <a href="/services.html">Services</a>
-  <a href="/contact.html">Contact</a>
+<a href="/">Home</a>
+<a href="/services.html">Services</a>
+<a href="/contact.html">Contact</a>
 </nav>
 
-<h1>SERVICES</h1>
+<h1 style="text-align:center;">SERVICES</h1>
 
-<div class="grid">
-  <div class="card"><h3>DoorDash</h3><p>Discounted meals</p><div class="price">Message for pricing</div></div>
-  <div class="card"><h3>Roblox</h3><p>1,000 Followers / Members</p><div class="price">$7</div></div>
-  <div class="card"><h3>Twitch</h3><p>1,000 Followers</p><div class="price">$8</div></div>
-  <div class="card"><h3>TikTok</h3><p>Followers, Likes, Views</p><div class="price">From $4</div></div>
-  <div class="card"><h3>Instagram</h3><p>Followers, Likes, Views</p><div class="price">From $4</div></div>
+<div style="max-width:900px;margin:auto;padding:20px;display:grid;gap:20px;">
+<div class="card">Roblox - $7</div>
+<div class="card">Twitch - $8</div>
+<div class="card">TikTok - from $4</div>
 </div>
 
-<div class="payments">
-  <h2>Payments</h2>
+<div style="max-width:800px;margin:60px auto;padding:20px;">
+<h2>Payments</h2>
 
-  <div class="payment-card">
-    <span>💵 Cash App</span>
-    <div class="pay-row">
-      <input value="$ky0ku" readonly onclick="selectText(this)">
-    </div>
-  </div>
+<div class="card">
+Cash App
+<input value="$ky0ku" readonly onclick="selectText(this)">
+</div>
 
-  <div class="payment-card">
-    <span>₿ Bitcoin</span>
-    <div class="pay-row">
-      <input value="bc1ql8mrufw0t2t2acpv0cu5kwxdst267xmed6gwzd" readonly onclick="selectText(this)">
-    </div>
-  </div>
-
-  <div class="payment-card">
-    <span>⟠ Ethereum</span>
-    <div class="pay-row">
-      <input value="0x7952c05673119766f9c56c78c568b4d4507721f1" readonly onclick="selectText(this)">
-    </div>
-  </div>
-
-  <div class="payment-card">
-    <span>◎ Solana</span>
-    <div class="pay-row">
-      <input value="9FQLcQ7gsrA5CL79ViDrFT7sD5HYfUiXvdQXZMnTnNQY" readonly onclick="selectText(this)">
-    </div>
-  </div>
-
-  <div class="payment-card">
-    <span>ⓜ Monero</span>
-    <div class="pay-row">
-      <input value="8A1HUrTrJZaSp4axcdu9vxZQKpZBF1ksTYYo2S6Wh7xnKji8CiZUPeggEKEUAeTsdpUdjjF29yyJJczAHi9aich5KFgvEd5" readonly onclick="selectText(this)">
-    </div>
-  </div>
+<div class="card">
+BTC
+<input value="bc1ql8mrufw0t2t2acpv0cu5kwxdst267xmed6gwzd" readonly onclick="selectText(this)">
+</div>
 
 </div>
 
 <div id="popup">Selected — Press Ctrl+C</div>
 
-<script>
-const cursor = document.getElementById('cursor');
-
-document.addEventListener('mousemove', e => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
-});
-
-document.querySelectorAll('a, .card, input').forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cursor.style.transform = 'translate(-50%, -50%) scale(1.8)';
-  });
-  el.addEventListener('mouseleave', () => {
-    cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-  });
-});
-
-function selectText(el) {
-  el.select();
-  const popup = document.getElementById("popup");
-  popup.classList.add("show");
-  setTimeout(() => popup.classList.remove("show"), 1500);
-}
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
