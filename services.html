@@ -14,17 +14,28 @@
       color: white;
     }
 
-    /* Cursor */
+    /* Sleek cursor */
     .cursor {
       position: fixed;
-      width: 18px;
-      height: 18px;
+      width: 8px;
+      height: 8px;
       background: white;
       border-radius: 50%;
       pointer-events: none;
       transform: translate(-50%, -50%);
       z-index: 9999;
-      transition: transform 0.15s ease;
+    }
+
+    .cursor::after {
+      content: "";
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
 
     nav {
@@ -50,7 +61,6 @@
       letter-spacing: 2px;
     }
 
-    /* Services */
     .grid {
       max-width: 900px;
       margin: 40px auto;
@@ -78,7 +88,6 @@
       color: #ccc;
     }
 
-    /* Payments */
     .payments {
       max-width: 800px;
       margin: 60px auto;
@@ -101,7 +110,6 @@
       box-shadow: 0 0 20px rgba(255,255,255,0.15);
     }
 
-    /* Glow border */
     .payment-card::before {
       content: "";
       position: absolute;
@@ -149,7 +157,6 @@
       background: #ddd;
     }
 
-    /* Popup */
     #popup {
       position: fixed;
       bottom: 30px;
@@ -248,7 +255,7 @@ document.addEventListener('mousemove', e => {
 
 document.querySelectorAll('a, .card, button').forEach(el => {
   el.addEventListener('mouseenter', () => {
-    cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+    cursor.style.transform = 'translate(-50%, -50%) scale(1.8)';
   });
   el.addEventListener('mouseleave', () => {
     cursor.style.transform = 'translate(-50%, -50%) scale(1)';
@@ -256,10 +263,13 @@ document.querySelectorAll('a, .card, button').forEach(el => {
 });
 
 function copyText(text) {
-  navigator.clipboard.writeText(text);
-  const popup = document.getElementById("popup");
-  popup.classList.add("show");
-  setTimeout(() => popup.classList.remove("show"), 1500);
+  navigator.clipboard.writeText(text).then(() => {
+    const popup = document.getElementById("popup");
+    popup.classList.add("show");
+    setTimeout(() => popup.classList.remove("show"), 1500);
+  }).catch(() => {
+    alert("Copy failed");
+  });
 }
 </script>
 
