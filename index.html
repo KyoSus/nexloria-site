@@ -4,6 +4,65 @@
 <title>Nexloria</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
+
+<style>
+/* Page fade animation */
+body {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+body.show {
+  opacity: 1;
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 120px 20px;
+}
+
+.hero img {
+  width: 120px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  letter-spacing: 2px;
+}
+
+.hero p {
+  color: #aaa;
+  margin-bottom: 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid #333;
+  border-radius: 10px;
+  color: white;
+  text-decoration: none;
+  margin: 10px;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* Sections */
+.section {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+  display: grid;
+  gap: 20px;
+}
+</style>
+
 </head>
 <body>
 
@@ -15,12 +74,40 @@
 <a href="/contact.html">Contact</a>
 </nav>
 
-<div style="text-align:center; padding:100px;">
-<img src="cat.png" width="120">
+<div class="hero">
+<img src="cat.png">
 <h1>NEXLORIA</h1>
 <p>Minimal. Powerful. Silent.</p>
+
+<a href="/services.html" class="btn">View Services</a>
+<a href="/contact.html" class="btn">Contact</a>
+</div>
+
+<div class="section">
+<div class="card">Fast delivery</div>
+<div class="card">Secure payments</div>
+<div class="card">Global services</div>
 </div>
 
 <script src="script.js"></script>
+
+<script>
+// fade in
+document.body.classList.add("show");
+
+// page transitions
+document.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", function(e) {
+    if (this.href.includes(location.hostname)) {
+      e.preventDefault();
+      document.body.classList.remove("show");
+      setTimeout(() => {
+        window.location = this.href;
+      }, 300);
+    }
+  });
+});
+</script>
+
 </body>
 </html>
