@@ -2,40 +2,91 @@
 <html>
 <head>
   <title>Contact - Nexloria</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
-    body { background:#000; color:white; font-family:Arial; }
-    nav { text-align:center; padding:20px; backdrop-filter:blur(10px); background:rgba(0,0,0,0.4);}
-    a { color:#aaa; margin:10px; text-decoration:none; }
+    * { cursor: none; }
+
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: #000;
+      color: white;
+    }
+
+    .cursor {
+      position: fixed;
+      width: 18px;
+      height: 18px;
+      background: white;
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+    }
+
+    nav {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(10px);
+    }
+
+    nav a {
+      color: #aaa;
+      margin: 0 15px;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      color: white;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 80px auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
 
     form {
-      max-width:500px;
-      margin:80px auto;
-      background:rgba(255,255,255,0.05);
-      padding:25px;
-      border-radius:12px;
-      backdrop-filter:blur(10px);
+      background: rgba(255,255,255,0.05);
+      padding: 25px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.1);
     }
 
     input, textarea {
-      width:100%;
-      margin:10px 0;
-      padding:12px;
-      background:#111;
-      border:1px solid #222;
-      color:white;
+      width: 100%;
+      margin: 12px 0;
+      padding: 12px;
+      background: #111;
+      border: 1px solid #222;
+      color: white;
+      border-radius: 8px;
     }
 
     button {
-      width:100%;
-      padding:12px;
-      background:white;
-      color:black;
-      border:none;
-      cursor:pointer;
+      width: 100%;
+      padding: 12px;
+      background: white;
+      color: black;
+      border: none;
+      border-radius: 8px;
+    }
+
+    button:hover {
+      opacity: 0.9;
     }
   </style>
 </head>
 <body>
+
+<div class="cursor" id="cursor"></div>
 
 <nav>
   <a href="/">Home</a>
@@ -43,13 +94,26 @@
   <a href="/contact.html">Contact</a>
 </nav>
 
-<form name="contact" method="POST" data-netlify="true" action="/thank-you">
-  <input type="hidden" name="form-name" value="contact" />
-  <input type="text" name="name" placeholder="Name" required>
-  <input type="email" name="email" placeholder="Email" required>
-  <textarea name="message" placeholder="Message" required></textarea>
-  <button type="submit">Send</button>
-</form>
+<div class="container">
+  <h1>Contact</h1>
+
+  <form name="contact" method="POST" data-netlify="true" action="/thank-you">
+    <input type="hidden" name="form-name" value="contact" />
+    <input type="text" name="name" placeholder="Name" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <textarea name="message" placeholder="Message" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+</div>
+
+<script>
+const cursor = document.getElementById('cursor');
+
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+</script>
 
 </body>
 </html>
