@@ -8,92 +8,108 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
+      background: #000;
       color: white;
-      background: #0a0e1a;
       overflow-x: hidden;
     }
 
-    /* Animated glow background */
-    body::before {
-      content: "";
+    /* Cursor glow */
+    .cursor {
       position: fixed;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, #8b5cf6, transparent 70%);
-      top: -200px;
-      left: -200px;
-      animation: moveGlow 10s infinite alternate;
-      filter: blur(100px);
-      z-index: -1;
-    }
-
-    body::after {
-      content: "";
-      position: fixed;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, #6366f1, transparent 70%);
-      bottom: -200px;
-      right: -200px;
-      animation: moveGlow2 12s infinite alternate;
-      filter: blur(100px);
-      z-index: -1;
-    }
-
-    @keyframes moveGlow {
-      from { transform: translate(0,0); }
-      to { transform: translate(200px,200px); }
-    }
-
-    @keyframes moveGlow2 {
-      from { transform: translate(0,0); }
-      to { transform: translate(-200px,-150px); }
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 0;
     }
 
     nav {
-      text-align: center;
+      position: sticky;
+      top: 0;
       padding: 20px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      background: rgba(0,0,0,0.4);
+      z-index: 10;
     }
 
     nav a {
-      color: #a78bfa;
+      color: #aaa;
       margin: 0 15px;
       text-decoration: none;
-      font-weight: 600;
     }
 
-    .container {
+    nav a:hover {
+      color: white;
+    }
+
+    .hero {
       text-align: center;
-      padding: 120px 20px;
+      padding: 100px 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero img {
+      width: 120px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      filter: contrast(1.2);
     }
 
     h1 {
       font-size: 3rem;
-      background: linear-gradient(90deg, #a78bfa, #6366f1);
-      -webkit-background-clip: text;
-      color: transparent;
+      letter-spacing: 2px;
     }
 
     .btn {
       display: inline-block;
       margin: 15px;
       padding: 12px 24px;
-      background: #8b5cf6;
-      border-radius: 8px;
-      text-decoration: none;
+      border: 1px solid #333;
+      border-radius: 10px;
       color: white;
+      text-decoration: none;
       transition: 0.3s;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
     }
 
     .btn:hover {
-      box-shadow: 0 0 20px #8b5cf6;
+      background: rgba(255,255,255,0.1);
+      box-shadow: 0 0 15px rgba(255,255,255,0.2);
+    }
+
+    /* Glass cards */
+    .section {
+      padding: 80px 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      width: 250px;
+      padding: 20px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
     }
 
     /* Scroll animation */
     .fade {
       opacity: 0;
       transform: translateY(40px);
-      transition: all 0.8s ease;
+      transition: 0.8s;
     }
 
     .fade.show {
@@ -101,13 +117,11 @@
       transform: translateY(0);
     }
 
-    .section {
-      padding: 100px 20px;
-      text-align: center;
-    }
   </style>
 </head>
 <body>
+
+<div class="cursor" id="cursor"></div>
 
 <nav>
   <a href="/">Home</a>
@@ -115,31 +129,39 @@
   <a href="/contact.html">Contact</a>
 </nav>
 
-<div class="container fade">
-  <h1>Nexloria</h1>
-  <p>Premium digital services, simplified.</p>
-  <a href="/services.html" class="btn">View Services</a>
+<div class="hero fade">
+  <img src="cat.png" alt="logo">
+  <h1>NEXLORIA</h1>
+  <p>Minimal. Powerful. Silent.</p>
+  <a href="/services.html" class="btn">Services</a>
   <a href="/contact.html" class="btn">Contact</a>
 </div>
 
 <div class="section fade">
-  <h2>Fast</h2>
-  <p>Lightning quick delivery on all services.</p>
-</div>
-
-<div class="section fade">
-  <h2>Secure</h2>
-  <p>Safe and reliable transactions.</p>
-</div>
-
-<div class="section fade">
-  <h2>Global</h2>
-  <p>Available anywhere, anytime.</p>
+  <div class="card">
+    <h3>Fast</h3>
+    <p>Instant delivery and performance.</p>
+  </div>
+  <div class="card">
+    <h3>Secure</h3>
+    <p>Private and reliable systems.</p>
+  </div>
+  <div class="card">
+    <h3>Global</h3>
+    <p>Available anywhere.</p>
+  </div>
 </div>
 
 <script>
-  const fades = document.querySelectorAll('.fade');
+  // Cursor glow
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
 
+  // Scroll animations
+  const fades = document.querySelectorAll('.fade');
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
