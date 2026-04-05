@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Services</title>
+<title>Services - Nexloria</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -18,22 +18,41 @@
 <h1 style="text-align:center;">SERVICES</h1>
 
 <div style="max-width:900px;margin:auto;padding:20px;display:grid;gap:20px;">
-<div class="card">Roblox - $7</div>
-<div class="card">Twitch - $8</div>
-<div class="card">TikTok - from $4</div>
+
+<div class="card"><h3>DoorDash</h3><p>Discounted meals</p></div>
+<div class="card"><h3>Roblox</h3><p>1,000 Followers</p><p>$7</p></div>
+<div class="card"><h3>Twitch</h3><p>1,000 Followers</p><p>$8</p></div>
+<div class="card"><h3>TikTok</h3><p>Followers / Likes</p><p>From $4</p></div>
+<div class="card"><h3>Instagram</h3><p>Followers / Views</p><p>From $4</p></div>
+
 </div>
 
 <div style="max-width:800px;margin:60px auto;padding:20px;">
 <h2>Payments</h2>
 
-<div class="card">
+<div class="payment-card">
 Cash App
 <input value="$ky0ku" readonly onclick="selectText(this)">
 </div>
 
-<div class="card">
-BTC
+<div class="payment-card">
+Bitcoin
 <input value="bc1ql8mrufw0t2t2acpv0cu5kwxdst267xmed6gwzd" readonly onclick="selectText(this)">
+</div>
+
+<div class="payment-card">
+Ethereum
+<input value="0x7952c05673119766f9c56c78c568b4d4507721f1" readonly onclick="selectText(this)">
+</div>
+
+<div class="payment-card">
+Solana
+<input value="9FQLcQ7gsrA5CL79ViDrFT7sD5HYfUiXvdQXZMnTnNQY" readonly onclick="selectText(this)">
+</div>
+
+<div class="payment-card">
+Monero
+<input value="8A1HUrTrJZaSp4axcdu9vxZQKpZBF1ksTYYo2S6Wh7xnKji8CiZUPeggEKEUAeTsdpUdjjF29yyJJczAHi9aich5KFgvEd5" readonly onclick="selectText(this)">
 </div>
 
 </div>
@@ -41,5 +60,6 @@ BTC
 <div id="popup">Selected — Press Ctrl+C</div>
 
 <script src="script.js"></script>
+
 </body>
 </html>
