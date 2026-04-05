@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Services</title>
+<title>Contact</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -15,30 +15,18 @@
 <a href="/contact.html">Contact</a>
 </nav>
 
-<h1 style="text-align:center;">SERVICES</h1>
+<div style="max-width:500px;margin:80px auto;padding:20px;">
+<h1>Contact</h1>
 
-<div style="max-width:900px;margin:auto;padding:20px;display:grid;gap:20px;">
-<div class="card">Roblox - $7</div>
-<div class="card">Twitch - $8</div>
-<div class="card">TikTok - from $4</div>
-</div>
-
-<div style="max-width:800px;margin:60px auto;padding:20px;">
-<h2>Payments</h2>
-
-<div class="card">
-Cash App
-<input value="$ky0ku" readonly onclick="selectText(this)">
-</div>
-
-<div class="card">
-BTC
-<input value="bc1ql8mrufw0t2t2acpv0cu5kwxdst267xmed6gwzd" readonly onclick="selectText(this)">
-</div>
+<form name="contact" method="POST" data-netlify="true" action="/thank-you">
+<input type="hidden" name="form-name" value="contact" />
+<input type="text" name="name" placeholder="Name" required>
+<input type="email" name="email" placeholder="Email" required>
+<textarea name="message" placeholder="Message" required></textarea>
+<button type="submit">Send</button>
+</form>
 
 </div>
-
-<div id="popup">Selected — Press Ctrl+C</div>
 
 <script src="script.js"></script>
 </body>
