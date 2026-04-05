@@ -3,121 +3,83 @@
 <head>
   <title>Services - Nexloria</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
-  background:#000 !important;
-  color:white;
-}
-
-.card, .payment-box {
-  background:rgba(255,255,255,0.05) !important;
-  border:1px solid rgba(255,255,255,0.1) !important;
-}
-
-nav {
-  backdrop-filter:blur(10px);
-  background:rgba(0,0,0,0.4);
-}
-    body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: radial-gradient(circle at top, #1a1040, #0a0e1a);
+      font-family: Arial;
+      background: #000;
       color: white;
     }
 
     nav {
       text-align: center;
       padding: 20px;
-      background: rgba(15, 23, 42, 0.7);
+      background: rgba(0,0,0,0.4);
       backdrop-filter: blur(10px);
     }
 
     nav a {
-      color: #a78bfa;
+      color: #aaa;
       margin: 0 15px;
       text-decoration: none;
-      font-weight: 600;
     }
 
     nav a:hover {
-      color: #c4b5fd;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 60px 20px;
-      text-align: center;
+      color: white;
     }
 
     h1 {
-      font-size: 3rem;
-      background: linear-gradient(90deg, #a78bfa, #6366f1);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    p {
-      color: #94a3b8;
+      text-align: center;
+      margin-top: 40px;
+      letter-spacing: 2px;
     }
 
     .grid {
+      max-width: 900px;
+      margin: 40px auto;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-      margin-top: 40px;
+      gap: 20px;
+      padding: 20px;
     }
 
     .card {
-      background: rgba(30, 41, 59, 0.6);
-      border: 1px solid rgba(167, 139, 250, 0.2);
-      padding: 25px;
-      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 14px;
       transition: 0.3s;
     }
 
     .card:hover {
       transform: translateY(-5px);
-      border-color: #a78bfa;
-      box-shadow: 0 0 20px rgba(167, 139, 250, 0.3);
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
     }
 
     .price {
-      color: #a78bfa;
       margin-top: 10px;
-      font-weight: bold;
+      color: #ccc;
     }
 
     .payments {
-      margin-top: 60px;
-    }
-
-    .payment-box {
-      background: rgba(30, 41, 59, 0.6);
-      border: 1px solid rgba(167, 139, 250, 0.2);
+      max-width: 800px;
+      margin: 60px auto;
       padding: 20px;
-      border-radius: 12px;
+    }
+
+    .payment {
+      padding: 15px;
       margin: 10px 0;
-    }
-
-    .payment-box:hover {
-      border-color: #a78bfa;
-      box-shadow: 0 0 15px rgba(167, 139, 250, 0.2);
-    }
-
-    .label {
-      color: #94a3b8;
-      font-size: 0.9rem;
-    }
-
-    .value {
-      color: #a78bfa;
-      font-family: monospace;
-      word-break: break-all;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
+
+<div class="cursor" id="cursor"></div>
 
 <nav>
   <a href="/">Home</a>
@@ -125,72 +87,40 @@ nav {
   <a href="/contact.html">Contact</a>
 </nav>
 
-<div class="container">
-  <h1>Services</h1>
-  <p>Premium digital services at unbeatable prices</p>
+<h1>SERVICES</h1>
 
-  <div class="grid">
-    <div class="card">
-      <h2>🍔 DoorDash</h2>
-      <p>Discounted meal orders</p>
-      <div class="price">Message for pricing</div>
-    </div>
-
-    <div class="card">
-      <h2>🎮 Roblox</h2>
-      <p>1,000 Followers / Members</p>
-      <div class="price">$7</div>
-    </div>
-
-    <div class="card">
-      <h2>📺 Twitch</h2>
-      <p>1,000 Followers</p>
-      <div class="price">$8</div>
-    </div>
-
-    <div class="card">
-      <h2>🎵 TikTok</h2>
-      <p>Followers, Likes, Views</p>
-      <div class="price">From $4</div>
-    </div>
-
-    <div class="card">
-      <h2>📸 Instagram</h2>
-      <p>Followers, Likes, Views</p>
-      <div class="price">From $4</div>
-    </div>
-  </div>
-
-  <div class="payments">
-    <h2>Payment Methods</h2>
-
-    <div class="payment-box">
-      <div class="label">Cash App</div>
-      <div class="value">$ky0ku</div>
-    </div>
-
-    <div class="payment-box">
-      <div class="label">Bitcoin (BTC)</div>
-      <div class="value">bc1ql8mrufw0t2t2acpv0cu5kwxdst267xmed6gwzd</div>
-    </div>
-
-    <div class="payment-box">
-      <div class="label">Ethereum (ETH)</div>
-      <div class="value">0x7952c05673119766f9c56c78c568b4d4507721f1</div>
-    </div>
-
-    <div class="payment-box">
-      <div class="label">Solana (SOL)</div>
-      <div class="value">9FQLcQ7gsrA5CL79ViDrFT7sD5HYfUiXvdQXZMnTnNQY</div>
-    </div>
-
-    <div class="payment-box">
-      <div class="label">Monero (XMR)</div>
-      <div class="value">8A1HUrTrJZaSp4axcdu9vxZQKpZBF1ksTYYo2S6Wh7xnKji8CiZUPeggEKEUAeTsdpUdjjF29yyJJczAHi9aich5KFgvEd5</div>
-    </div>
-  </div>
-
+<div class="grid">
+  <div class="card"><h3>DoorDash</h3><p>Discounted meals</p><div class="price">Message for pricing</div></div>
+  <div class="card"><h3>Roblox</h3><p>1,000 Followers</p><div class="price">$7</div></div>
+  <div class="card"><h3>Twitch</h3><p>1,000 Followers</p><div class="price">$8</div></div>
+  <div class="card"><h3>TikTok</h3><p>Boosts & engagement</p><div class="price">From $4</div></div>
+  <div class="card"><h3>Instagram</h3><p>Growth services</p><div class="price">From $4</div></div>
 </div>
+
+<div class="payments">
+  <h2>Payments</h2>
+  <div class="payment">Cash App: $ky0ku</div>
+  <div class="payment">BTC: bc1ql8mrufw0t2t2acpv0cu5kwxdst267xmed6gwzd</div>
+  <div class="payment">ETH: 0x7952c05673119766f9c56c78c568b4d4507721f1</div>
+</div>
+
+<script>
+const cursor = document.getElementById('cursor');
+
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+
+document.querySelectorAll('a, .card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+  });
+});
+</script>
 
 </body>
 </html>
