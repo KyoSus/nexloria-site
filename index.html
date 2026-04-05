@@ -1,188 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Nexloria</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    * {
-      cursor: none;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #000;
-      color: white;
-      overflow-x: hidden;
-    }
-
-    /* Custom cursor */
-    .cursor {
-      position: fixed;
-      width: 18px;
-      height: 18px;
-      background: white;
-      border-radius: 50%;
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-      z-index: 9999;
-      transition: transform 0.15s ease;
-    }
-
-    nav {
-      position: sticky;
-      top: 0;
-      padding: 20px;
-      text-align: center;
-      backdrop-filter: blur(10px);
-      background: rgba(0,0,0,0.4);
-      z-index: 10;
-    }
-
-    nav a {
-      color: #aaa;
-      margin: 0 15px;
-      text-decoration: none;
-    }
-
-    nav a:hover {
-      color: white;
-    }
-
-    .hero {
-      text-align: center;
-      padding: 100px 20px;
-    }
-
-    .hero img {
-      width: 120px;
-      border-radius: 50%;
-      margin-bottom: 20px;
-    }
-
-    h1 {
-      font-size: 3rem;
-      letter-spacing: 2px;
-    }
-
-    .btn {
-      display: inline-block;
-      margin: 15px;
-      padding: 12px 24px;
-      border: 1px solid #333;
-      border-radius: 10px;
-      color: white;
-      text-decoration: none;
-      transition: 0.3s;
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(10px);
-    }
-
-    .btn:hover {
-      background: rgba(255,255,255,0.1);
-      box-shadow: 0 0 15px rgba(255,255,255,0.2);
-    }
-
-    .section {
-      padding: 80px 20px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .card {
-      width: 250px;
-      padding: 20px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: 0.3s;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 20px rgba(255,255,255,0.1);
-    }
-
-    /* Scroll animation */
-    .fade {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: 0.8s;
-    }
-
-    .fade.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-  </style>
+<title>Nexloria</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="cursor" id="cursor"></div>
 
 <nav>
-  <a href="/">Home</a>
-  <a href="/services.html">Services</a>
-  <a href="/contact.html">Contact</a>
+<a href="/">Home</a>
+<a href="/services.html">Services</a>
+<a href="/contact.html">Contact</a>
 </nav>
 
-<div class="hero fade">
-  <img src="cat.png" alt="logo">
-  <h1>NEXLORIA</h1>
-  <p>Minimal. Powerful. Silent.</p>
-  <a href="/services.html" class="btn">Services</a>
-  <a href="/contact.html" class="btn">Contact</a>
+<div style="text-align:center; padding:100px;">
+<img src="cat.png" width="120">
+<h1>NEXLORIA</h1>
+<p>Minimal. Powerful. Silent.</p>
 </div>
 
-<div class="section fade">
-  <div class="card">
-    <h3>Fast</h3>
-    <p>Instant delivery and performance.</p>
-  </div>
-  <div class="card">
-    <h3>Secure</h3>
-    <p>Private and reliable systems.</p>
-  </div>
-  <div class="card">
-    <h3>Global</h3>
-    <p>Available anywhere.</p>
-  </div>
-</div>
-
-<script>
-const cursor = document.getElementById('cursor');
-
-document.addEventListener('mousemove', e => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
-});
-
-document.querySelectorAll('a, .btn, .card').forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cursor.style.transform = 'translate(-50%, -50%) scale(2)';
-  });
-  el.addEventListener('mouseleave', () => {
-    cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-  });
-});
-
-// Scroll animation
-const fades = document.querySelectorAll('.fade');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('show');
-    }
-  });
-});
-
-fades.forEach(el => observer.observe(el));
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
