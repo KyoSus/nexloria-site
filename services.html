@@ -5,11 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
+    * {
+      cursor: none;
+    }
+
     body {
       margin: 0;
       font-family: Arial;
       background: #000;
       color: white;
+    }
+
+    /* Cursor */
+    .cursor {
+      position: fixed;
+      width: 18px;
+      height: 18px;
+      background: white;
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      transition: transform 0.15s ease;
     }
 
     nav {
@@ -35,6 +52,7 @@
       letter-spacing: 2px;
     }
 
+    /* Services grid */
     .grid {
       max-width: 900px;
       margin: 40px auto;
@@ -62,18 +80,54 @@
       color: #ccc;
     }
 
+    /* Payments */
     .payments {
       max-width: 800px;
       margin: 60px auto;
       padding: 20px;
     }
 
-    .payment {
-      padding: 15px;
-      margin: 10px 0;
+    .payment-card {
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 10px;
+      border-radius: 14px;
+      padding: 18px;
+      margin: 12px 0;
+      transition: 0.3s;
+    }
+
+    .payment-card:hover {
+      box-shadow: 0 0 20px rgba(255,255,255,0.15);
+      transform: translateY(-3px);
+    }
+
+    .pay-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      gap: 10px;
+    }
+
+    code {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: #ccc;
+      word-break: break-all;
+    }
+
+    button {
+      background: white;
+      color: black;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: none;
+      font-size: 0.8rem;
+    }
+
+    button:hover {
+      background: #ddd;
     }
   </style>
 </head>
@@ -91,20 +145,54 @@
 
 <div class="grid">
   <div class="card"><h3>DoorDash</h3><p>Discounted meals</p><div class="price">Message for pricing</div></div>
-  <div class="card"><h3>Roblox</h3><p>1,000 Followers</p><div class="price">$7</div></div>
+  <div class="card"><h3>Roblox</h3><p>1,000 Followers / Members</p><div class="price">$7</div></div>
   <div class="card"><h3>Twitch</h3><p>1,000 Followers</p><div class="price">$8</div></div>
-  <div class="card"><h3>TikTok</h3><p>Boosts & engagement</p><div class="price">From $4</div></div>
-  <div class="card"><h3>Instagram</h3><p>Growth services</p><div class="price">From $4</div></div>
+  <div class="card"><h3>TikTok</h3><p>Followers, Likes, Views</p><div class="price">From $4</div></div>
+  <div class="card"><h3>Instagram</h3><p>Followers, Likes, Views</p><div class="price">From $4</div></div>
 </div>
 
 <div class="payments">
   <h2>Payments</h2>
 
-  <div class="payment">Cash App: $ky0ku</div>
-  <div class="payment">BTC: bc1ql8mrufw0t2t2acpv0cu5kwxdst267xmed6gwzd</div>
-  <div class="payment">ETH: 0x7952c05673119766f9c56c78c568b4d4507721f1</div>
-  <div class="payment">SOL: 9FQLcQ7gsrA5CL79ViDrFT7sD5HYfUiXvdQXZMnTnNQY</div>
-  <div class="payment">XMR: 8A1HUrTrJZaSp4axcdu9vxZQKpZBF1ksTYYo2S6Wh7xnKji8CiZUPeggEKEUAeTsdpUdjjF29yyJJczAHi9aich5KFgvEd5</div>
+  <div class="payment-card">
+    <span>💵 Cash App</span>
+    <div class="pay-row">
+      <code>$ky0ku</code>
+      <button onclick="copyText('$ky0ku')">Copy</button>
+    </div>
+  </div>
+
+  <div class="payment-card">
+    <span>₿ Bitcoin</span>
+    <div class="pay-row">
+      <code>bc1ql8mrufw0t2t2acpv0cu5kwxdst267xmed6gwzd</code>
+      <button onclick="copyText('bc1ql8mrufw0t2t2acpv0cu5kwxdst267xmed6gwzd')">Copy</button>
+    </div>
+  </div>
+
+  <div class="payment-card">
+    <span>⟠ Ethereum</span>
+    <div class="pay-row">
+      <code>0x7952c05673119766f9c56c78c568b4d4507721f1</code>
+      <button onclick="copyText('0x7952c05673119766f9c56c78c568b4d4507721f1')">Copy</button>
+    </div>
+  </div>
+
+  <div class="payment-card">
+    <span>◎ Solana</span>
+    <div class="pay-row">
+      <code>9FQLcQ7gsrA5CL79ViDrFT7sD5HYfUiXvdQXZMnTnNQY</code>
+      <button onclick="copyText('9FQLcQ7gsrA5CL79ViDrFT7sD5HYfUiXvdQXZMnTnNQY')">Copy</button>
+    </div>
+  </div>
+
+  <div class="payment-card">
+    <span>ⓜ Monero</span>
+    <div class="pay-row">
+      <code>8A1HUrTrJZaSp4axcdu9vxZQKpZBF1ksTYYo2S6Wh7xnKji8CiZUPeggEKEUAeTsdpUdjjF29yyJJczAHi9aich5KFgvEd5</code>
+      <button onclick="copyText('8A1HUrTrJZaSp4axcdu9vxZQKpZBF1ksTYYo2S6Wh7xnKji8CiZUPeggEKEUAeTsdpUdjjF29yyJJczAHi9aich5KFgvEd5')">Copy</button>
+    </div>
+  </div>
 
 </div>
 
@@ -116,7 +204,7 @@ document.addEventListener('mousemove', e => {
   cursor.style.top = e.clientY + 'px';
 });
 
-document.querySelectorAll('a, .card').forEach(el => {
+document.querySelectorAll('a, .card, button').forEach(el => {
   el.addEventListener('mouseenter', () => {
     cursor.style.transform = 'translate(-50%, -50%) scale(2)';
   });
@@ -124,6 +212,11 @@ document.querySelectorAll('a, .card').forEach(el => {
     cursor.style.transform = 'translate(-50%, -50%) scale(1)';
   });
 });
+
+function copyText(text) {
+  navigator.clipboard.writeText(text);
+  alert("Copied!");
+}
 </script>
 
 </body>
