@@ -130,31 +130,22 @@
     }
 
     .pay-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       margin-top: 10px;
-      gap: 10px;
     }
 
-    code {
-      font-family: monospace;
-      font-size: 0.85rem;
-      color: #ccc;
-      word-break: break-all;
-    }
-
-    button {
-      background: white;
-      color: black;
-      border: none;
-      padding: 6px 12px;
+    input {
+      width: 100%;
+      background: #111;
+      border: 1px solid #222;
+      color: white;
+      padding: 10px;
       border-radius: 6px;
-      font-size: 0.8rem;
+      font-family: monospace;
     }
 
-    button:hover {
-      background: #ddd;
+    input:focus {
+      outline: none;
+      border-color: white;
     }
 
     #popup {
@@ -204,46 +195,41 @@
   <div class="payment-card">
     <span>💵 Cash App</span>
     <div class="pay-row">
-      <code>$ky0ku</code>
-      <button onclick="copyText('$ky0ku')">Copy</button>
+      <input value="$ky0ku" readonly onclick="selectText(this)">
     </div>
   </div>
 
   <div class="payment-card">
     <span>₿ Bitcoin</span>
     <div class="pay-row">
-      <code>bc1ql8mrufw0t2t2acpv0cu5kwxdst267xmed6gwzd</code>
-      <button onclick="copyText('bc1ql8mrufw0t2t2acpv0cu5kwxdst267xmed6gwzd')">Copy</button>
+      <input value="bc1ql8mrufw0t2t2acpv0cu5kwxdst267xmed6gwzd" readonly onclick="selectText(this)">
     </div>
   </div>
 
   <div class="payment-card">
     <span>⟠ Ethereum</span>
     <div class="pay-row">
-      <code>0x7952c05673119766f9c56c78c568b4d4507721f1</code>
-      <button onclick="copyText('0x7952c05673119766f9c56c78c568b4d4507721f1')">Copy</button>
+      <input value="0x7952c05673119766f9c56c78c568b4d4507721f1" readonly onclick="selectText(this)">
     </div>
   </div>
 
   <div class="payment-card">
     <span>◎ Solana</span>
     <div class="pay-row">
-      <code>9FQLcQ7gsrA5CL79ViDrFT7sD5HYfUiXvdQXZMnTnNQY</code>
-      <button onclick="copyText('9FQLcQ7gsrA5CL79ViDrFT7sD5HYfUiXvdQXZMnTnNQY')">Copy</button>
+      <input value="9FQLcQ7gsrA5CL79ViDrFT7sD5HYfUiXvdQXZMnTnNQY" readonly onclick="selectText(this)">
     </div>
   </div>
 
   <div class="payment-card">
     <span>ⓜ Monero</span>
     <div class="pay-row">
-      <code>8A1HUrTrJZaSp4axcdu9vxZQKpZBF1ksTYYo2S6Wh7xnKji8CiZUPeggEKEUAeTsdpUdjjF29yyJJczAHi9aich5KFgvEd5</code>
-      <button onclick="copyText('8A1HUrTrJZaSp4axcdu9vxZQKpZBF1ksTYYo2S6Wh7xnKji8CiZUPeggEKEUAeTsdpUdjjF29yyJJczAHi9aich5KFgvEd5')">Copy</button>
+      <input value="8A1HUrTrJZaSp4axcdu9vxZQKpZBF1ksTYYo2S6Wh7xnKji8CiZUPeggEKEUAeTsdpUdjjF29yyJJczAHi9aich5KFgvEd5" readonly onclick="selectText(this)">
     </div>
   </div>
 
 </div>
 
-<div id="popup">Copied ✓</div>
+<div id="popup">Selected — Press Ctrl+C</div>
 
 <script>
 const cursor = document.getElementById('cursor');
@@ -253,7 +239,7 @@ document.addEventListener('mousemove', e => {
   cursor.style.top = e.clientY + 'px';
 });
 
-document.querySelectorAll('a, .card, button').forEach(el => {
+document.querySelectorAll('a, .card, input').forEach(el => {
   el.addEventListener('mouseenter', () => {
     cursor.style.transform = 'translate(-50%, -50%) scale(1.8)';
   });
@@ -262,31 +248,13 @@ document.querySelectorAll('a, .card, button').forEach(el => {
   });
 });
 
-function copyText(text) {
-  const textarea = document.createElement("textarea");
-  textarea.value = text;
-
-  // prevent scroll jump
-  textarea.style.position = "fixed";
-  textarea.style.top = "-9999px";
-
-  document.body.appendChild(textarea);
-  textarea.focus();
-  textarea.select();
-
-  try {
-    document.execCommand("copy");
-  } catch (err) {
-    console.log("Copy failed");
-  }
-
-  document.body.removeChild(textarea);
-
-  // popup
+function selectText(el) {
+  el.select();
   const popup = document.getElementById("popup");
   popup.classList.add("show");
   setTimeout(() => popup.classList.remove("show"), 1500);
 }
 </script>
+
 </body>
 </html>
