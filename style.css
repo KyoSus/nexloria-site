@@ -1,10 +1,18 @@
+/* Hide default cursor */
 * { cursor: none; }
 
+/* GLOBAL page transition */
 body {
   margin: 0;
   font-family: Arial;
   background: #000;
   color: white;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+body.show {
+  opacity: 1;
 }
 
 /* Cursor */
@@ -43,13 +51,31 @@ nav a {
   color: #aaa;
   margin: 0 15px;
   text-decoration: none;
+  transition: 0.2s;
 }
 
 nav a:hover {
   color: white;
 }
 
-/* Cards */
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 10px 22px;
+  border: 1px solid #222;
+  border-radius: 999px;
+  color: white;
+  text-decoration: none;
+  margin: 8px;
+  transition: 0.25s ease;
+}
+
+.btn:hover {
+  background: #111;
+  border-color: #444;
+}
+
+/* Cards (still available if you use them elsewhere) */
 .card {
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.1);
@@ -96,4 +122,35 @@ input:focus, textarea:focus {
 #popup.show {
   opacity: 1;
   transform: translateX(-50%) scale(1);
+}
+
+/* Section + features list */
+.section {
+  max-width: 700px;
+  margin: auto;
+  padding: 40px 20px 80px;
+}
+
+.features {
+  list-style: none;
+  padding: 0;
+}
+
+.features li {
+  position: relative;
+  padding: 14px 0 14px 28px;
+  border-bottom: 1px solid #1a1a1a;
+  color: #ccc;
+}
+
+.features li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #666;
+}
+
+.features li:hover {
+  color: white;
+  border-color: #333;
 }
