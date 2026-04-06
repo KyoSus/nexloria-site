@@ -165,3 +165,29 @@ input:focus, textarea:focus {
   color: white;
   border-color: var(--accent);
 }
+
+/* Gradient glow background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+
+  background:
+    radial-gradient(circle at 20% 30%, rgba(59,130,246,0.25), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(255,79,216,0.2), transparent 40%);
+
+  filter: blur(80px);
+  opacity: 0.8;
+  animation: floatGlow 12s ease-in-out infinite alternate;
+}
+
+/* subtle movement */
+@keyframes floatGlow {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  100% {
+    transform: translate(-40px, -20px) scale(1.1);
+  }
+}
