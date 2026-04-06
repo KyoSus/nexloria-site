@@ -13,7 +13,9 @@
 }
 
 select, input {
+  width: 100%;
   margin-top: 10px;
+  margin-bottom: 15px;
 }
 
 .result {
@@ -35,12 +37,25 @@ select, input {
 </nav>
 
 <div class="container">
-<h1>Fee Calculator</h1>
+<h1>Order Calculator</h1>
 
-<label>Amount ($)</label>
-<input type="number" id="amount" placeholder="Enter amount">
+<label>Platform</label>
+<select id="platform">
+<option value="roblox">Roblox</option>
+<option value="twitch">Twitch</option>
+<option value="tiktok">TikTok</option>
+<option value="instagram">Instagram</option>
+</select>
 
-<div class="result" id="result">Total: $0</div>
+<label>Service</label>
+<select id="service"></select>
+
+<label>Amount</label>
+<input type="number" id="amount" placeholder="Enter amount (ex. 250, 5000, etc)">
+
+<div class="result" id="result">
+Cost: $0 | Fee: $0 | Total: $0
+</div>
 </div>
 
 <footer style="text-align:center; padding:40px; color:#999; border-top:1px solid rgba(255,255,255,0.05);">
@@ -50,32 +65,92 @@ select, input {
 <script src="script.js"></script>
 
 <script>
+const platform = document.getElementById("platform");
+const service = document.getElementById("service");
 const amountInput = document.getElementById("amount");
 const result = document.getElementById("result");
 
-amountInput.addEventListener("input", () => {
+/* PRICING DATA */
+const pricing = {
+  roblox: {
+    "Followers": 7/1000,
+    "Group Members": 7/1000
+  },
+  twitch: {
+    "Followers": 8/1000
+  },
+  tiktok: {
+    "Followers": 7/1000,
+    "Likes": 5/5000,
+    "Views": 4/5000,
+    "Saves": 4/500
+  },
+  instagram: {
+    "Followers": 7/1000,
+    "Views": 4/2500,
+    "Likes": 4/500,
+    "Reposts": 4/100
+  }
+};
+
+/* Populate services */
+function updateServices() {
+  service.innerHTML = "";
+  const selected = pricing[platform.value];
+
+  for (let key in selected) {
+    const option = document.createElement("option");
+    option.value = key;
+    option.textContent = key;
+    service.appendChild(option);
+  }
+}
+
+/* Fee calculation */
+function getFee(amt) {
+  if (amt <= 10) return 1.25;
+  if (amt <= 40) return 3.15;
+  if (amt <= 70) return 5.00;
+  if (amt <= 100) return 7.50;
+  if (amt <= 200) return 12.50;
+  if (amt <= 300) return 18.75;
+  if (amt <= 500) return 27.50;
+  if (amt <= 750) return 43.75;
+  if (amt <= 1000) return 62.50;
+  return 0;
+}
+
+/* Calculate total */
+function calculate() {
   const amt = parseFloat(amountInput.value);
-  if (!amt) {
-    result.innerText = "Total: $0";
+  if (!amt || amt <= 0) {
+    result.innerText = "Cost: $0 | Fee: $0 | Total: $0";
     return;
   }
 
-  let fee = 0;
+  const rate = pricing[platform.value][service.value];
+  let cost = amt * rate;
 
-  if (amt <= 10) fee = 1.25;
-  else if (amt <= 40) fee = 3.15;
-  else if (amt <= 70) fee = 5.00;
-  else if (amt <= 100) fee = 7.50;
-  else if (amt <= 200) fee = 12.50;
-  else if (amt <= 300) fee = 18.75;
-  else if (amt <= 500) fee = 27.50;
-  else if (amt <= 750) fee = 43.75;
-  else if (amt <= 1000) fee = 62.50;
+  if (cost < 1) cost = 1; // minimum order
 
-  const total = (amt + fee).toFixed(2);
+  const fee = getFee(cost);
+  const total = (cost + fee).toFixed(2);
 
-  result.innerText = `Fee: $${fee.toFixed(2)} | Total: $${total}`;
+  result.innerText =
+    `Cost: $${cost.toFixed(2)} | Fee: $${fee.toFixed(2)} | Total: $${total}`;
+}
+
+/* Events */
+platform.addEventListener("change", () => {
+  updateServices();
+  calculate();
 });
+
+service.addEventListener("change", calculate);
+amountInput.addEventListener("input", calculate);
+
+/* Init */
+updateServices();
 </script>
 
 </body>
