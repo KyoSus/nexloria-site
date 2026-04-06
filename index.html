@@ -95,7 +95,6 @@ nav a:hover {
   letter-spacing: 0.3px;
 }
 
-/* custom bullet */
 .features li::before {
   content: "•";
   position: absolute;
@@ -103,7 +102,6 @@ nav a:hover {
   color: #666;
 }
 
-/* subtle hover */
 .features li:hover {
   color: white;
   border-color: #333;
@@ -112,6 +110,9 @@ nav a:hover {
 
 </head>
 <body>
+
+<!-- Cursor restored -->
+<div class="cursor" id="cursor"></div>
 
 <nav>
 <a href="/">Home</a>
@@ -134,6 +135,8 @@ nav a:hover {
 <li>Global services</li>
 </ul>
 </div>
+
+<script src="script.js"></script>
 
 <script>
 // fade in
