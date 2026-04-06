@@ -6,22 +6,95 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
-.container {
-  max-width: 500px;
-  margin: 100px auto;
+.wrapper {
+  max-width: 520px;
+  margin: 120px auto;
   padding: 20px;
+}
+
+/* Card container */
+.calc-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(59,130,246,0.15);
+  border-radius: 20px;
+  padding: 30px;
+  backdrop-filter: blur(12px);
+}
+
+/* Title */
+.calc-title {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+/* Inputs */
+label {
+  font-size: 0.8rem;
+  color: #888;
+  display: block;
+  margin-top: 15px;
 }
 
 select, input {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 8px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: white;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+}
+
+select:focus, input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(59,130,246,0.3);
+}
+
+/* Result box */
+.result-box {
+  margin-top: 25px;
+  padding: 18px;
+  border-radius: 14px;
+  background: rgba(59,130,246,0.08);
+  border: 1px solid rgba(59,130,246,0.2);
+}
+
+.result-main {
+  font-size: 1.4rem;
+  color: white;
+}
+
+.result-sub {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-top: 5px;
+}
+
+/* Mode toggle */
+.mode {
+  display: flex;
+  gap: 10px;
   margin-bottom: 15px;
 }
 
-.result {
-  margin-top: 20px;
-  font-size: 1.2rem;
-  color: var(--accent);
+.mode button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #222;
+  background: #111;
+  color: #aaa;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.mode button.active {
+  border-color: var(--accent);
+  color: white;
+  box-shadow: 0 0 10px rgba(59,130,246,0.4);
 }
 </style>
 </head>
@@ -36,16 +109,18 @@ select, input {
 <a href="/contact.html">Contact</a>
 </nav>
 
-<div class="container">
-<h1>Calculator</h1>
+<div class="wrapper">
+<div class="calc-card">
 
-<label>Mode</label>
-<select id="mode">
-<option value="services">Services</option>
-<option value="exchange">Exchange</option>
-</select>
+<div class="calc-title">Calculator</div>
 
-<!-- SERVICES UI -->
+<!-- MODE -->
+<div class="mode">
+<button id="servicesBtn" class="active">Services</button>
+<button id="exchangeBtn">Exchange</button>
+</div>
+
+<!-- SERVICES -->
 <div id="servicesUI">
 <label>Platform</label>
 <select id="platform"></select>
@@ -54,10 +129,10 @@ select, input {
 <select id="service"></select>
 </div>
 
-<!-- EXCHANGE UI -->
+<!-- EXCHANGE -->
 <div id="exchangeUI" style="display:none;">
 <label>From</label>
-<select id="from">
+<select>
 <option>Cash App</option>
 <option>PayPal</option>
 <option>Apple Pay</option>
@@ -67,7 +142,7 @@ select, input {
 </select>
 
 <label>To</label>
-<select id="to">
+<select>
 <option>Bitcoin</option>
 <option>Ethereum</option>
 <option>Solana</option>
@@ -77,11 +152,15 @@ select, input {
 </select>
 </div>
 
-<label>Amount ($)</label>
-<input type="number" id="amount" placeholder="Enter amount">
+<label>Amount</label>
+<input type="number" id="amount" placeholder="e.g. 250, 5000, etc">
 
-<div class="result" id="result">
-Cost: $0 | Fee: $0 | Total: $0
+<!-- RESULT -->
+<div class="result-box">
+<div class="result-main" id="mainResult">$0</div>
+<div class="result-sub" id="subResult">Enter amount to calculate</div>
+</div>
+
 </div>
 </div>
 
@@ -92,125 +171,110 @@ Cost: $0 | Fee: $0 | Total: $0
 <script src="script.js"></script>
 
 <script>
-const mode = document.getElementById("mode");
+const servicesBtn = document.getElementById("servicesBtn");
+const exchangeBtn = document.getElementById("exchangeBtn");
+
 const servicesUI = document.getElementById("servicesUI");
 const exchangeUI = document.getElementById("exchangeUI");
 
 const platform = document.getElementById("platform");
 const service = document.getElementById("service");
 const amountInput = document.getElementById("amount");
-const result = document.getElementById("result");
 
-/* PRICING */
+const mainResult = document.getElementById("mainResult");
+const subResult = document.getElementById("subResult");
+
+let mode = "services";
+
+/* Pricing */
 const pricing = {
-  roblox: {
-    "Followers": 7/1000,
-    "Group Members": 7/1000
-  },
-  twitch: {
-    "Followers": 8/1000
-  },
-  tiktok: {
-    "Followers": 7/1000,
-    "Likes": 5/5000,
-    "Views": 4/5000,
-    "Saves": 4/500
-  },
-  instagram: {
-    "Followers": 7/1000,
-    "Views": 4/2500,
-    "Likes": 4/500,
-    "Reposts": 4/100
-  }
+  roblox: {"Followers": 7/1000, "Group Members": 7/1000},
+  twitch: {"Followers": 8/1000},
+  tiktok: {"Followers": 7/1000, "Likes": 5/5000, "Views": 4/5000, "Saves": 4/500},
+  instagram: {"Followers": 7/1000, "Views": 4/2500, "Likes": 4/500, "Reposts": 4/100}
 };
 
-/* Populate platform dropdown */
-function loadPlatforms() {
-  platform.innerHTML = "";
-  for (let key in pricing) {
-    const opt = document.createElement("option");
-    opt.value = key;
-    opt.textContent = key.toUpperCase();
-    platform.appendChild(opt);
+function loadPlatforms(){
+  for(let key in pricing){
+    let o = document.createElement("option");
+    o.value = key;
+    o.textContent = key.toUpperCase();
+    platform.appendChild(o);
   }
 }
 
-/* Populate services */
-function updateServices() {
+function updateServices(){
   service.innerHTML = "";
-  const selected = pricing[platform.value];
-
-  for (let key in selected) {
-    const opt = document.createElement("option");
-    opt.value = key;
-    opt.textContent = key;
-    service.appendChild(opt);
+  let data = pricing[platform.value];
+  for(let k in data){
+    let o = document.createElement("option");
+    o.value = k;
+    o.textContent = k;
+    service.appendChild(o);
   }
 }
 
-/* FEES (EXCHANGE ONLY) */
-function getFee(amt) {
-  if (amt <= 10) return 1.25;
-  if (amt <= 40) return 3.15;
-  if (amt <= 70) return 5.00;
-  if (amt <= 100) return 7.50;
-  if (amt <= 200) return 12.50;
-  if (amt <= 300) return 18.75;
-  if (amt <= 500) return 27.50;
-  if (amt <= 750) return 43.75;
-  if (amt <= 1000) return 62.50;
+function fee(a){
+  if(a<=10)return 1.25;
+  if(a<=40)return 3.15;
+  if(a<=70)return 5;
+  if(a<=100)return 7.5;
+  if(a<=200)return 12.5;
+  if(a<=300)return 18.75;
+  if(a<=500)return 27.5;
+  if(a<=750)return 43.75;
+  if(a<=1000)return 62.5;
   return 0;
 }
 
-/* CALCULATE */
-function calculate() {
-  const amt = parseFloat(amountInput.value);
-  if (!amt || amt <= 0) {
-    result.innerText = "Cost: $0 | Fee: $0 | Total: $0";
+function calc(){
+  let amt = parseFloat(amountInput.value);
+  if(!amt){
+    mainResult.innerText="$0";
+    subResult.innerText="Enter amount to calculate";
     return;
   }
 
-  if (mode.value === "services") {
-    const rate = pricing[platform.value][service.value];
-    let cost = amt * rate;
+  if(mode==="services"){
+    let cost = amt * pricing[platform.value][service.value];
+    if(cost<1) cost=1;
 
-    if (cost < 1) cost = 1;
-
-    result.innerText =
-      `Cost: $${cost.toFixed(2)} | Total: $${cost.toFixed(2)}`;
+    mainResult.innerText = "$"+cost.toFixed(2);
+    subResult.innerText = "Service cost (no fees)";
   }
 
-  if (mode.value === "exchange") {
-    const fee = getFee(amt);
-    const total = (amt + fee).toFixed(2);
+  if(mode==="exchange"){
+    let f = fee(amt);
+    let receive = amt - f;
 
-    result.innerText =
-      `You Send: $${amt.toFixed(2)} | Fee: $${fee.toFixed(2)} | You Receive: $${(amt - fee).toFixed(2)}`;
+    mainResult.innerText = "$"+receive.toFixed(2);
+    subResult.innerText = `Fee: $${f.toFixed(2)} • You send: $${amt}`;
   }
 }
 
-/* MODE SWITCH */
-mode.addEventListener("change", () => {
-  if (mode.value === "services") {
-    servicesUI.style.display = "block";
-    exchangeUI.style.display = "none";
-  } else {
-    servicesUI.style.display = "none";
-    exchangeUI.style.display = "block";
-  }
-  calculate();
-});
+/* Mode switch */
+servicesBtn.onclick = ()=>{
+  mode="services";
+  servicesBtn.classList.add("active");
+  exchangeBtn.classList.remove("active");
+  servicesUI.style.display="block";
+  exchangeUI.style.display="none";
+  calc();
+};
 
-/* EVENTS */
-platform.addEventListener("change", () => {
-  updateServices();
-  calculate();
-});
+exchangeBtn.onclick = ()=>{
+  mode="exchange";
+  exchangeBtn.classList.add("active");
+  servicesBtn.classList.remove("active");
+  servicesUI.style.display="none";
+  exchangeUI.style.display="block";
+  calc();
+};
 
-service.addEventListener("change", calculate);
-amountInput.addEventListener("input", calculate);
+platform.onchange = ()=>{ updateServices(); calc(); };
+service.onchange = calc;
+amountInput.oninput = calc;
 
-/* INIT */
 loadPlatforms();
 updateServices();
 </script>
