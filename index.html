@@ -138,23 +138,5 @@ nav a:hover {
 
 <script src="script.js"></script>
 
-<script>
-// fade in
-document.body.classList.add("show");
-
-// page transitions
-document.querySelectorAll("a").forEach(link => {
-  link.addEventListener("click", function(e) {
-    if (this.href.includes(location.hostname)) {
-      e.preventDefault();
-      document.body.classList.remove("show");
-      setTimeout(() => {
-        window.location = this.href;
-      }, 300);
-    }
-  });
-});
-</script>
-
 </body>
 </html>
