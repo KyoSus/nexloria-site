@@ -20,7 +20,6 @@
   backdrop-filter: blur(12px);
 }
 
-/* Title */
 .calc-title {
   font-size: 1.6rem;
   margin-bottom: 15px;
@@ -39,8 +38,8 @@
 }
 
 .selection-preview img {
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
 }
 
 .selection-text {
@@ -71,6 +70,7 @@ select option {
   color: white;
 }
 
+/* Result */
 .result-box {
   margin-top: 20px;
   padding: 16px;
@@ -129,13 +129,11 @@ select option {
 
 <div class="calc-title">Calculator</div>
 
-<!-- MODE -->
 <div class="mode">
 <button id="servicesBtn" class="active">Services</button>
 <button id="exchangeBtn">Exchange</button>
 </div>
 
-<!-- PREVIEW -->
 <div class="selection-preview">
 <img id="icon" src="">
 <div class="selection-text" id="selectionText">Select options</div>
@@ -160,7 +158,7 @@ select option {
 </div>
 
 <label>Amount</label>
-<input type="number" id="amount">
+<input type="number" id="amount" placeholder="e.g. 250, 5000">
 
 <div class="result-box">
 <div class="result-main" id="mainResult">$0</div>
@@ -197,14 +195,21 @@ const subResult = document.getElementById("subResult");
 
 let mode = "services";
 
-/* ICON MAP (use your own images later if you want) */
+/* ICONS (WORKING) */
 const icons = {
-  roblox: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/roblox/roblox-original.svg",
-  twitch: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/twitch/twitch-original.svg",
-  tiktok: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/twitter/twitter-original.svg",
-  instagram: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/instagram/instagram-original.svg",
-  bitcoin: "https://cryptologos.cc/logos/bitcoin-btc-logo.png",
-  ethereum: "https://cryptologos.cc/logos/ethereum-eth-logo.png"
+  roblox: "https://img.icons8.com/color/48/roblox.png",
+  twitch: "https://img.icons8.com/color/48/twitch.png",
+  tiktok: "https://img.icons8.com/color/48/tiktok.png",
+  instagram: "https://img.icons8.com/color/48/instagram-new.png",
+
+  "Cash App": "https://img.icons8.com/color/48/cash-app.png",
+  PayPal: "https://img.icons8.com/color/48/paypal.png",
+  Crypto: "https://img.icons8.com/color/48/bitcoin--v1.png",
+
+  Bitcoin: "https://img.icons8.com/color/48/bitcoin--v1.png",
+  Ethereum: "https://img.icons8.com/color/48/ethereum.png",
+  Solana: "https://img.icons8.com/color/48/solana.png",
+  Monero: "https://img.icons8.com/color/48/monero.png"
 };
 
 /* Pricing */
@@ -215,7 +220,6 @@ const pricing = {
   instagram: {"Followers": 7/1000, "Views": 4/2500, "Likes": 4/500, "Reposts": 4/100}
 };
 
-/* Load dropdowns */
 function loadPlatforms(){
   for(let k in pricing){
     let o=document.createElement("option");
@@ -243,15 +247,21 @@ function loadExchange(){
     from.appendChild(o.cloneNode(true));
     to.appendChild(o.cloneNode(true));
   });
+
+  ["Bitcoin","Ethereum","Solana","Monero"].forEach(v=>{
+    let o=document.createElement("option");
+    o.textContent=v;
+    to.appendChild(o);
+  });
 }
 
-/* Update preview */
+/* Preview */
 function updatePreview(){
   if(mode==="services"){
     icon.src = icons[platform.value] || "";
     selectionText.innerText = `${platform.value.toUpperCase()} • ${service.value}`;
   } else {
-    icon.src = icons["bitcoin"];
+    icon.src = icons[from.value] || icons[to.value] || "";
     selectionText.innerText = `${from.value} → ${to.value}`;
   }
 }
@@ -270,7 +280,7 @@ function fee(a){
   return 0;
 }
 
-/* Animation */
+/* Animate */
 function animate(start,end){
   let startTime=null;
   function step(t){
@@ -286,6 +296,7 @@ function animate(start,end){
 /* Calc */
 function calc(){
   let amt=parseFloat(amountInput.value);
+
   if(!amt){
     mainResult.innerText="$0";
     subResult.innerText="Enter amount";
@@ -296,28 +307,34 @@ function calc(){
     let cost=amt*pricing[platform.value][service.value];
     if(cost<1) cost=1;
     animate(0,cost);
-    subResult.innerText="Service cost";
+    subResult.innerText="Service cost (no fees)";
   } else {
     let f=fee(amt);
     let r=amt-f;
     animate(0,r);
-    subResult.innerText=`Fee: $${f}`;
+    subResult.innerText=`Fee: $${f.toFixed(2)} • You send: $${amt}`;
   }
 
   updatePreview();
 }
 
-/* Events */
+/* Mode */
 servicesBtn.onclick=()=>{
   mode="services";
+  servicesBtn.classList.add("active");
+  exchangeBtn.classList.remove("active");
   servicesUI.style.display="block";
   exchangeUI.style.display="none";
+  calc();
 };
 
 exchangeBtn.onclick=()=>{
   mode="exchange";
+  exchangeBtn.classList.add("active");
+  servicesBtn.classList.remove("active");
   servicesUI.style.display="none";
   exchangeUI.style.display="block";
+  calc();
 };
 
 platform.onchange=()=>{updateServices();calc();}
