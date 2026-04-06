@@ -244,7 +244,6 @@ function updateServices(){
   }
 }
 
-/* LOAD EXCHANGE */
 function loadExchange(){
   const methods = [
     "Cash App",
@@ -260,12 +259,6 @@ function loadExchange(){
     o.textContent=v;
     from.appendChild(o.cloneNode(true));
     to.appendChild(o.cloneNode(true));
-  });
-
-  ["Bitcoin","Ethereum","Solana","Monero"].forEach(v=>{
-    let o=document.createElement("option");
-    o.textContent=v;
-    to.appendChild(o);
   });
 }
 
