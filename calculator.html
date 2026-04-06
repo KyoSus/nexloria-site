@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Calculator - Nexloria</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+
+<style>
+.container {
+  max-width: 500px;
+  margin: 100px auto;
+  padding: 20px;
+}
+
+select, input {
+  margin-top: 10px;
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: var(--accent);
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav>
+<a href="/">Home</a>
+<a href="/services.html">Services</a>
+<a href="/calculator.html">Calculator</a>
+<a href="/contact.html">Contact</a>
+</nav>
+
+<div class="container">
+<h1>Fee Calculator</h1>
+
+<label>Amount ($)</label>
+<input type="number" id="amount" placeholder="Enter amount">
+
+<div class="result" id="result">Total: $0</div>
+</div>
+
+<footer style="text-align:center; padding:40px; color:#999; border-top:1px solid rgba(255,255,255,0.05);">
+© 2026 Nexloria
+</footer>
+
+<script src="script.js"></script>
+
+<script>
+const amountInput = document.getElementById("amount");
+const result = document.getElementById("result");
+
+amountInput.addEventListener("input", () => {
+  const amt = parseFloat(amountInput.value);
+  if (!amt) {
+    result.innerText = "Total: $0";
+    return;
+  }
+
+  let fee = 0;
+
+  if (amt <= 10) fee = 1.25;
+  else if (amt <= 40) fee = 3.15;
+  else if (amt <= 70) fee = 5.00;
+  else if (amt <= 100) fee = 7.50;
+  else if (amt <= 200) fee = 12.50;
+  else if (amt <= 300) fee = 18.75;
+  else if (amt <= 500) fee = 27.50;
+  else if (amt <= 750) fee = 43.75;
+  else if (amt <= 1000) fee = 62.50;
+
+  const total = (amt + fee).toFixed(2);
+
+  result.innerText = `Fee: $${fee.toFixed(2)} | Total: $${total}`;
+});
+</script>
+
+</body>
+</html>
