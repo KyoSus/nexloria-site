@@ -37,21 +37,48 @@ select, input {
 </nav>
 
 <div class="container">
-<h1>Order Calculator</h1>
+<h1>Calculator</h1>
 
-<label>Platform</label>
-<select id="platform">
-<option value="roblox">Roblox</option>
-<option value="twitch">Twitch</option>
-<option value="tiktok">TikTok</option>
-<option value="instagram">Instagram</option>
+<label>Mode</label>
+<select id="mode">
+<option value="services">Services</option>
+<option value="exchange">Exchange</option>
 </select>
+
+<!-- SERVICES UI -->
+<div id="servicesUI">
+<label>Platform</label>
+<select id="platform"></select>
 
 <label>Service</label>
 <select id="service"></select>
+</div>
 
-<label>Amount</label>
-<input type="number" id="amount" placeholder="Enter amount (ex. 250, 5000, etc)">
+<!-- EXCHANGE UI -->
+<div id="exchangeUI" style="display:none;">
+<label>From</label>
+<select id="from">
+<option>Cash App</option>
+<option>PayPal</option>
+<option>Apple Pay</option>
+<option>Venmo</option>
+<option>Zelle</option>
+<option>Crypto</option>
+</select>
+
+<label>To</label>
+<select id="to">
+<option>Bitcoin</option>
+<option>Ethereum</option>
+<option>Solana</option>
+<option>Monero</option>
+<option>Cash App</option>
+<option>PayPal</option>
+</select>
+</div>
+
+<label>Amount ($)</label>
+<input type="number" id="amount" placeholder="Enter amount">
 
 <div class="result" id="result">
 Cost: $0 | Fee: $0 | Total: $0
@@ -65,12 +92,16 @@ Cost: $0 | Fee: $0 | Total: $0
 <script src="script.js"></script>
 
 <script>
+const mode = document.getElementById("mode");
+const servicesUI = document.getElementById("servicesUI");
+const exchangeUI = document.getElementById("exchangeUI");
+
 const platform = document.getElementById("platform");
 const service = document.getElementById("service");
 const amountInput = document.getElementById("amount");
 const result = document.getElementById("result");
 
-/* PRICING DATA */
+/* PRICING */
 const pricing = {
   roblox: {
     "Followers": 7/1000,
@@ -93,20 +124,31 @@ const pricing = {
   }
 };
 
+/* Populate platform dropdown */
+function loadPlatforms() {
+  platform.innerHTML = "";
+  for (let key in pricing) {
+    const opt = document.createElement("option");
+    opt.value = key;
+    opt.textContent = key.toUpperCase();
+    platform.appendChild(opt);
+  }
+}
+
 /* Populate services */
 function updateServices() {
   service.innerHTML = "";
   const selected = pricing[platform.value];
 
   for (let key in selected) {
-    const option = document.createElement("option");
-    option.value = key;
-    option.textContent = key;
-    service.appendChild(option);
+    const opt = document.createElement("option");
+    opt.value = key;
+    opt.textContent = key;
+    service.appendChild(opt);
   }
 }
 
-/* Fee calculation */
+/* FEES (EXCHANGE ONLY) */
 function getFee(amt) {
   if (amt <= 10) return 1.25;
   if (amt <= 40) return 3.15;
@@ -120,7 +162,7 @@ function getFee(amt) {
   return 0;
 }
 
-/* Calculate total */
+/* CALCULATE */
 function calculate() {
   const amt = parseFloat(amountInput.value);
   if (!amt || amt <= 0) {
@@ -128,19 +170,38 @@ function calculate() {
     return;
   }
 
-  const rate = pricing[platform.value][service.value];
-  let cost = amt * rate;
+  if (mode.value === "services") {
+    const rate = pricing[platform.value][service.value];
+    let cost = amt * rate;
 
-  if (cost < 1) cost = 1; // minimum order
+    if (cost < 1) cost = 1;
 
-  const fee = getFee(cost);
-  const total = (cost + fee).toFixed(2);
+    result.innerText =
+      `Cost: $${cost.toFixed(2)} | Total: $${cost.toFixed(2)}`;
+  }
 
-  result.innerText =
-    `Cost: $${cost.toFixed(2)} | Fee: $${fee.toFixed(2)} | Total: $${total}`;
+  if (mode.value === "exchange") {
+    const fee = getFee(amt);
+    const total = (amt + fee).toFixed(2);
+
+    result.innerText =
+      `You Send: $${amt.toFixed(2)} | Fee: $${fee.toFixed(2)} | They Receive: $${(amt - fee).toFixed(2)}`;
+  }
 }
 
-/* Events */
+/* MODE SWITCH */
+mode.addEventListener("change", () => {
+  if (mode.value === "services") {
+    servicesUI.style.display = "block";
+    exchangeUI.style.display = "none";
+  } else {
+    servicesUI.style.display = "none";
+    exchangeUI.style.display = "block";
+  }
+  calculate();
+});
+
+/* EVENTS */
 platform.addEventListener("change", () => {
   updateServices();
   calculate();
@@ -149,7 +210,8 @@ platform.addEventListener("change", () => {
 service.addEventListener("change", calculate);
 amountInput.addEventListener("input", calculate);
 
-/* Init */
+/* INIT */
+loadPlatforms();
 updateServices();
 </script>
 
