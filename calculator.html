@@ -20,45 +20,60 @@
   backdrop-filter: blur(12px);
 }
 
+/* Title */
 .calc-title {
   font-size: 1.6rem;
-  margin-bottom: 20px;
-  letter-spacing: 1px;
+  margin-bottom: 15px;
 }
 
+/* Selection preview */
+.selection-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(59,130,246,0.08);
+  border: 1px solid rgba(59,130,246,0.2);
+  margin-bottom: 15px;
+}
+
+.selection-preview img {
+  width: 26px;
+  height: 26px;
+}
+
+.selection-text {
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+/* Inputs */
 label {
   font-size: 0.8rem;
   color: #888;
+  margin-top: 12px;
   display: block;
-  margin-top: 15px;
 }
 
 select, input {
   width: 100%;
-  margin-top: 8px;
+  margin-top: 6px;
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.08);
   color: white;
   padding: 12px;
   border-radius: 10px;
-  font-size: 0.95rem;
 }
 
-select:focus, input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 10px rgba(59,130,246,0.3);
-}
-
-/* FIX dropdown visibility */
 select option {
   background: #0a0a0a;
   color: white;
 }
 
 .result-box {
-  margin-top: 25px;
-  padding: 18px;
+  margin-top: 20px;
+  padding: 16px;
   border-radius: 14px;
   background: rgba(59,130,246,0.08);
   border: 1px solid rgba(59,130,246,0.2);
@@ -71,9 +86,9 @@ select option {
 .result-sub {
   font-size: 0.9rem;
   color: #aaa;
-  margin-top: 5px;
 }
 
+/* Mode buttons */
 .mode {
   display: flex;
   gap: 10px;
@@ -88,7 +103,6 @@ select option {
   background: #111;
   color: #aaa;
   cursor: pointer;
-  transition: 0.2s;
 }
 
 .mode button.active {
@@ -98,6 +112,7 @@ select option {
 }
 </style>
 </head>
+
 <body>
 
 <div class="cursor" id="cursor"></div>
@@ -114,11 +129,19 @@ select option {
 
 <div class="calc-title">Calculator</div>
 
+<!-- MODE -->
 <div class="mode">
 <button id="servicesBtn" class="active">Services</button>
 <button id="exchangeBtn">Exchange</button>
 </div>
 
+<!-- PREVIEW -->
+<div class="selection-preview">
+<img id="icon" src="">
+<div class="selection-text" id="selectionText">Select options</div>
+</div>
+
+<!-- SERVICES -->
 <div id="servicesUI">
 <label>Platform</label>
 <select id="platform"></select>
@@ -127,34 +150,21 @@ select option {
 <select id="service"></select>
 </div>
 
+<!-- EXCHANGE -->
 <div id="exchangeUI" style="display:none;">
 <label>From</label>
-<select>
-<option>Cash App</option>
-<option>PayPal</option>
-<option>Apple Pay</option>
-<option>Venmo</option>
-<option>Zelle</option>
-<option>Crypto</option>
-</select>
+<select id="from"></select>
 
 <label>To</label>
-<select>
-<option>Bitcoin</option>
-<option>Ethereum</option>
-<option>Solana</option>
-<option>Monero</option>
-<option>Cash App</option>
-<option>PayPal</option>
-</select>
+<select id="to"></select>
 </div>
 
 <label>Amount</label>
-<input type="number" id="amount" placeholder="e.g. 250, 5000">
+<input type="number" id="amount">
 
 <div class="result-box">
 <div class="result-main" id="mainResult">$0</div>
-<div class="result-sub" id="subResult">Enter amount to calculate</div>
+<div class="result-sub" id="subResult">Enter amount</div>
 </div>
 
 </div>
@@ -167,6 +177,9 @@ select option {
 <script src="script.js"></script>
 
 <script>
+const icon = document.getElementById("icon");
+const selectionText = document.getElementById("selectionText");
+
 const servicesBtn = document.getElementById("servicesBtn");
 const exchangeBtn = document.getElementById("exchangeBtn");
 
@@ -175,12 +188,24 @@ const exchangeUI = document.getElementById("exchangeUI");
 
 const platform = document.getElementById("platform");
 const service = document.getElementById("service");
-const amountInput = document.getElementById("amount");
+const from = document.getElementById("from");
+const to = document.getElementById("to");
 
+const amountInput = document.getElementById("amount");
 const mainResult = document.getElementById("mainResult");
 const subResult = document.getElementById("subResult");
 
 let mode = "services";
+
+/* ICON MAP (use your own images later if you want) */
+const icons = {
+  roblox: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/roblox/roblox-original.svg",
+  twitch: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/twitch/twitch-original.svg",
+  tiktok: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/twitter/twitter-original.svg",
+  instagram: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/instagram/instagram-original.svg",
+  bitcoin: "https://cryptologos.cc/logos/bitcoin-btc-logo.png",
+  ethereum: "https://cryptologos.cc/logos/ethereum-eth-logo.png"
+};
 
 /* Pricing */
 const pricing = {
@@ -190,26 +215,48 @@ const pricing = {
   instagram: {"Followers": 7/1000, "Views": 4/2500, "Likes": 4/500, "Reposts": 4/100}
 };
 
+/* Load dropdowns */
 function loadPlatforms(){
-  for(let key in pricing){
-    let o = document.createElement("option");
-    o.value = key;
-    o.textContent = key.toUpperCase();
+  for(let k in pricing){
+    let o=document.createElement("option");
+    o.value=k;
+    o.textContent=k.toUpperCase();
     platform.appendChild(o);
   }
 }
 
 function updateServices(){
-  service.innerHTML = "";
-  let data = pricing[platform.value];
-  for(let k in data){
-    let o = document.createElement("option");
-    o.value = k;
-    o.textContent = k;
+  service.innerHTML="";
+  let d=pricing[platform.value];
+  for(let k in d){
+    let o=document.createElement("option");
+    o.value=k;
+    o.textContent=k;
     service.appendChild(o);
   }
 }
 
+function loadExchange(){
+  ["Cash App","PayPal","Crypto"].forEach(v=>{
+    let o=document.createElement("option");
+    o.textContent=v;
+    from.appendChild(o.cloneNode(true));
+    to.appendChild(o.cloneNode(true));
+  });
+}
+
+/* Update preview */
+function updatePreview(){
+  if(mode==="services"){
+    icon.src = icons[platform.value] || "";
+    selectionText.innerText = `${platform.value.toUpperCase()} • ${service.value}`;
+  } else {
+    icon.src = icons["bitcoin"];
+    selectionText.innerText = `${from.value} → ${to.value}`;
+  }
+}
+
+/* Fee */
 function fee(a){
   if(a<=10)return 1.25;
   if(a<=40)return 3.15;
@@ -224,80 +271,66 @@ function fee(a){
 }
 
 /* Animation */
-function animateValue(start, end, duration, callback) {
-  let startTime = null;
-
-  function step(timestamp) {
-    if (!startTime) startTime = timestamp;
-    const progress = Math.min((timestamp - startTime) / duration, 1);
-    const value = start + (end - start) * progress;
-
-    callback(value);
-
-    if (progress < 1) requestAnimationFrame(step);
+function animate(start,end){
+  let startTime=null;
+  function step(t){
+    if(!startTime) startTime=t;
+    let p=Math.min((t-startTime)/400,1);
+    let val=start+(end-start)*p;
+    mainResult.innerText="$"+val.toFixed(2);
+    if(p<1) requestAnimationFrame(step);
   }
-
   requestAnimationFrame(step);
 }
 
-/* Calculate */
+/* Calc */
 function calc(){
-  let amt = parseFloat(amountInput.value);
-
+  let amt=parseFloat(amountInput.value);
   if(!amt){
     mainResult.innerText="$0";
-    subResult.innerText="Enter amount to calculate";
+    subResult.innerText="Enter amount";
     return;
   }
 
   if(mode==="services"){
-    let cost = amt * pricing[platform.value][service.value];
-    if(cost < 1) cost = 1;
-
-    animateValue(0, cost, 400, (val)=>{
-      mainResult.innerText = "$" + val.toFixed(2);
-    });
-
-    subResult.innerText = "Service cost (no fees)";
+    let cost=amt*pricing[platform.value][service.value];
+    if(cost<1) cost=1;
+    animate(0,cost);
+    subResult.innerText="Service cost";
+  } else {
+    let f=fee(amt);
+    let r=amt-f;
+    animate(0,r);
+    subResult.innerText=`Fee: $${f}`;
   }
 
-  if(mode==="exchange"){
-    let f = fee(amt);
-    let receive = amt - f;
-
-    animateValue(0, receive, 400, (val)=>{
-      mainResult.innerText = "$" + val.toFixed(2);
-    });
-
-    subResult.innerText = `Fee: $${f.toFixed(2)} • You send: $${amt}`;
-  }
+  updatePreview();
 }
 
-/* Mode switching */
-servicesBtn.onclick = ()=>{
+/* Events */
+servicesBtn.onclick=()=>{
   mode="services";
-  servicesBtn.classList.add("active");
-  exchangeBtn.classList.remove("active");
   servicesUI.style.display="block";
   exchangeUI.style.display="none";
-  calc();
 };
 
-exchangeBtn.onclick = ()=>{
+exchangeBtn.onclick=()=>{
   mode="exchange";
-  exchangeBtn.classList.add("active");
-  servicesBtn.classList.remove("active");
   servicesUI.style.display="none";
   exchangeUI.style.display="block";
-  calc();
 };
 
-platform.onchange = ()=>{ updateServices(); calc(); };
-service.onchange = calc;
-amountInput.oninput = calc;
+platform.onchange=()=>{updateServices();calc();}
+service.onchange=calc;
+from.onchange=calc;
+to.onchange=calc;
+amountInput.oninput=calc;
 
+/* Init */
 loadPlatforms();
 updateServices();
+loadExchange();
+updatePreview();
 </script>
 
 </body>
