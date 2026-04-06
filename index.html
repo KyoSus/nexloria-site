@@ -4,114 +4,10 @@
 <title>Nexloria</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
-
-<style>
-body {
-  margin: 0;
-  background: #0a0a0a;
-  color: white;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-body.show {
-  opacity: 1;
-}
-
-/* Nav */
-nav {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  padding: 20px;
-  font-size: 0.9rem;
-}
-
-nav a {
-  color: #aaa;
-  text-decoration: none;
-  transition: 0.2s;
-}
-
-nav a:hover {
-  color: white;
-}
-
-/* Hero */
-.hero {
-  text-align: center;
-  padding: 120px 20px 80px;
-}
-
-.hero img {
-  width: 110px;
-  border-radius: 50%;
-  margin-bottom: 20px;
-}
-
-.hero h1 {
-  font-size: 3rem;
-  letter-spacing: 4px;
-  margin-bottom: 20px;
-}
-
-/* Buttons */
-.btn {
-  display: inline-block;
-  padding: 10px 22px;
-  border: 1px solid #222;
-  border-radius: 999px;
-  color: white;
-  text-decoration: none;
-  margin: 8px;
-  transition: 0.25s ease;
-}
-
-.btn:hover {
-  background: #111;
-  border-color: #444;
-}
-
-/* Features section */
-.section {
-  max-width: 700px;
-  margin: auto;
-  padding: 40px 20px 80px;
-}
-
-/* Styled bullet list */
-.features {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.features li {
-  position: relative;
-  padding: 14px 0 14px 28px;
-  border-bottom: 1px solid #1a1a1a;
-  color: #ccc;
-  letter-spacing: 0.3px;
-}
-
-.features li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: #666;
-}
-
-.features li:hover {
-  color: white;
-  border-color: #333;
-}
-</style>
-
 </head>
+
 <body>
 
-<!-- Cursor restored -->
 <div class="cursor" id="cursor"></div>
 
 <nav>
@@ -129,12 +25,18 @@ nav a:hover {
 </div>
 
 <div class="section">
+<h2 class="section-title">FEATURES</h2>
+
 <ul class="features">
 <li>Fast delivery</li>
 <li>Secure payments</li>
 <li>Global services</li>
 </ul>
 </div>
+
+<footer style="text-align:center; padding:40px; color:#666;">
+© 2026 Nexloria
+</footer>
 
 <script src="script.js"></script>
 
