@@ -1,9 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Contact</title>
+<title>Contact - Nexloria</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
+
+<style>
+.container {
+  max-width: 500px;
+  margin: 80px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+p {
+  color: #aaa;
+  margin-bottom: 30px;
+}
+
+/* Social cards */
+.social {
+  display: block;
+  padding: 15px;
+  margin: 12px 0;
+  border-radius: 12px;
+  text-decoration: none;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.05);
+  transition: 0.3s;
+}
+
+.social:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 20px rgba(255,255,255,0.15);
+}
+</style>
+
 </head>
 <body>
 
@@ -15,19 +52,21 @@
 <a href="/contact.html">Contact</a>
 </nav>
 
-<div style="max-width:500px;margin:80px auto;padding:20px;">
+<div class="container">
 <h1>Contact</h1>
+<p>Reach out directly through my socials</p>
 
-<form name="contact" method="POST" data-netlify="true" action="/thank-you.html">
-<input type="hidden" name="form-name" value="contact" />
-<input type="text" name="name" placeholder="Name" required>
-<input type="email" name="email" placeholder="Email" required>
-<textarea name="message" placeholder="Message" required></textarea>
-<button type="submit">Send</button>
-</form>
+<a class="social" href="https://t.me/realkyoku" target="_blank">
+📩 Telegram — @realkyoku
+</a>
+
+<a class="social" href="https://discord.com/users/799027175436058624" target="_blank">
+💬 Discord — kyoku
+</a>
 
 </div>
 
 <script src="script.js"></script>
+
 </body>
 </html>
