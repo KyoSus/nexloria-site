@@ -195,7 +195,7 @@ const subResult = document.getElementById("subResult");
 
 let mode = "services";
 
-/* ICONS (WORKING) */
+/* ICONS */
 const icons = {
   roblox: "https://img.icons8.com/color/48/roblox.png",
   twitch: "https://img.icons8.com/color/48/twitch.png",
@@ -203,8 +203,11 @@ const icons = {
   instagram: "https://img.icons8.com/color/48/instagram-new.png",
 
   "Cash App": "https://img.icons8.com/color/48/cash-app.png",
-  PayPal: "https://img.icons8.com/color/48/paypal.png",
-  Crypto: "https://img.icons8.com/color/48/bitcoin--v1.png",
+  "PayPal (F&F)": "https://img.icons8.com/color/48/paypal.png",
+  "Apple Pay": "https://img.icons8.com/color/48/apple-pay.png",
+  "Venmo": "https://img.icons8.com/color/48/venmo.png",
+  "Zelle": "https://img.icons8.com/color/48/bank.png",
+  "Crypto": "https://img.icons8.com/color/48/bitcoin--v1.png",
 
   Bitcoin: "https://img.icons8.com/color/48/bitcoin--v1.png",
   Ethereum: "https://img.icons8.com/color/48/ethereum.png",
@@ -212,7 +215,7 @@ const icons = {
   Monero: "https://img.icons8.com/color/48/monero.png"
 };
 
-/* Pricing */
+/* PRICING */
 const pricing = {
   roblox: {"Followers": 7/1000, "Group Members": 7/1000},
   twitch: {"Followers": 8/1000},
@@ -220,6 +223,7 @@ const pricing = {
   instagram: {"Followers": 7/1000, "Views": 4/2500, "Likes": 4/500, "Reposts": 4/100}
 };
 
+/* LOAD SERVICES */
 function loadPlatforms(){
   for(let k in pricing){
     let o=document.createElement("option");
@@ -240,8 +244,18 @@ function updateServices(){
   }
 }
 
+/* LOAD EXCHANGE */
 function loadExchange(){
-  ["Cash App","PayPal","Crypto"].forEach(v=>{
+  const methods = [
+    "Cash App",
+    "PayPal (F&F)",
+    "Apple Pay",
+    "Venmo",
+    "Zelle",
+    "Crypto"
+  ];
+
+  methods.forEach(v=>{
     let o=document.createElement("option");
     o.textContent=v;
     from.appendChild(o.cloneNode(true));
@@ -255,7 +269,7 @@ function loadExchange(){
   });
 }
 
-/* Preview */
+/* PREVIEW */
 function updatePreview(){
   if(mode==="services"){
     icon.src = icons[platform.value] || "";
@@ -266,7 +280,7 @@ function updatePreview(){
   }
 }
 
-/* Fee */
+/* FEES */
 function fee(a){
   if(a<=10)return 1.25;
   if(a<=40)return 3.15;
@@ -280,7 +294,7 @@ function fee(a){
   return 0;
 }
 
-/* Animate */
+/* ANIMATION */
 function animate(start,end){
   let startTime=null;
   function step(t){
@@ -293,7 +307,7 @@ function animate(start,end){
   requestAnimationFrame(step);
 }
 
-/* Calc */
+/* CALCULATE */
 function calc(){
   let amt=parseFloat(amountInput.value);
 
@@ -309,16 +323,19 @@ function calc(){
     animate(0,cost);
     subResult.innerText="Service cost (no fees)";
   } else {
-    let f=fee(amt);
-    let r=amt-f;
-    animate(0,r);
-    subResult.innerText=`Fee: $${f.toFixed(2)} • You send: $${amt}`;
+    let f = fee(amt);
+    let receive = amt - f;
+
+    animate(0, receive);
+
+    subResult.innerText =
+      `You send $${amt.toFixed(2)} • You receive $${receive.toFixed(2)} (Fee $${f.toFixed(2)})`;
   }
 
   updatePreview();
 }
 
-/* Mode */
+/* MODE SWITCH */
 servicesBtn.onclick=()=>{
   mode="services";
   servicesBtn.classList.add("active");
@@ -337,13 +354,14 @@ exchangeBtn.onclick=()=>{
   calc();
 };
 
+/* EVENTS */
 platform.onchange=()=>{updateServices();calc();}
 service.onchange=calc;
 from.onchange=calc;
 to.onchange=calc;
 amountInput.oninput=calc;
 
-/* Init */
+/* INIT */
 loadPlatforms();
 updateServices();
 loadExchange();
