@@ -1,12 +1,3 @@
-const cursor = document.getElementById('cursor');
-
-document.addEventListener('mousemove', e => {
-  if(cursor){
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-  }
-});
-
 // Fade in on load
 window.addEventListener("DOMContentLoaded", () => {
   document.body.classList.add("show");
