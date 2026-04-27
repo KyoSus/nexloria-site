@@ -21,9 +21,19 @@
   <p class="sub">Select a service and quantity to get an instant price estimate.</p>
 
   <div class="calc-box">
+
+    <!-- MODE -->
+    <div class="form-group">
+      <label>MODE</label>
+      <select id="mode">
+        <option value="service">Service</option>
+        <option value="exchange">Exchange</option>
+      </select>
+    </div>
+
     <div class="form-group">
       <label>SERVICE</label>
-      <select id="service" onchange="calculate()">
+      <select id="service">
         <option value="">— Select a service —</option>
         <optgroup label="Roblox">
           <option value="7,1000">Roblox Followers — $7 / 1,000</option>
@@ -49,7 +59,34 @@
 
     <div class="form-group">
       <label>QUANTITY</label>
-      <input type="number" id="qty" min="1" placeholder="e.g. 5000" oninput="calculate()">
+      <input type="number" id="qty" min="1" placeholder="e.g. 5000">
+    </div>
+
+    <!-- EXCHANGE -->
+    <div id="exchangeFields" style="display:none;">
+      <div class="form-group">
+        <label>YOU SEND</label>
+        <select id="from">
+          <option>Cash App</option>
+          <option>PayPal (F&F)</option>
+          <option>Apple Pay</option>
+          <option>Venmo</option>
+          <option>Zelle</option>
+          <option>Crypto</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>YOU RECEIVE</label>
+        <select id="to">
+          <option>Cash App</option>
+          <option>PayPal (F&F)</option>
+          <option>Apple Pay</option>
+          <option>Venmo</option>
+          <option>Zelle</option>
+          <option>Crypto</option>
+        </select>
+      </div>
     </div>
 
     <div class="calc-result" id="result">
@@ -76,26 +113,84 @@
 <footer>© 2026 Nexloria</footer>
 
 <script src="script.js"></script>
+
 <script>
+function fee(a){
+  if (a <= 1000) {
+    if(a<=10)return 1.25;
+    if(a<=40)return 3.15;
+    if(a<=70)return 5;
+    if(a<=100)return 7.5;
+    if(a<=200)return 12.5;
+    if(a<=300)return 18.75;
+    if(a<=500)return 27.5;
+    if(a<=750)return 43.75;
+    return 62.5;
+  }
+  return a * 0.0625;
+}
+
 function calculate() {
+  const mode = document.getElementById("mode").value;
   const svc = document.getElementById("service").value;
-  const qty = parseInt(document.getElementById("qty").value) || 0;
+  const qty = parseFloat(document.getElementById("qty").value) || 0;
+
+  const exchangeFields = document.getElementById("exchangeFields");
   const result = document.getElementById("result");
 
-  if (!svc || qty <= 0) {
-    result.classList.remove("visible");
-    return;
+  exchangeFields.style.display = mode === "exchange" ? "block" : "none";
+
+  if(mode === "service"){
+    if (!svc || qty <= 0) {
+      result.classList.remove("visible");
+      return;
+    }
+
+    const [price, per] = svc.split(",").map(Number);
+    let total = (qty / per) * price;
+
+    if (total < 1) total = 1;
+
+    document.getElementById("res-rate").textContent =
+      `$${price} / ${per.toLocaleString()}`;
+
+    document.getElementById("res-qty").textContent =
+      qty.toLocaleString();
+
+    document.getElementById("res-total").textContent =
+      `$${total.toFixed(2)}`;
+
+    result.classList.add("visible");
   }
 
-  const [price, per] = svc.split(",").map(Number);
-  const total = (qty / per) * price;
+  if(mode === "exchange"){
+    if (qty <= 0) {
+      result.classList.remove("visible");
+      return;
+    }
 
-  document.getElementById("res-rate").textContent = `$${price} / ${per.toLocaleString()}`;
-  document.getElementById("res-qty").textContent = qty.toLocaleString();
-  document.getElementById("res-total").textContent = `$${total.toFixed(2)}`;
+    const f = fee(qty);
+    const receive = qty - f;
 
-  result.classList.add("visible");
+    document.getElementById("res-rate").textContent =
+      `Fee: $${f.toFixed(2)}`;
+
+    document.getElementById("res-qty").textContent =
+      `You send $${qty.toFixed(2)}`;
+
+    document.getElementById("res-total").textContent =
+      `$${receive.toFixed(2)} received`;
+
+    result.classList.add("visible");
+  }
 }
+
+/* LIVE */
+["service","qty","mode","from","to"].forEach(id=>{
+  document.getElementById(id).addEventListener("input", calculate);
+  document.getElementById(id).addEventListener("change", calculate);
+});
 </script>
+
 </body>
 </html>
