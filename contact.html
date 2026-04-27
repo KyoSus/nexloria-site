@@ -1,71 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Contact - Nexloria</title>
+<title>Contact — Nexloria</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
-
-<style>
-.container {
-  max-width: 500px;
-  margin: 80px auto;
-  padding: 20px;
-  text-align: center;
-}
-
-h1 {
-  margin-bottom: 10px;
-}
-
-p {
-  color: #aaa;
-  margin-bottom: 30px;
-}
-
-/* Social cards */
-.social {
-  display: block;
-  padding: 15px;
-  margin: 12px 0;
-  border-radius: 12px;
-  text-decoration: none;
-  color: white;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.05);
-  transition: 0.3s;
-}
-
-.social:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 20px rgba(255,255,255,0.15);
-}
-</style>
-
 </head>
 <body>
 
 <nav>
-<a href="/">Home</a>
-<a href="/services.html">Services</a>
-<a href="/calculator.html">Calculator</a>
-<a href="/contact.html">Contact</a>
+  <a href="/" class="logo">NEXLORIA</a>
+  <a href="/">Home</a>
+  <a href="/services.html">Services</a>
+  <a href="/calculator.html">Calculator</a>
+  <a href="/contact.html">Contact</a>
 </nav>
 
-<div class="container">
-<h1>Contact</h1>
-<p>Reach out directly through my socials</p>
+<div class="contact-wrap">
+  <div class="section-label" style="margin-bottom: 12px;">Get in touch</div>
+  <h1>Contact</h1>
+  <p class="sub">Reach out directly through my socials — I'll get back to you fast.</p>
 
-<a class="social" href="https://t.me/realkyoku" target="_blank">
-📩 Telegram — @realkyoku
-</a>
+  <a class="social-card" href="https://t.me/realkyoku" target="_blank">
+    <div class="social-icon">✈️</div>
+    <div class="social-info">
+      <div class="platform">Telegram</div>
+      <div class="handle">@realkyoku</div>
+    </div>
+    <span class="social-arrow">→</span>
+  </a>
 
-<a class="social" href="https://discord.com/users/799027175436058624" target="_blank">
-💬 Discord — kyoku
-</a>
-
+  <a class="social-card" href="https://discord.com/users/799027175436058624" target="_blank">
+    <div class="social-icon">💬</div>
+    <div class="social-info">
+      <div class="platform">Discord</div>
+      <div class="handle">kyoku</div>
+    </div>
+    <span class="social-arrow">→</span>
+  </a>
 </div>
 
-<script src="script.js"></script>
+<footer>© 2026 Nexloria</footer>
 
+<script src="script.js"></script>
 </body>
 </html>
