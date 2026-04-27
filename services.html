@@ -1,165 +1,132 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Services - Nexloria</title>
+<title>Services — Nexloria</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <nav>
-<a href="/">Home</a>
-<a href="/services.html">Services</a>
-<a href="/calculator.html">Calculator</a>
-<a href="/contact.html">Contact</a>
+  <a href="/" class="logo">NEXLORIA</a>
+  <a href="/">Home</a>
+  <a href="/services.html">Services</a>
+  <a href="/calculator.html">Calculator</a>
+  <a href="/contact.html">Contact</a>
 </nav>
 
-<h1 style="text-align:center;">SERVICES</h1>
+<div class="section" style="padding-top: 120px;">
+  <div class="section-label">What we offer</div>
+  <h1 class="section-title">Services &amp; Pricing</h1>
 
-<!-- SERVICES CARDS -->
-<div style="max-width:900px;margin:auto;padding:20px;display:grid;gap:20px;">
+  <!-- PRICING -->
+  <div class="pricing-block">
+    <h3>🎮 Roblox</h3>
+    <div class="price-row"><span>1,000 Followers</span><span class="amount">$7.00</span></div>
+    <div class="price-row"><span>1,000 Group Members</span><span class="amount">$7.00</span></div>
+  </div>
 
-<div class="card">
-<h3>Roblox</h3>
-<p>Followers / Group Members</p>
+  <div class="pricing-block">
+    <h3>💜 Twitch</h3>
+    <div class="price-row"><span>1,000 Followers</span><span class="amount">$8.00</span></div>
+  </div>
+
+  <div class="pricing-block">
+    <h3>🎵 TikTok</h3>
+    <div class="price-row"><span>1,000 Followers</span><span class="amount">$7.00</span></div>
+    <div class="price-row"><span>5,000 Likes</span><span class="amount">$5.00</span></div>
+    <div class="price-row"><span>5,000 Views</span><span class="amount">$4.00</span></div>
+    <div class="price-row"><span>500 Saves</span><span class="amount">$4.00</span></div>
+  </div>
+
+  <div class="pricing-block">
+    <h3>📸 Instagram</h3>
+    <div class="price-row"><span>1,000 Followers</span><span class="amount">$7.00</span></div>
+    <div class="price-row"><span>2,500 Views</span><span class="amount">$4.00</span></div>
+    <div class="price-row"><span>500 Likes</span><span class="amount">$4.00</span></div>
+    <div class="price-row"><span>100 Reposts</span><span class="amount">$4.00</span></div>
+  </div>
 </div>
 
-<div class="card">
-<h3>Twitch</h3>
-<p>Followers</p>
+<!-- EXCHANGE FEES -->
+<div class="section" style="padding-top: 0;">
+  <div class="section-label">Currency exchange</div>
+  <h2 class="section-title">Exchange Fees</h2>
+
+  <div style="margin-bottom: 20px;">
+    <span class="badge">⚠ All fees are final &amp; non-negotiable</span>
+  </div>
+
+  <div class="fee-table">
+    <div class="fee-table-header">$1 – $100</div>
+    <div class="fee-row"><span>$1 – $10</span><span class="fee-amt">$1.25 fee</span></div>
+    <div class="fee-row"><span>$11 – $40</span><span class="fee-amt">$3.15 fee</span></div>
+    <div class="fee-row"><span>$41 – $70</span><span class="fee-amt">$5.00 fee</span></div>
+    <div class="fee-row"><span>$71 – $100</span><span class="fee-amt">$7.50 fee</span></div>
+  </div>
+
+  <div class="fee-table">
+    <div class="fee-table-header">$101 – $1,000</div>
+    <div class="fee-row"><span>$101 – $200</span><span class="fee-amt">$12.50 fee</span></div>
+    <div class="fee-row"><span>$201 – $300</span><span class="fee-amt">$18.75 fee</span></div>
+    <div class="fee-row"><span>$301 – $500</span><span class="fee-amt">$27.50 fee</span></div>
+    <div class="fee-row"><span>$501 – $750</span><span class="fee-amt">$43.75 fee</span></div>
+    <div class="fee-row"><span>$751 – $1,000</span><span class="fee-amt">$62.50 fee</span></div>
+  </div>
+
+  <div style="margin-top: 32px;">
+    <div class="section-label" style="margin-bottom: 12px;">Accepted payment methods</div>
+    <div class="pay-methods">
+      <span class="pay-method-tag">💵 Cash App</span>
+      <span class="pay-method-tag">🅿️ PayPal F&amp;F</span>
+      <span class="pay-method-tag">🍎 Apple Pay</span>
+      <span class="pay-method-tag">💙 Venmo</span>
+      <span class="pay-method-tag">🏦 Zelle</span>
+      <span class="pay-method-tag">🔗 Crypto (All Networks)</span>
+    </div>
+  </div>
 </div>
 
-<div class="card">
-<h3>TikTok</h3>
-<p>Followers / Likes / Views / Saves</p>
+<!-- PAYMENT ADDRESSES -->
+<div class="section" style="padding-top: 0;">
+  <div class="section-label">Send payment to</div>
+  <h2 class="section-title">Payment Addresses</h2>
+
+  <div class="payment-card">
+    <span class="pay-label">Cash App</span>
+    <input id="cashapp" value="$ky0ku" readonly onclick="selectText(this)">
+    <button class="copy-btn" onclick="copyText(document.getElementById('cashapp'), this)">Copy</button>
+  </div>
+
+  <div class="payment-card">
+    <span class="pay-label">Bitcoin</span>
+    <input id="btc" value="bc1ql8mrufw0t2t2acpv0cu5kwxdst267xmed6gwzd" readonly onclick="selectText(this)">
+    <button class="copy-btn" onclick="copyText(document.getElementById('btc'), this)">Copy</button>
+  </div>
+
+  <div class="payment-card">
+    <span class="pay-label">Ethereum</span>
+    <input id="eth" value="0x7952c05673119766f9c56c78c568b4d4507721f1" readonly onclick="selectText(this)">
+    <button class="copy-btn" onclick="copyText(document.getElementById('eth'), this)">Copy</button>
+  </div>
+
+  <div class="payment-card">
+    <span class="pay-label">Solana</span>
+    <input id="sol" value="9FQLcQ7gsrA5CL79ViDrFT7sD5HYfUiXvdQXZMnTnNQY" readonly onclick="selectText(this)">
+    <button class="copy-btn" onclick="copyText(document.getElementById('sol'), this)">Copy</button>
+  </div>
+
+  <div class="payment-card">
+    <span class="pay-label">Monero</span>
+    <input id="xmr" value="8A1HUrTrJZaSp4axcdu9vxZQKpZBF1ksTYYo2S6Wh7xnKji8CiZUPeggEKEUAeTsdpUdjjF29yyJJczAHi9aich5KFgvEd5" readonly onclick="selectText(this)">
+    <button class="copy-btn" onclick="copyText(document.getElementById('xmr'), this)">Copy</button>
+  </div>
 </div>
 
-<div class="card">
-<h3>Instagram</h3>
-<p>Followers / Views / Likes / Reposts</p>
-</div>
+<div id="popup">✓ Copied to clipboard</div>
 
-<div class="card">
-  <h3>Exchanges</h3>
-  <p>Fast & secure currency exchanges</p>
-</div>
-
-</div>
-
-<!-- PRICING -->
-<div class="section">
-<h2 class="section-title">PRICING</h2>
-
-<div class="card">
-
-<p><strong>Roblox</strong></p>
-<ul class="features">
-<li>$7 / 1,000 followers</li>
-<li>$7 / 1,000 group members</li>
-</ul>
-
-<p><strong>Twitch</strong></p>
-<ul class="features">
-<li>$8 / 1,000 followers</li>
-</ul>
-
-<p><strong>TikTok</strong></p>
-<ul class="features">
-<li>$7 / 1,000 followers</li>
-<li>$5 / 5,000 likes</li>
-<li>$4 / 5,000 views</li>
-<li>$4 / 500 saves</li>
-</ul>
-
-<p><strong>Instagram</strong></p>
-<ul class="features">
-<li>$7 / 1,000 followers</li>
-<li>$4 / 2,500 views</li>
-<li>$4 / 500 likes</li>
-<li>$4 / 100 reposts</li>
-</ul>
-
-</div>
-</div>
-
-<!-- FEES -->
-<div class="section">
-<h2 class="section-title">EXCHANGE</h2>
-
-<div class="card">
-<p><strong>⚠️ ALL FEES ARE FINAL & NON-NEGOTIABLE</strong></p>
-
-<hr>
-
-<p><strong>💸 $1 – $100</strong></p>
-<ul class="features">
-<li>$1 – $10 → $1.25 Fee</li>
-<li>$11 – $40 → $3.15 Fee</li>
-<li>$41 – $70 → $5.00 Fee</li>
-<li>$71 – $100 → $7.50 Fee</li>
-</ul>
-
-<p><strong>💸 $101 – $1000</strong></p>
-<ul class="features">
-<li>$101 – $200 → $12.50 Fee</li>
-<li>$201 – $300 → $18.75 Fee</li>
-<li>$301 – $500 → $27.50 Fee</li>
-<li>$501 – $750 → $43.75 Fee</li>
-<li>$751 – $1000 → $62.50 Fee</li>
-</ul>
-
-<hr>
-
-<p><strong>💳 PAYMENT METHODS</strong></p>
-<ul class="features">
-<li>Cash App</li>
-<li>PayPal (Friends & Family)</li>
-<li>Apple Pay</li>
-<li>Venmo</li>
-<li>Zelle</li>
-<li>Crypto (All Networks)</li>
-</ul>
-</div>
-</div>
-
-<!-- PAYMENTS -->
-<div style="max-width:800px;margin:60px auto;padding:20px;">
-<h2>Payments</h2>
-
-<div class="payment-card">
-Cash App
-<input value="$ky0ku" readonly onclick="selectText(this)">
-</div>
-
-<div class="payment-card">
-Bitcoin
-<input value="bc1ql8mrufw0t2t2acpv0cu5kwxdst267xmed6gwzd" readonly onclick="selectText(this)">
-</div>
-
-<div class="payment-card">
-Ethereum
-<input value="0x7952c05673119766f9c56c78c568b4d4507721f1" readonly onclick="selectText(this)">
-</div>
-
-<div class="payment-card">
-Solana
-<input value="9FQLcQ7gsrA5CL79ViDrFT7sD5HYfUiXvdQXZMnTnNQY" readonly onclick="selectText(this)">
-</div>
-
-<div class="payment-card">
-Monero
-<input value="8A1HUrTrJZaSp4axcdu9vxZQKpZBF1ksTYYo2S6Wh7xnKji8CiZUPeggEKEUAeTsdpUdjjF29yyJJczAHi9aich5KFgvEd5" readonly onclick="selectText(this)">
-</div>
-
-</div>
-
-<div id="popup">Selected — Press Ctrl+C</div>
-
-<footer style="text-align:center; padding:40px; color:#999; border-top:1px solid rgba(255,255,255,0.05);">
-© 2026 Nexloria
-</footer>
+<footer>© 2026 Nexloria</footer>
 
 <script src="script.js"></script>
-
 </body>
 </html>
