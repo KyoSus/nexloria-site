@@ -1,363 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Calculator - Nexloria</title>
+<title>Calculator — Nexloria</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
-
-<style>
-.wrapper {
-  max-width: 520px;
-  margin: 120px auto;
-  padding: 20px;
-}
-
-.calc-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(59,130,246,0.15);
-  border-radius: 20px;
-  padding: 30px;
-  backdrop-filter: blur(12px);
-}
-
-.calc-title {
-  font-size: 1.6rem;
-  margin-bottom: 15px;
-}
-
-/* Selection preview */
-.selection-preview {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
-  border-radius: 12px;
-  background: rgba(59,130,246,0.08);
-  border: 1px solid rgba(59,130,246,0.2);
-  margin-bottom: 15px;
-}
-
-.selection-preview img {
-  width: 28px;
-  height: 28px;
-}
-
-.selection-text {
-  font-size: 0.9rem;
-  color: #ccc;
-}
-
-/* Inputs */
-label {
-  font-size: 0.8rem;
-  color: #888;
-  margin-top: 12px;
-  display: block;
-}
-
-select, input {
-  width: 100%;
-  margin-top: 6px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-  color: white;
-  padding: 12px;
-  border-radius: 10px;
-}
-
-select option {
-  background: #0a0a0a;
-  color: white;
-}
-
-/* Result */
-.result-box {
-  margin-top: 20px;
-  padding: 16px;
-  border-radius: 14px;
-  background: rgba(59,130,246,0.08);
-  border: 1px solid rgba(59,130,246,0.2);
-}
-
-.result-main {
-  font-size: 1.4rem;
-}
-
-.result-sub {
-  font-size: 0.9rem;
-  color: #aaa;
-}
-
-/* Mode buttons */
-.mode {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.mode button {
-  flex: 1;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #222;
-  background: #111;
-  color: #aaa;
-  cursor: pointer;
-}
-
-.mode button.active {
-  border-color: var(--accent);
-  color: white;
-  box-shadow: 0 0 10px rgba(59,130,246,0.4);
-}
-</style>
 </head>
-
 <body>
 
 <nav>
-<a href="/">Home</a>
-<a href="/services.html">Services</a>
-<a href="/calculator.html">Calculator</a>
-<a href="/contact.html">Contact</a>
+  <a href="/" class="logo">NEXLORIA</a>
+  <a href="/">Home</a>
+  <a href="/services.html">Services</a>
+  <a href="/calculator.html">Calculator</a>
+  <a href="/contact.html">Contact</a>
 </nav>
 
-<div class="wrapper">
-<div class="calc-card">
+<div class="calc-wrap">
+  <div class="section-label" style="margin-bottom: 10px;">Estimate your order</div>
+  <h1>Price Calculator</h1>
+  <p class="sub">Select a service and quantity to get an instant price estimate.</p>
 
-<div class="calc-title">Calculator</div>
+  <div class="calc-box">
+    <div class="form-group">
+      <label>SERVICE</label>
+      <select id="service" onchange="calculate()">
+        <option value="">— Select a service —</option>
+        <optgroup label="Roblox">
+          <option value="7,1000">Roblox Followers — $7 / 1,000</option>
+          <option value="7,1000">Roblox Group Members — $7 / 1,000</option>
+        </optgroup>
+        <optgroup label="Twitch">
+          <option value="8,1000">Twitch Followers — $8 / 1,000</option>
+        </optgroup>
+        <optgroup label="TikTok">
+          <option value="7,1000">TikTok Followers — $7 / 1,000</option>
+          <option value="5,5000">TikTok Likes — $5 / 5,000</option>
+          <option value="4,5000">TikTok Views — $4 / 5,000</option>
+          <option value="4,500">TikTok Saves — $4 / 500</option>
+        </optgroup>
+        <optgroup label="Instagram">
+          <option value="7,1000">Instagram Followers — $7 / 1,000</option>
+          <option value="4,2500">Instagram Views — $4 / 2,500</option>
+          <option value="4,500">Instagram Likes — $4 / 500</option>
+          <option value="4,100">Instagram Reposts — $4 / 100</option>
+        </optgroup>
+      </select>
+    </div>
 
-<div class="mode">
-<button id="servicesBtn" class="active">Services</button>
-<button id="exchangeBtn">Exchange</button>
+    <div class="form-group">
+      <label>QUANTITY</label>
+      <input type="number" id="qty" min="1" placeholder="e.g. 5000" oninput="calculate()">
+    </div>
+
+    <div class="calc-result" id="result">
+      <div class="result-row">
+        <span>Unit rate</span>
+        <span id="res-rate">—</span>
+      </div>
+      <div class="result-row">
+        <span>Quantity</span>
+        <span id="res-qty">—</span>
+      </div>
+      <div class="result-row total">
+        <span>Estimated total</span>
+        <span id="res-total">—</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="color: var(--muted); font-size: 0.8rem; margin-top: 16px; text-align: center;">
+    Estimates only. Contact via <a href="/contact.html" style="color: var(--accent); text-decoration: none;">Telegram or Discord</a> to place an order.
+  </p>
 </div>
 
-<div class="selection-preview">
-<img id="icon" src="">
-<div class="selection-text" id="selectionText">Select options</div>
-</div>
-
-<!-- SERVICES -->
-<div id="servicesUI">
-<label>Platform</label>
-<select id="platform"></select>
-
-<label>Service</label>
-<select id="service"></select>
-</div>
-
-<!-- EXCHANGE -->
-<div id="exchangeUI" style="display:none;">
-<label>From</label>
-<select id="from"></select>
-
-<label>To</label>
-<select id="to"></select>
-</div>
-
-<label>Amount</label>
-<input type="number" id="amount" placeholder="e.g. 250, 5000">
-
-<div class="result-box">
-<div class="result-main" id="mainResult">$0</div>
-<div class="result-sub" id="subResult">Enter amount</div>
-</div>
-
-</div>
-</div>
-
-<footer style="text-align:center; padding:40px; color:#999; border-top:1px solid rgba(255,255,255,0.05);">
-© 2026 Nexloria
-</footer>
+<footer>© 2026 Nexloria</footer>
 
 <script src="script.js"></script>
-
 <script>
-const icon = document.getElementById("icon");
-const selectionText = document.getElementById("selectionText");
+function calculate() {
+  const svc = document.getElementById("service").value;
+  const qty = parseInt(document.getElementById("qty").value) || 0;
+  const result = document.getElementById("result");
 
-const servicesBtn = document.getElementById("servicesBtn");
-const exchangeBtn = document.getElementById("exchangeBtn");
-
-const servicesUI = document.getElementById("servicesUI");
-const exchangeUI = document.getElementById("exchangeUI");
-
-const platform = document.getElementById("platform");
-const service = document.getElementById("service");
-const from = document.getElementById("from");
-const to = document.getElementById("to");
-
-const amountInput = document.getElementById("amount");
-const mainResult = document.getElementById("mainResult");
-const subResult = document.getElementById("subResult");
-
-let mode = "services";
-
-/* ICONS */
-const icons = {
-  roblox: "https://img.icons8.com/color/48/roblox.png",
-  twitch: "https://img.icons8.com/color/48/twitch.png",
-  tiktok: "https://img.icons8.com/color/48/tiktok.png",
-  instagram: "https://img.icons8.com/color/48/instagram-new.png",
-
-  "Cash App": "https://img.icons8.com/color/48/cash-app.png",
-  "PayPal (F&F)": "https://img.icons8.com/color/48/paypal.png",
-  "Apple Pay": "https://img.icons8.com/color/48/apple-pay.png",
-  "Venmo": "https://img.icons8.com/color/48/venmo.png",
-  "Zelle": "https://img.icons8.com/color/48/bank.png",
-  "Crypto": "https://img.icons8.com/color/48/bitcoin--v1.png",
-
-  Bitcoin: "https://img.icons8.com/color/48/bitcoin--v1.png",
-  Ethereum: "https://img.icons8.com/color/48/ethereum.png",
-  Solana: "https://img.icons8.com/color/48/solana.png",
-  Monero: "https://img.icons8.com/color/48/monero.png"
-};
-
-/* PRICING */
-const pricing = {
-  roblox: {"Followers": 7/1000, "Group Members": 7/1000},
-  twitch: {"Followers": 8/1000},
-  tiktok: {"Followers": 7/1000, "Likes": 5/5000, "Views": 4/5000, "Saves": 4/500},
-  instagram: {"Followers": 7/1000, "Views": 4/2500, "Likes": 4/500, "Reposts": 4/100}
-};
-
-/* LOAD SERVICES */
-function loadPlatforms(){
-  for(let k in pricing){
-    let o=document.createElement("option");
-    o.value=k;
-    o.textContent=k.toUpperCase();
-    platform.appendChild(o);
-  }
-}
-
-function updateServices(){
-  service.innerHTML="";
-  let d=pricing[platform.value];
-  for(let k in d){
-    let o=document.createElement("option");
-    o.value=k;
-    o.textContent=k;
-    service.appendChild(o);
-  }
-}
-
-function loadExchange(){
-  const methods = [
-    "Cash App",
-    "PayPal (F&F)",
-    "Apple Pay",
-    "Venmo",
-    "Zelle",
-    "Crypto"
-  ];
-
-  methods.forEach(v=>{
-    let o=document.createElement("option");
-    o.textContent=v;
-    from.appendChild(o.cloneNode(true));
-    to.appendChild(o.cloneNode(true));
-  });
-}
-
-/* PREVIEW */
-function updatePreview(){
-  if(mode==="services"){
-    icon.src = icons[platform.value] || "";
-    selectionText.innerText = `${platform.value.toUpperCase()} • ${service.value}`;
-  } else {
-    icon.src = icons[from.value] || icons[to.value] || "";
-    selectionText.innerText = `${from.value} → ${to.value}`;
-  }
-}
-
-/* FEES */
-function fee(a){
-  if(a<=10)return 1.25;
-  if(a<=40)return 3.15;
-  if(a<=70)return 5;
-  if(a<=100)return 7.5;
-  if(a<=200)return 12.5;
-  if(a<=300)return 18.75;
-  if(a<=500)return 27.5;
-  if(a<=750)return 43.75;
-  if(a<=1000)return 62.5;
-  return 0;
-}
-
-/* ANIMATION */
-function animate(start,end){
-  let startTime=null;
-  function step(t){
-    if(!startTime) startTime=t;
-    let p=Math.min((t-startTime)/400,1);
-    let val=start+(end-start)*p;
-    mainResult.innerText="$"+val.toFixed(2);
-    if(p<1) requestAnimationFrame(step);
-  }
-  requestAnimationFrame(step);
-}
-
-/* CALCULATE */
-function calc(){
-  let amt=parseFloat(amountInput.value);
-
-  if(!amt){
-    mainResult.innerText="$0";
-    subResult.innerText="Enter amount";
+  if (!svc || qty <= 0) {
+    result.classList.remove("visible");
     return;
   }
 
-  if(mode==="services"){
-    let cost=amt*pricing[platform.value][service.value];
-    if(cost<1) cost=1;
-    animate(0,cost);
-    subResult.innerText="Service cost (no fees)";
-  } else {
-    let f = fee(amt);
-    let receive = amt - f;
+  const [price, per] = svc.split(",").map(Number);
+  const total = (qty / per) * price;
 
-    animate(0, receive);
+  document.getElementById("res-rate").textContent = `$${price} / ${per.toLocaleString()}`;
+  document.getElementById("res-qty").textContent = qty.toLocaleString();
+  document.getElementById("res-total").textContent = `$${total.toFixed(2)}`;
 
-    subResult.innerText =
-      `You send $${amt.toFixed(2)} • You receive $${receive.toFixed(2)} (Fee $${f.toFixed(2)})`;
-  }
-
-  updatePreview();
+  result.classList.add("visible");
 }
-
-/* MODE SWITCH */
-servicesBtn.onclick=()=>{
-  mode="services";
-  servicesBtn.classList.add("active");
-  exchangeBtn.classList.remove("active");
-  servicesUI.style.display="block";
-  exchangeUI.style.display="none";
-  calc();
-};
-
-exchangeBtn.onclick=()=>{
-  mode="exchange";
-  exchangeBtn.classList.add("active");
-  servicesBtn.classList.remove("active");
-  servicesUI.style.display="none";
-  exchangeUI.style.display="block";
-  calc();
-};
-
-/* EVENTS */
-platform.onchange=()=>{updateServices();calc();}
-service.onchange=calc;
-from.onchange=calc;
-to.onchange=calc;
-amountInput.oninput=calc;
-
-/* INIT */
-loadPlatforms();
-updateServices();
-loadExchange();
-updatePreview();
 </script>
-
 </body>
 </html>
