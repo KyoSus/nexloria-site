@@ -25,7 +25,7 @@
     <!-- MODE -->
     <div class="form-group">
       <label>MODE</label>
-      <select id="mode">
+      <select id="mode" onchange="calculate()">
         <option value="service">Service</option>
         <option value="exchange">Exchange</option>
       </select>
@@ -34,7 +34,7 @@
     <!-- SERVICE -->
     <div class="form-group" id="serviceField">
       <label>SERVICE</label>
-      <select id="service">
+      <select id="service" onchange="calculate()">
         <option value="">— Select a service —</option>
         <optgroup label="Roblox">
           <option value="7,1000">Roblox Followers — $7 / 1,000</option>
@@ -61,14 +61,14 @@
     <!-- QUANTITY -->
     <div class="form-group">
       <label>AMOUNT</label>
-      <input type="number" id="qty" min="1" placeholder="e.g. 5000">
+      <input type="number" id="qty" min="1" placeholder="e.g. 5000" oninput="calculate()">
     </div>
 
     <!-- EXCHANGE -->
     <div id="exchangeFields" style="display:none;">
       <div class="form-group">
         <label>YOU SEND</label>
-        <select id="from">
+        <select id="from" onchange="calculate()">
           <option>Cash App</option>
           <option>PayPal (F&F)</option>
           <option>Apple Pay</option>
@@ -80,7 +80,7 @@
 
       <div class="form-group">
         <label>YOU RECEIVE</label>
-        <select id="to">
+        <select id="to" onchange="calculate()">
           <option>Cash App</option>
           <option>PayPal (F&F)</option>
           <option>Apple Pay</option>
@@ -191,16 +191,6 @@ function calculate() {
     result.classList.add("visible");
   }
 }
-
-/* SAFE LIVE */
-["service","qty","mode","from","to"].forEach(id=>{
-  const el = document.getElementById(id);
-  if(!el) return;
-  el.addEventListener("input", calculate);
-  el.addEventListener("change", calculate);
-});
-
-window.addEventListener("DOMContentLoaded", calculate);
 </script>
 
 </body>
