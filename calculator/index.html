@@ -1,8 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Calculator — Nexloria</title>
+<title>Price Calculator | Nexloria</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Estimate service and exchange totals instantly with the Nexloria calculator, then contact support with your quote.">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="Price Calculator | Nexloria">
+<meta property="og:description" content="Get instant quote estimates for service and exchange orders.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nexloria.com/calculator/">
+<meta property="og:image" content="https://nexloria.com/cat.png">
+<link rel="canonical" href="https://nexloria.com/calculator/">
+<link rel="icon" type="image/png" href="/cat.png">
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -106,6 +115,10 @@
         <span id="res-total">—</span>
       </div>
     </div>
+    <div class="calc-actions" id="quoteActions">
+      <button type="button" class="btn btn-secondary" id="copyQuoteBtn">Copy Quote</button>
+      <a href="https://t.me/realkyoku" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Send Quote on Telegram</a>
+    </div>
 
   </div>
 
@@ -113,6 +126,8 @@
     Estimates only. Contact via <a href="/contact/" style="color: var(--accent); text-decoration: none;">Telegram or Discord</a>.
   </p>
 </div>
+
+<a class="mobile-cta" href="https://t.me/realkyoku" target="_blank" rel="noopener noreferrer">Order on Telegram</a>
 
 <footer>© 2026 Nexloria</footer>
 
@@ -143,6 +158,8 @@ const icons = {
   "Crypto": "🔗"
 };
 
+let currentQuoteText = "";
+
 function calculate() {
   const mode = document.getElementById("mode").value;
   const svc = document.getElementById("service").value;
@@ -161,6 +178,8 @@ function calculate() {
   if(mode === "service"){
     if (!svc || qty <= 0) {
       result.classList.remove("visible");
+      document.getElementById("quoteActions").classList.remove("visible");
+      currentQuoteText = "";
       return;
     }
 
@@ -171,13 +190,18 @@ function calculate() {
     document.getElementById("res-rate").textContent = `$${price} / ${per.toLocaleString()}`;
     document.getElementById("res-qty").textContent = qty.toLocaleString();
     document.getElementById("res-total").textContent = `$${total.toFixed(2)}`;
+    const serviceLabel = document.getElementById("service").selectedOptions[0].textContent.split(" — ")[0];
+    currentQuoteText = `Quote request: ${serviceLabel}, amount ${qty.toLocaleString()}, estimated total $${total.toFixed(2)}.`;
 
     result.classList.add("visible");
+    document.getElementById("quoteActions").classList.add("visible");
   }
 
   if(mode === "exchange"){
     if (qty <= 0) {
       result.classList.remove("visible");
+      document.getElementById("quoteActions").classList.remove("visible");
+      currentQuoteText = "";
       return;
     }
 
@@ -187,10 +211,24 @@ function calculate() {
     document.getElementById("res-rate").textContent = `Fee: $${f.toFixed(2)}`;
     document.getElementById("res-qty").textContent = `${icons[from] || ""} You send $${qty.toFixed(2)}`;
     document.getElementById("res-total").textContent = `${icons[to] || ""} $${receive.toFixed(2)} received`;
+    currentQuoteText = `Exchange quote request: send ${from} $${qty.toFixed(2)}, receive ${to} $${receive.toFixed(2)} (fee $${f.toFixed(2)}).`;
 
     result.classList.add("visible");
+    document.getElementById("quoteActions").classList.add("visible");
   }
 }
+
+document.getElementById("copyQuoteBtn").addEventListener("click", () => {
+  if (!currentQuoteText) return;
+  navigator.clipboard.writeText(currentQuoteText).then(() => {
+    const btn = document.getElementById("copyQuoteBtn");
+    const original = btn.textContent;
+    btn.textContent = "Quote Copied";
+    setTimeout(() => {
+      btn.textContent = original;
+    }, 1200);
+  });
+});
 </script>
 
 </body>
