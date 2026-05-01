@@ -29,7 +29,7 @@
 <div class="order-wrap" id="main-content" tabindex="-1">
   <div class="section-label" style="margin-bottom: 10px;">Checkout</div>
   <h1>Order Form + Payment Flow</h1>
-  <p class="sub">Submit your order details, choose a payment method, and receive an instant order reference.</p>
+  <p class="sub">Submit your order details, choose a payment method, and receive an instant order reference. Service and exchange fields update automatically.</p>
 
   <form id="orderForm" class="order-box">
     <div class="order-grid">
@@ -56,33 +56,84 @@
         <select id="paymentMethod" name="paymentMethod" required>
           <option value="">Select payment method</option>
           <option value="Cash App">Cash App</option>
+          <option value="PayPal F&F">PayPal F&F</option>
+          <option value="Apple Pay">Apple Pay</option>
+          <option value="Venmo">Venmo</option>
+          <option value="Zelle">Zelle</option>
           <option value="Bitcoin">Bitcoin</option>
           <option value="Ethereum">Ethereum</option>
           <option value="Solana">Solana</option>
           <option value="Monero">Monero</option>
+          <option value="Litecoin">Litecoin</option>
+          <option value="USDT (TRC20)">USDT (TRC20)</option>
+          <option value="USDT (ERC20)">USDT (ERC20)</option>
+          <option value="BNB (BEP20)">BNB (BEP20)</option>
+          <option value="TRX">TRX</option>
         </select>
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="serviceName">SERVICE OR EXCHANGE DETAILS</label>
-      <input id="serviceName" name="serviceName" type="text" required placeholder="Example: TikTok Followers">
+    <div id="serviceFields">
+      <div class="form-group">
+        <label for="serviceName">SERVICE</label>
+        <input id="serviceName" name="serviceName" type="text" required placeholder="Example: TikTok Followers">
+      </div>
+      <div class="order-grid">
+        <div class="form-group">
+          <label for="quantity">QUANTITY</label>
+          <input id="quantity" name="quantity" type="text" required placeholder="Example: 5000">
+        </div>
+        <div class="form-group">
+          <label for="targetLink">TARGET LINK / USERNAME</label>
+          <input id="targetLink" name="targetLink" type="text" required placeholder="Profile URL or username">
+        </div>
+      </div>
     </div>
 
-    <div class="order-grid">
-      <div class="form-group">
-        <label for="quantity">QUANTITY OR SEND AMOUNT</label>
-        <input id="quantity" name="quantity" type="text" required placeholder="Example: 5000 or $150">
+    <div id="exchangeFields">
+      <div class="order-grid">
+        <div class="form-group">
+          <label for="exchangeFrom">YOU SEND</label>
+          <select id="exchangeFrom" name="exchangeFrom">
+            <option value="">Select send method</option>
+            <option value="Cash App">Cash App</option>
+            <option value="PayPal F&F">PayPal F&F</option>
+            <option value="Apple Pay">Apple Pay</option>
+            <option value="Venmo">Venmo</option>
+            <option value="Zelle">Zelle</option>
+            <option value="Crypto">Crypto</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="exchangeTo">YOU RECEIVE</label>
+          <select id="exchangeTo" name="exchangeTo">
+            <option value="">Select receive method</option>
+            <option value="Cash App">Cash App</option>
+            <option value="PayPal F&F">PayPal F&F</option>
+            <option value="Apple Pay">Apple Pay</option>
+            <option value="Venmo">Venmo</option>
+            <option value="Zelle">Zelle</option>
+            <option value="Crypto">Crypto</option>
+          </select>
+        </div>
       </div>
       <div class="form-group">
-        <label for="estimatedTotal">ESTIMATED TOTAL</label>
-        <input id="estimatedTotal" name="estimatedTotal" type="text" required placeholder="Example: $35.00">
+        <label for="exchangeAmount">SEND AMOUNT (USD)</label>
+        <input id="exchangeAmount" name="exchangeAmount" type="text" placeholder="Example: 150">
+      </div>
+      <div class="form-group">
+        <label for="serviceNameExchange">EXCHANGE DETAILS</label>
+        <input id="serviceNameExchange" name="serviceNameExchange" type="text" placeholder="Example: Cash App to BTC">
+      </div>
+      <div class="form-group">
+        <label for="targetLinkExchange">RECEIVING WALLET / ACCOUNT</label>
+        <input id="targetLinkExchange" name="targetLinkExchange" type="text" placeholder="Wallet address or receiving account">
       </div>
     </div>
 
     <div class="form-group">
-      <label for="targetLink">TARGET LINK / USERNAME</label>
-      <input id="targetLink" name="targetLink" type="text" required placeholder="Profile URL or username">
+      <label for="estimatedTotal">ESTIMATED TOTAL</label>
+      <input id="estimatedTotal" name="estimatedTotal" type="text" required placeholder="Example: $35.00">
     </div>
 
     <div class="form-group">
@@ -120,11 +171,23 @@
 <script>
 const paymentAddresses = {
   "Cash App": "$ky0ku",
+  "PayPal F&F": "paypal-email@example.com",
+  "Apple Pay": "apple-pay-contact",
+  "Venmo": "@venmo-handle",
+  "Zelle": "zelle-email-or-number",
   "Bitcoin": "bc1ql8mrufw0t2t2acpv0cu5kwxdst267xmed6gwzd",
   "Ethereum": "0x7952c05673119766f9c56c78c568b4d4507721f1",
   "Solana": "9FQLcQ7gsrA5CL79ViDrFT7sD5HYfUiXvdQXZMnTnNQY",
-  "Monero": "8A1HUrTrJZaSp4axcdu9vxZQKpZBF1ksTYYo2S6Wh7xnKji8CiZUPeggEKEUAeTsdpUdjjF29yyJJczAHi9aich5KFgvEd5"
+  "Monero": "8A1HUrTrJZaSp4axcdu9vxZQKpZBF1ksTYYo2S6Wh7xnKji8CiZUPeggEKEUAeTsdpUdjjF29yyJJczAHi9aich5KFgvEd5",
+  "Litecoin": "litecoin-wallet-address",
+  "USDT (TRC20)": "trc20-wallet-address",
+  "USDT (ERC20)": "erc20-wallet-address",
+  "BNB (BEP20)": "bep20-wallet-address",
+  "TRX": "trx-wallet-address"
 };
+
+const ORDER_EMAIL = "orders@nexloria.com";
+const FORMSUBMIT_ENDPOINT = `https://formsubmit.co/ajax/${ORDER_EMAIL}`;
 
 function hydrateOrderFromQuote() {
   const params = new URLSearchParams(window.location.search);
@@ -145,19 +208,55 @@ function hydrateOrderFromQuote() {
   if (source.service) document.getElementById("serviceName").value = source.service;
   if (source.quantity || source.sendAmount) document.getElementById("quantity").value = source.quantity || `$${source.sendAmount}`;
   if (source.total) document.getElementById("estimatedTotal").value = `$${source.total}`;
+  if (source.mode === "exchange") {
+    if (source.sendMethod) document.getElementById("exchangeFrom").value = source.sendMethod;
+    if (source.receiveMethod) document.getElementById("exchangeTo").value = source.receiveMethod;
+    if (source.sendAmount) document.getElementById("exchangeAmount").value = source.sendAmount;
+    document.getElementById("serviceNameExchange").value = `${source.sendMethod || ""} to ${source.receiveMethod || ""}`.trim();
+  }
   if (source.summary) document.getElementById("notes").value = source.summary;
 }
 
+function setModeFields() {
+  const mode = document.getElementById("orderMode").value;
+  const serviceBox = document.getElementById("serviceFields");
+  const exchangeBox = document.getElementById("exchangeFields");
+  const serviceRequired = ["serviceName", "quantity", "targetLink"];
+  const exchangeRequired = ["exchangeFrom", "exchangeTo", "exchangeAmount", "serviceNameExchange", "targetLinkExchange"];
+
+  serviceBox.style.display = mode === "service" ? "block" : "none";
+  exchangeBox.style.display = mode === "exchange" ? "block" : "none";
+
+  serviceRequired.forEach((id) => {
+    document.getElementById(id).required = mode === "service";
+  });
+  exchangeRequired.forEach((id) => {
+    document.getElementById(id).required = mode === "exchange";
+  });
+}
+
 function getOrderSummary(formData, orderId) {
+  const details = formData.orderMode === "exchange"
+    ? (formData.serviceNameExchange || `${formData.exchangeFrom} to ${formData.exchangeTo}`)
+    : formData.serviceName;
+  const qtyOrAmount = formData.orderMode === "exchange"
+    ? `$${formData.exchangeAmount}`
+    : formData.quantity;
+  const target = formData.orderMode === "exchange"
+    ? formData.targetLinkExchange
+    : formData.targetLink;
+
   return [
     `Order ID: ${orderId}`,
     `Name: ${formData.customerName}`,
     `Email: ${formData.customerEmail}`,
     `Type: ${formData.orderMode}`,
-    `Service/Details: ${formData.serviceName}`,
-    `Quantity: ${formData.quantity}`,
+    `Service/Details: ${details}`,
+    `Quantity/Amount: ${qtyOrAmount}`,
     `Estimated Total: ${formData.estimatedTotal}`,
-    `Target: ${formData.targetLink}`,
+    `Target: ${target}`,
+    `Exchange From: ${formData.exchangeFrom || "N/A"}`,
+    `Exchange To: ${formData.exchangeTo || "N/A"}`,
     `Payment Method: ${formData.paymentMethod}`,
     `Payment Ref: ${formData.txRef || "Pending"}`,
     `Notes: ${formData.notes || "None"}`
@@ -175,8 +274,10 @@ function refreshPaymentNotice() {
 }
 
 hydrateOrderFromQuote();
+setModeFields();
 refreshPaymentNotice();
 document.getElementById("paymentMethod").addEventListener("change", refreshPaymentNotice);
+document.getElementById("orderMode").addEventListener("change", setModeFields);
 
 document.getElementById("copyOrderBtn").addEventListener("click", async () => {
   const form = new FormData(document.getElementById("orderForm"));
@@ -191,7 +292,7 @@ document.getElementById("copyOrderBtn").addEventListener("click", async () => {
   }, 1200);
 });
 
-document.getElementById("orderForm").addEventListener("submit", (event) => {
+document.getElementById("orderForm").addEventListener("submit", async (event) => {
   event.preventDefault();
   const form = new FormData(event.currentTarget);
   const data = Object.fromEntries(form.entries());
@@ -202,11 +303,33 @@ document.getElementById("orderForm").addEventListener("submit", (event) => {
 
   const success = document.getElementById("orderSuccess");
   success.classList.add("visible");
-  success.textContent = `Order placed successfully. Your reference is ${orderId}. Keep this ID for support and payment verification.`;
+  success.textContent = `Submitting order ${orderId}...`;
 
-  const subject = encodeURIComponent(`New Nexloria Order ${orderId}`);
-  const body = encodeURIComponent(summary);
-  window.location.href = `mailto:orders@nexloria.com?subject=${subject}&body=${body}`;
+  const submitPayload = new FormData();
+  submitPayload.append("_subject", `New Nexloria Order ${orderId}`);
+  submitPayload.append("order_reference", orderId);
+  submitPayload.append("order_summary", summary);
+  submitPayload.append("customer_name", data.customerName);
+  submitPayload.append("customer_email", data.customerEmail);
+  submitPayload.append("_captcha", "false");
+  submitPayload.append("_template", "table");
+
+  try {
+    const response = await fetch(FORMSUBMIT_ENDPOINT, {
+      method: "POST",
+      body: submitPayload,
+      headers: {
+        Accept: "application/json"
+      }
+    });
+    if (!response.ok) throw new Error("email-provider-failed");
+    success.textContent = `Order placed successfully. Your reference is ${orderId}. A confirmation email was sent to ${ORDER_EMAIL}.`;
+  } catch (error) {
+    success.textContent = `Order placed as ${orderId}, but auto-email failed. Opening backup email draft now.`;
+    const subject = encodeURIComponent(`New Nexloria Order ${orderId}`);
+    const body = encodeURIComponent(summary);
+    window.location.href = `mailto:${ORDER_EMAIL}?subject=${subject}&body=${body}`;
+  }
 });
 </script>
 </body>
