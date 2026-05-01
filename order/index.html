@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Order Checkout | Nexloria</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Complete your Nexloria order checkout with service details, payment method selection, and instant order confirmation.">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#080a0f">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://nexloria.com/order/">
+<link rel="icon" type="image/png" href="/cat.png">
+<link rel="apple-touch-icon" href="/cat.png">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<nav aria-label="Primary">
+  <a href="/" class="logo">NEXLORIA</a>
+  <a href="/">Home</a>
+  <a href="/services/">Services</a>
+  <a href="/calculator/">Calculator</a>
+  <a href="/how-it-works/">How It Works</a>
+  <a href="/order/">Order</a>
+  <a href="/contact/">Contact</a>
+</nav>
+
+<div class="order-wrap" id="main-content" tabindex="-1">
+  <div class="section-label" style="margin-bottom: 10px;">Checkout</div>
+  <h1>Order Form + Payment Flow</h1>
+  <p class="sub">Submit your order details, choose a payment method, and receive an instant order reference.</p>
+
+  <form id="orderForm" class="order-box">
+    <div class="order-grid">
+      <div class="form-group">
+        <label for="customerName">YOUR NAME</label>
+        <input id="customerName" name="customerName" type="text" required placeholder="Full name">
+      </div>
+      <div class="form-group">
+        <label for="customerEmail">EMAIL</label>
+        <input id="customerEmail" name="customerEmail" type="email" required placeholder="you@example.com">
+      </div>
+    </div>
+
+    <div class="order-grid">
+      <div class="form-group">
+        <label for="orderMode">ORDER TYPE</label>
+        <select id="orderMode" name="orderMode" required>
+          <option value="service">Service Order</option>
+          <option value="exchange">Exchange Order</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="paymentMethod">PAYMENT METHOD</label>
+        <select id="paymentMethod" name="paymentMethod" required>
+          <option value="">Select payment method</option>
+          <option value="Cash App">Cash App</option>
+          <option value="Bitcoin">Bitcoin</option>
+          <option value="Ethereum">Ethereum</option>
+          <option value="Solana">Solana</option>
+          <option value="Monero">Monero</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="serviceName">SERVICE OR EXCHANGE DETAILS</label>
+      <input id="serviceName" name="serviceName" type="text" required placeholder="Example: TikTok Followers">
+    </div>
+
+    <div class="order-grid">
+      <div class="form-group">
+        <label for="quantity">QUANTITY OR SEND AMOUNT</label>
+        <input id="quantity" name="quantity" type="text" required placeholder="Example: 5000 or $150">
+      </div>
+      <div class="form-group">
+        <label for="estimatedTotal">ESTIMATED TOTAL</label>
+        <input id="estimatedTotal" name="estimatedTotal" type="text" required placeholder="Example: $35.00">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="targetLink">TARGET LINK / USERNAME</label>
+      <input id="targetLink" name="targetLink" type="text" required placeholder="Profile URL or username">
+    </div>
+
+    <div class="form-group">
+      <label for="txRef">PAYMENT TX ID / REF (AFTER PAYMENT)</label>
+      <input id="txRef" name="txRef" type="text" placeholder="Transaction hash or app reference">
+    </div>
+
+    <div class="form-group">
+      <label for="notes">NOTES</label>
+      <textarea id="notes" name="notes" rows="3" placeholder="Anything we should know before processing."></textarea>
+    </div>
+
+    <div class="payment-notice" id="paymentNotice">Select a payment method to view the destination address.</div>
+    <div class="calc-actions visible">
+      <button type="submit" class="btn btn-primary">Place Order</button>
+      <button type="button" class="btn btn-secondary" id="copyOrderBtn">Copy Order Details</button>
+    </div>
+  </form>
+
+  <div class="order-success" id="orderSuccess" aria-live="polite"></div>
+</div>
+
+<a class="mobile-cta" href="/order/">Checkout</a>
+
+<footer>
+  <div class="footer-links">
+    <a href="/how-it-works/">How It Works</a>
+    <a href="/refund-policy/">Refund Policy</a>
+    <a href="/terms/">Terms of Service</a>
+  </div>
+  © 2026 Nexloria
+</footer>
+
+<script src="../script.js"></script>
+<script>
+const paymentAddresses = {
+  "Cash App": "$ky0ku",
+  "Bitcoin": "bc1ql8mrufw0t2t2acpv0cu5kwxdst267xmed6gwzd",
+  "Ethereum": "0x7952c05673119766f9c56c78c568b4d4507721f1",
+  "Solana": "9FQLcQ7gsrA5CL79ViDrFT7sD5HYfUiXvdQXZMnTnNQY",
+  "Monero": "8A1HUrTrJZaSp4axcdu9vxZQKpZBF1ksTYYo2S6Wh7xnKji8CiZUPeggEKEUAeTsdpUdjjF29yyJJczAHi9aich5KFgvEd5"
+};
+
+function hydrateOrderFromQuote() {
+  const params = new URLSearchParams(window.location.search);
+  const stored = localStorage.getItem("nexloria_order_prefill");
+  let source = {};
+  if (stored) {
+    try {
+      source = JSON.parse(stored);
+    } catch (error) {
+      source = {};
+    }
+  }
+  params.forEach((value, key) => {
+    source[key] = value;
+  });
+
+  if (source.mode) document.getElementById("orderMode").value = source.mode;
+  if (source.service) document.getElementById("serviceName").value = source.service;
+  if (source.quantity || source.sendAmount) document.getElementById("quantity").value = source.quantity || `$${source.sendAmount}`;
+  if (source.total) document.getElementById("estimatedTotal").value = `$${source.total}`;
+  if (source.summary) document.getElementById("notes").value = source.summary;
+}
+
+function getOrderSummary(formData, orderId) {
+  return [
+    `Order ID: ${orderId}`,
+    `Name: ${formData.customerName}`,
+    `Email: ${formData.customerEmail}`,
+    `Type: ${formData.orderMode}`,
+    `Service/Details: ${formData.serviceName}`,
+    `Quantity: ${formData.quantity}`,
+    `Estimated Total: ${formData.estimatedTotal}`,
+    `Target: ${formData.targetLink}`,
+    `Payment Method: ${formData.paymentMethod}`,
+    `Payment Ref: ${formData.txRef || "Pending"}`,
+    `Notes: ${formData.notes || "None"}`
+  ].join("\n");
+}
+
+function refreshPaymentNotice() {
+  const method = document.getElementById("paymentMethod").value;
+  const notice = document.getElementById("paymentNotice");
+  if (!method || !paymentAddresses[method]) {
+    notice.textContent = "Select a payment method to view the destination address.";
+    return;
+  }
+  notice.textContent = `${method} destination: ${paymentAddresses[method]}`;
+}
+
+hydrateOrderFromQuote();
+refreshPaymentNotice();
+document.getElementById("paymentMethod").addEventListener("change", refreshPaymentNotice);
+
+document.getElementById("copyOrderBtn").addEventListener("click", async () => {
+  const form = new FormData(document.getElementById("orderForm"));
+  const data = Object.fromEntries(form.entries());
+  const text = getOrderSummary(data, "DRAFT");
+  await navigator.clipboard.writeText(text);
+  const btn = document.getElementById("copyOrderBtn");
+  const label = btn.textContent;
+  btn.textContent = "Copied";
+  setTimeout(() => {
+    btn.textContent = label;
+  }, 1200);
+});
+
+document.getElementById("orderForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const form = new FormData(event.currentTarget);
+  const data = Object.fromEntries(form.entries());
+  const orderId = `NX-${Date.now().toString().slice(-8)}`;
+  const summary = getOrderSummary(data, orderId);
+  localStorage.setItem(`nexloria_order_${orderId}`, summary);
+  localStorage.removeItem("nexloria_order_prefill");
+
+  const success = document.getElementById("orderSuccess");
+  success.classList.add("visible");
+  success.textContent = `Order placed successfully. Your reference is ${orderId}. Keep this ID for support and payment verification.`;
+
+  const subject = encodeURIComponent(`New Nexloria Order ${orderId}`);
+  const body = encodeURIComponent(summary);
+  window.location.href = `mailto:orders@nexloria.com?subject=${subject}&body=${body}`;
+});
+</script>
+</body>
+</html>
