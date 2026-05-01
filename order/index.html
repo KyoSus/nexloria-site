@@ -72,7 +72,20 @@
     <div id="serviceFields">
       <div class="form-group">
         <label for="serviceName">SERVICE</label>
-        <input id="serviceName" name="serviceName" type="text" required placeholder="Example: TikTok Followers">
+        <select id="serviceName" name="serviceName" required>
+          <option value="">Select a service</option>
+          <option value="Roblox Followers">Roblox Followers</option>
+          <option value="Roblox Group Members">Roblox Group Members</option>
+          <option value="Twitch Followers">Twitch Followers</option>
+          <option value="TikTok Followers">TikTok Followers</option>
+          <option value="TikTok Likes">TikTok Likes</option>
+          <option value="TikTok Views">TikTok Views</option>
+          <option value="TikTok Saves">TikTok Saves</option>
+          <option value="Instagram Followers">Instagram Followers</option>
+          <option value="Instagram Views">Instagram Views</option>
+          <option value="Instagram Likes">Instagram Likes</option>
+          <option value="Instagram Reposts">Instagram Reposts</option>
+        </select>
       </div>
       <div class="order-grid">
         <div class="form-group">
@@ -127,7 +140,10 @@
 
     <div class="form-group">
       <label for="estimatedTotal">ESTIMATED TOTAL</label>
-      <input id="estimatedTotal" name="estimatedTotal" type="text" required placeholder="Example: $35.00">
+      <input id="estimatedTotal" name="estimatedTotal" type="text" required readonly placeholder="Auto-calculated by system">
+    </div>
+    <div id="totalBreakdown" style="color: var(--muted); font-size: 0.83rem; margin-top: -8px; margin-bottom: 16px;">
+      Enter order details to calculate total automatically.
     </div>
 
     <div class="form-group">
@@ -178,6 +194,51 @@ const paymentAddresses = {
 
 const ORDER_EMAIL = "orders@nexloria.com";
 const FORMSUBMIT_ENDPOINT = `https://formsubmit.co/ajax/${ORDER_EMAIL}`;
+const serviceRates = {
+  "Roblox Followers": { price: 7, per: 1000 },
+  "Roblox Group Members": { price: 7, per: 1000 },
+  "Twitch Followers": { price: 8, per: 1000 },
+  "TikTok Followers": { price: 7, per: 1000 },
+  "TikTok Likes": { price: 5, per: 5000 },
+  "TikTok Views": { price: 4, per: 5000 },
+  "TikTok Saves": { price: 4, per: 500 },
+  "Instagram Followers": { price: 7, per: 1000 },
+  "Instagram Views": { price: 4, per: 2500 },
+  "Instagram Likes": { price: 4, per: 500 },
+  "Instagram Reposts": { price: 4, per: 100 }
+};
+
+function fee(amount) {
+  if (amount <= 10) return 1.25;
+  if (amount <= 40) return 3.15;
+  if (amount <= 70) return 5;
+  if (amount <= 100) return 7.5;
+  if (amount <= 200) return 12.5;
+  if (amount <= 300) return 18.75;
+  if (amount <= 500) return 27.5;
+  if (amount <= 750) return 43.75;
+  if (amount <= 1000) return 62.5;
+  return amount * 0.0625;
+}
+
+function parseNumeric(value) {
+  const cleaned = String(value || "").replace(/[^0-9.]/g, "");
+  return Number(cleaned);
+}
+
+function setServiceFromLabel(label) {
+  if (!label) return;
+  const select = document.getElementById("serviceName");
+  const normalized = label.trim().toLowerCase();
+  const options = Array.from(select.options);
+  const exact = options.find((opt) => opt.value.toLowerCase() === normalized);
+  if (exact) {
+    select.value = exact.value;
+    return;
+  }
+  const loose = options.find((opt) => normalized.includes(opt.value.toLowerCase()));
+  if (loose) select.value = loose.value;
+}
 
 function hydrateOrderFromQuote() {
   const params = new URLSearchParams(window.location.search);
@@ -195,9 +256,8 @@ function hydrateOrderFromQuote() {
   });
 
   if (source.mode) document.getElementById("orderMode").value = source.mode;
-  if (source.service) document.getElementById("serviceName").value = source.service;
+  if (source.service) setServiceFromLabel(source.service);
   if (source.quantity || source.sendAmount) document.getElementById("quantity").value = source.quantity || `$${source.sendAmount}`;
-  if (source.total) document.getElementById("estimatedTotal").value = `$${source.total}`;
   if (source.mode === "exchange") {
     if (source.sendMethod) document.getElementById("exchangeFrom").value = source.sendMethod;
     if (source.receiveMethod) document.getElementById("exchangeTo").value = source.receiveMethod;
@@ -223,6 +283,40 @@ function setModeFields() {
   exchangeRequired.forEach((id) => {
     document.getElementById(id).required = mode === "exchange";
   });
+  calculateOrderTotal();
+}
+
+function calculateOrderTotal() {
+  const mode = document.getElementById("orderMode").value;
+  const estimatedTotal = document.getElementById("estimatedTotal");
+  const totalBreakdown = document.getElementById("totalBreakdown");
+
+  if (mode === "service") {
+    const service = document.getElementById("serviceName").value;
+    const qty = parseNumeric(document.getElementById("quantity").value);
+    const rate = serviceRates[service];
+    if (!rate || !qty || qty <= 0) {
+      estimatedTotal.value = "";
+      totalBreakdown.textContent = "Select a valid service and quantity to calculate total.";
+      return;
+    }
+    let total = (qty / rate.per) * rate.price;
+    if (total < 1) total = 1;
+    estimatedTotal.value = `$${total.toFixed(2)}`;
+    totalBreakdown.textContent = `${service}: $${rate.price.toFixed(2)} per ${rate.per.toLocaleString()} | Quantity ${qty.toLocaleString()} | Total ${estimatedTotal.value}`;
+    return;
+  }
+
+  const sendAmount = parseNumeric(document.getElementById("exchangeAmount").value);
+  if (!sendAmount || sendAmount <= 0) {
+    estimatedTotal.value = "";
+    totalBreakdown.textContent = "Enter exchange send amount to calculate receive total after fees.";
+    return;
+  }
+  const exchangeFee = fee(sendAmount);
+  const receive = Math.max(sendAmount - exchangeFee, 0);
+  estimatedTotal.value = `$${receive.toFixed(2)}`;
+  totalBreakdown.textContent = `Exchange: send $${sendAmount.toFixed(2)} - fee $${exchangeFee.toFixed(2)} = receive $${receive.toFixed(2)}`;
 }
 
 function getOrderSummary(formData, orderId) {
@@ -266,8 +360,12 @@ function refreshPaymentNotice() {
 hydrateOrderFromQuote();
 setModeFields();
 refreshPaymentNotice();
+calculateOrderTotal();
 document.getElementById("paymentMethod").addEventListener("change", refreshPaymentNotice);
 document.getElementById("orderMode").addEventListener("change", setModeFields);
+document.getElementById("serviceName").addEventListener("change", calculateOrderTotal);
+document.getElementById("quantity").addEventListener("input", calculateOrderTotal);
+document.getElementById("exchangeAmount").addEventListener("input", calculateOrderTotal);
 
 document.getElementById("copyOrderBtn").addEventListener("click", async () => {
   const form = new FormData(document.getElementById("orderForm"));
@@ -284,8 +382,15 @@ document.getElementById("copyOrderBtn").addEventListener("click", async () => {
 
 document.getElementById("orderForm").addEventListener("submit", async (event) => {
   event.preventDefault();
+  calculateOrderTotal();
   const form = new FormData(event.currentTarget);
   const data = Object.fromEntries(form.entries());
+  if (!data.estimatedTotal) {
+    const success = document.getElementById("orderSuccess");
+    success.classList.add("visible");
+    success.textContent = "Please complete required fields so the system can calculate the total.";
+    return;
+  }
   const orderId = `NX-${Date.now().toString().slice(-8)}`;
   const summary = getOrderSummary(data, orderId);
   localStorage.setItem(`nexloria_order_${orderId}`, summary);
