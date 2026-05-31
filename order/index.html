@@ -29,7 +29,7 @@
 <div class="order-wrap" id="main-content" tabindex="-1">
   <div class="section-label" style="margin-bottom: 10px;">Checkout</div>
   <h1>Order Form + Payment Flow</h1>
-  <p class="sub">Submit your order details, choose a payment method, and receive an instant order reference. Service and exchange fields update automatically.</p>
+  <p class="sub">Submit your order details, choose a payment method, and receive an instant order reference. Fields update automatically based on order type.</p>
 
   <form id="orderForm" class="order-box">
     <div class="order-grid">
@@ -49,6 +49,8 @@
         <select id="orderMode" name="orderMode" required>
           <option value="service">Service Order</option>
           <option value="exchange">Exchange Order</option>
+          <option value="instacart">Instacart (70% off)</option>
+          <option value="visa">Prepaid Visa Gift Card (50% off)</option>
         </select>
       </div>
       <div class="form-group">
@@ -69,37 +71,40 @@
       </div>
     </div>
 
+    <!-- SERVICE FIELDS -->
     <div id="serviceFields">
       <div class="form-group">
         <label for="serviceName">SERVICE</label>
-        <select id="serviceName" name="serviceName" required>
+        <select id="serviceName" name="serviceName">
           <option value="">Select a service</option>
-          <option value="Roblox Followers">Roblox Followers</option>
+          <option value="Roblox Profile Followers">Roblox Profile Followers</option>
           <option value="Roblox Group Members">Roblox Group Members</option>
           <option value="Twitch Followers">Twitch Followers</option>
           <option value="TikTok Followers">TikTok Followers</option>
           <option value="TikTok Likes">TikTok Likes</option>
           <option value="TikTok Views">TikTok Views</option>
           <option value="TikTok Saves">TikTok Saves</option>
+          <option value="TikTok Reposts">TikTok Reposts</option>
           <option value="Instagram Followers">Instagram Followers</option>
-          <option value="Instagram Views">Instagram Views</option>
           <option value="Instagram Likes">Instagram Likes</option>
+          <option value="Instagram Views">Instagram Views</option>
           <option value="Instagram Reposts">Instagram Reposts</option>
         </select>
       </div>
       <div class="order-grid">
         <div class="form-group">
           <label for="quantity">QUANTITY</label>
-          <input id="quantity" name="quantity" type="text" required placeholder="Example: 5000">
+          <input id="quantity" name="quantity" type="text" placeholder="Example: 5000">
         </div>
         <div class="form-group">
           <label for="targetLink">TARGET LINK / USERNAME</label>
-          <input id="targetLink" name="targetLink" type="text" required placeholder="Profile URL or username">
+          <input id="targetLink" name="targetLink" type="text" placeholder="Profile URL or username">
         </div>
       </div>
     </div>
 
-    <div id="exchangeFields">
+    <!-- EXCHANGE FIELDS -->
+    <div id="exchangeFields" style="display:none;">
       <div class="order-grid">
         <div class="form-group">
           <label for="exchangeFrom">YOU SEND</label>
@@ -138,8 +143,28 @@
       </div>
     </div>
 
+    <!-- INSTACART FIELDS -->
+    <div id="instacartFields" style="display:none;">
+      <div class="form-group">
+        <label for="instacartCart">YOUR INSTACART CART TOTAL ($)</label>
+        <input id="instacartCart" name="instacartCart" type="text" placeholder="Example: 120">
+      </div>
+      <div class="form-group">
+        <label for="instacartDetails">ORDER DETAILS / STORE</label>
+        <input id="instacartDetails" name="instacartDetails" type="text" placeholder="Store name and any notes">
+      </div>
+    </div>
+
+    <!-- VISA FIELDS -->
+    <div id="visaFields" style="display:none;">
+      <div class="form-group">
+        <label for="visaAmount">GIFT CARD FACE VALUE ($)</label>
+        <input id="visaAmount" name="visaAmount" type="text" placeholder="Example: 100">
+      </div>
+    </div>
+
     <div class="form-group">
-      <label for="estimatedTotal">ESTIMATED TOTAL</label>
+      <label for="estimatedTotal">ESTIMATED TOTAL (YOU PAY)</label>
       <input id="estimatedTotal" name="estimatedTotal" type="text" required readonly placeholder="Auto-calculated by system">
     </div>
     <div id="totalBreakdown" style="color: var(--muted); font-size: 0.83rem; margin-top: -8px; margin-bottom: 16px;">
@@ -174,7 +199,7 @@
     <a href="/refund-policy/">Refund Policy</a>
     <a href="/terms/">Terms of Service</a>
   </div>
-  © 2026 Nexloria
+  Â© 2026 Nexloria
 </footer>
 
 <script src="../script.js"></script>
@@ -194,36 +219,25 @@ const paymentAddresses = {
 
 const ORDER_EMAIL = "orders@nexloria.com";
 const FORMSUBMIT_ENDPOINT = `https://formsubmit.co/ajax/${ORDER_EMAIL}`;
+const EXCHANGE_FEE_RATE = 0.0825;
+
 const serviceRates = {
-  "Roblox Followers": { price: 7, per: 1000 },
-  "Roblox Group Members": { price: 7, per: 1000 },
-  "Twitch Followers": { price: 8, per: 1000 },
-  "TikTok Followers": { price: 7, per: 1000 },
-  "TikTok Likes": { price: 5, per: 5000 },
-  "TikTok Views": { price: 4, per: 5000 },
-  "TikTok Saves": { price: 4, per: 500 },
-  "Instagram Followers": { price: 7, per: 1000 },
-  "Instagram Views": { price: 4, per: 2500 },
-  "Instagram Likes": { price: 4, per: 500 },
-  "Instagram Reposts": { price: 4, per: 100 }
+  "Roblox Profile Followers": { price: 6.5, per: 1000 },
+  "Roblox Group Members": { price: 6.5, per: 1000 },
+  "Twitch Followers": { price: 6.5, per: 1000 },
+  "TikTok Followers": { price: 6.5, per: 1000 },
+  "TikTok Likes": { price: 2.5, per: 1000 },
+  "TikTok Views": { price: 2.5, per: 2500 },
+  "TikTok Saves": { price: 2.5, per: 500 },
+  "TikTok Reposts": { price: 2.5, per: 250 },
+  "Instagram Followers": { price: 6.5, per: 1000 },
+  "Instagram Likes": { price: 2.5, per: 500 },
+  "Instagram Views": { price: 2.5, per: 2500 },
+  "Instagram Reposts": { price: 2.5, per: 100 }
 };
 
-function fee(amount) {
-  if (amount <= 10) return 1.25;
-  if (amount <= 40) return 3.15;
-  if (amount <= 70) return 5;
-  if (amount <= 100) return 7.5;
-  if (amount <= 200) return 12.5;
-  if (amount <= 300) return 18.75;
-  if (amount <= 500) return 27.5;
-  if (amount <= 750) return 43.75;
-  if (amount <= 1000) return 62.5;
-  return amount * 0.0625;
-}
-
 function parseNumeric(value) {
-  const cleaned = String(value || "").replace(/[^0-9.]/g, "");
-  return Number(cleaned);
+  return Number(String(value || "").replace(/[^0-9.]/g, ""));
 }
 
 function setServiceFromLabel(label) {
@@ -231,12 +245,9 @@ function setServiceFromLabel(label) {
   const select = document.getElementById("serviceName");
   const normalized = label.trim().toLowerCase();
   const options = Array.from(select.options);
-  const exact = options.find((opt) => opt.value.toLowerCase() === normalized);
-  if (exact) {
-    select.value = exact.value;
-    return;
-  }
-  const loose = options.find((opt) => normalized.includes(opt.value.toLowerCase()));
+  const exact = options.find(opt => opt.value.toLowerCase() === normalized);
+  if (exact) { select.value = exact.value; return; }
+  const loose = options.find(opt => normalized.includes(opt.value.toLowerCase()));
   if (loose) select.value = loose.value;
 }
 
@@ -244,16 +255,8 @@ function hydrateOrderFromQuote() {
   const params = new URLSearchParams(window.location.search);
   const stored = localStorage.getItem("nexloria_order_prefill");
   let source = {};
-  if (stored) {
-    try {
-      source = JSON.parse(stored);
-    } catch (error) {
-      source = {};
-    }
-  }
-  params.forEach((value, key) => {
-    source[key] = value;
-  });
+  if (stored) { try { source = JSON.parse(stored); } catch(e) { source = {}; } }
+  params.forEach((value, key) => { source[key] = value; });
 
   if (source.mode) document.getElementById("orderMode").value = source.mode;
   if (source.service) setServiceFromLabel(source.service);
@@ -269,20 +272,10 @@ function hydrateOrderFromQuote() {
 
 function setModeFields() {
   const mode = document.getElementById("orderMode").value;
-  const serviceBox = document.getElementById("serviceFields");
-  const exchangeBox = document.getElementById("exchangeFields");
-  const serviceRequired = ["serviceName", "quantity", "targetLink"];
-  const exchangeRequired = ["exchangeFrom", "exchangeTo", "exchangeAmount", "serviceNameExchange", "targetLinkExchange"];
-
-  serviceBox.style.display = mode === "service" ? "block" : "none";
-  exchangeBox.style.display = mode === "exchange" ? "block" : "none";
-
-  serviceRequired.forEach((id) => {
-    document.getElementById(id).required = mode === "service";
-  });
-  exchangeRequired.forEach((id) => {
-    document.getElementById(id).required = mode === "exchange";
-  });
+  document.getElementById("serviceFields").style.display = mode === "service" ? "block" : "none";
+  document.getElementById("exchangeFields").style.display = mode === "exchange" ? "block" : "none";
+  document.getElementById("instacartFields").style.display = mode === "instacart" ? "block" : "none";
+  document.getElementById("visaFields").style.display = mode === "visa" ? "block" : "none";
   calculateOrderTotal();
 }
 
@@ -303,44 +296,80 @@ function calculateOrderTotal() {
     let total = (qty / rate.per) * rate.price;
     if (total < 1) total = 1;
     estimatedTotal.value = `$${total.toFixed(2)}`;
-    totalBreakdown.textContent = `${service}: $${rate.price.toFixed(2)} per ${rate.per.toLocaleString()} | Quantity ${qty.toLocaleString()} | Total ${estimatedTotal.value}`;
+    totalBreakdown.textContent = `${service}: $${rate.price.toFixed(2)} per ${rate.per.toLocaleString()} | Qty ${qty.toLocaleString()} | Total ${estimatedTotal.value}`;
     return;
   }
 
-  const sendAmount = parseNumeric(document.getElementById("exchangeAmount").value);
-  if (!sendAmount || sendAmount <= 0) {
-    estimatedTotal.value = "";
-    totalBreakdown.textContent = "Enter exchange send amount to calculate receive total after fees.";
+  if (mode === "exchange") {
+    const sendAmount = parseNumeric(document.getElementById("exchangeAmount").value);
+    if (!sendAmount || sendAmount <= 0) {
+      estimatedTotal.value = "";
+      totalBreakdown.textContent = "Enter exchange send amount to calculate receive total after fees.";
+      return;
+    }
+    const fee = sendAmount * EXCHANGE_FEE_RATE;
+    const receive = Math.max(sendAmount - fee, 0);
+    estimatedTotal.value = `$${receive.toFixed(2)}`;
+    totalBreakdown.textContent = `Exchange: send $${sendAmount.toFixed(2)} âˆ’ 8.25% fee ($${fee.toFixed(2)}) = receive $${receive.toFixed(2)}`;
     return;
   }
-  const exchangeFee = fee(sendAmount);
-  const receive = Math.max(sendAmount - exchangeFee, 0);
-  estimatedTotal.value = `$${receive.toFixed(2)}`;
-  totalBreakdown.textContent = `Exchange: send $${sendAmount.toFixed(2)} - fee $${exchangeFee.toFixed(2)} = receive $${receive.toFixed(2)}`;
+
+  if (mode === "instacart") {
+    const cart = parseNumeric(document.getElementById("instacartCart").value);
+    if (!cart || cart <= 0) {
+      estimatedTotal.value = "";
+      totalBreakdown.textContent = "Enter your Instacart cart total to calculate your price.";
+      return;
+    }
+    const youPay = cart * 0.30;
+    estimatedTotal.value = `$${youPay.toFixed(2)}`;
+    totalBreakdown.textContent = `Instacart: $${cart.toFixed(2)} cart Ã— 30% = you pay $${youPay.toFixed(2)} (70% off)`;
+    return;
+  }
+
+  if (mode === "visa") {
+    const face = parseNumeric(document.getElementById("visaAmount").value);
+    if (!face || face <= 0) {
+      estimatedTotal.value = "";
+      totalBreakdown.textContent = "Enter the gift card face value to calculate your price.";
+      return;
+    }
+    const youPay = face * 0.50;
+    estimatedTotal.value = `$${youPay.toFixed(2)}`;
+    totalBreakdown.textContent = `Prepaid Visa: $${face.toFixed(2)} face value Ã— 50% = you pay $${youPay.toFixed(2)}`;
+    return;
+  }
 }
 
 function getOrderSummary(formData, orderId) {
-  const details = formData.orderMode === "exchange"
-    ? (formData.serviceNameExchange || `${formData.exchangeFrom} to ${formData.exchangeTo}`)
-    : formData.serviceName;
-  const qtyOrAmount = formData.orderMode === "exchange"
-    ? `$${formData.exchangeAmount}`
-    : formData.quantity;
-  const target = formData.orderMode === "exchange"
-    ? formData.targetLinkExchange
-    : formData.targetLink;
-
+  const mode = formData.orderMode;
+  let details, qtyOrAmount, target;
+  if (mode === "exchange") {
+    details = formData.serviceNameExchange || `${formData.exchangeFrom} to ${formData.exchangeTo}`;
+    qtyOrAmount = `$${formData.exchangeAmount}`;
+    target = formData.targetLinkExchange;
+  } else if (mode === "instacart") {
+    details = "Instacart Order (70% off)";
+    qtyOrAmount = `$${formData.instacartCart} cart`;
+    target = formData.instacartDetails || "N/A";
+  } else if (mode === "visa") {
+    details = "Prepaid Visa Gift Card (50% off)";
+    qtyOrAmount = `$${formData.visaAmount} face value`;
+    target = "N/A";
+  } else {
+    details = formData.serviceName;
+    qtyOrAmount = formData.quantity;
+    target = formData.targetLink;
+  }
   return [
     `Order ID: ${orderId}`,
     `Name: ${formData.customerName}`,
     `Email: ${formData.customerEmail}`,
-    `Type: ${formData.orderMode}`,
+    `Type: ${mode}`,
     `Service/Details: ${details}`,
     `Quantity/Amount: ${qtyOrAmount}`,
     `Estimated Total: ${formData.estimatedTotal}`,
     `Target: ${target}`,
-    `Exchange From: ${formData.exchangeFrom || "N/A"}`,
-    `Exchange To: ${formData.exchangeTo || "N/A"}`,
     `Payment Method: ${formData.paymentMethod}`,
     `Payment Ref: ${formData.txRef || "Pending"}`,
     `Notes: ${formData.notes || "None"}`
@@ -361,11 +390,14 @@ hydrateOrderFromQuote();
 setModeFields();
 refreshPaymentNotice();
 calculateOrderTotal();
+
 document.getElementById("paymentMethod").addEventListener("change", refreshPaymentNotice);
 document.getElementById("orderMode").addEventListener("change", setModeFields);
 document.getElementById("serviceName").addEventListener("change", calculateOrderTotal);
 document.getElementById("quantity").addEventListener("input", calculateOrderTotal);
 document.getElementById("exchangeAmount").addEventListener("input", calculateOrderTotal);
+document.getElementById("instacartCart").addEventListener("input", calculateOrderTotal);
+document.getElementById("visaAmount").addEventListener("input", calculateOrderTotal);
 
 document.getElementById("copyOrderBtn").addEventListener("click", async () => {
   const form = new FormData(document.getElementById("orderForm"));
@@ -375,9 +407,7 @@ document.getElementById("copyOrderBtn").addEventListener("click", async () => {
   const btn = document.getElementById("copyOrderBtn");
   const label = btn.textContent;
   btn.textContent = "Copied";
-  setTimeout(() => {
-    btn.textContent = label;
-  }, 1200);
+  setTimeout(() => { btn.textContent = label; }, 1200);
 });
 
 document.getElementById("orderForm").addEventListener("submit", async (event) => {
@@ -410,13 +440,7 @@ document.getElementById("orderForm").addEventListener("submit", async (event) =>
   submitPayload.append("_template", "table");
 
   try {
-    const response = await fetch(FORMSUBMIT_ENDPOINT, {
-      method: "POST",
-      body: submitPayload,
-      headers: {
-        Accept: "application/json"
-      }
-    });
+    const response = await fetch(FORMSUBMIT_ENDPOINT, { method: "POST", body: submitPayload, headers: { Accept: "application/json" } });
     if (!response.ok) throw new Error("email-provider-failed");
     success.textContent = `Order placed successfully. Your reference is ${orderId}. A confirmation email was sent to ${ORDER_EMAIL}.`;
   } catch (error) {
