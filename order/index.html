@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Order Checkout | Nexloria</title>
+<title>Order | Nexloria</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Place your Nexloria order for game accounts, social growth, streaming services, or payment exchanges.">
+<meta name="description" content="Ready to order from Nexloria? Get a quote then message us on Telegram or Discord to place your order.">
 <meta name="robots" content="index,follow">
 <meta name="theme-color" content="#080a0f">
 <meta name="color-scheme" content="dark">
@@ -24,61 +24,37 @@
   <a href="/contact/">Contact</a>
 </nav>
 
-<div class="order-wrap" id="main-content" tabindex="-1">
-  <div class="section-label" style="margin-bottom: 10px;">Place your order</div>
-  <h1>Order Checkout</h1>
-  <p class="sub">Fill in your details below. You'll receive a payment address after submitting.</p>
+<div class="contact-wrap" id="main-content" tabindex="-1">
+  <div class="section-label" style="margin-bottom: 12px;">Ready to order?</div>
+  <h1>Start an Order</h1>
+  <p class="sub">Use the calculator to get a quote, then send it to us on Telegram or Discord to place your order.</p>
 
-  <div class="order-box">
-    <div class="order-grid">
-      <div class="form-group">
-        <label>SERVICE / PRODUCT</label>
-        <input type="text" id="f-service" placeholder="e.g. Fortnite 50-100 Skins" autocomplete="off">
-      </div>
-      <div class="form-group">
-        <label>QUANTITY OR AMOUNT</label>
-        <input type="text" id="f-qty" placeholder="e.g. 1,000 or $100 cart">
-      </div>
+  <a href="/calculator/" class="btn btn-secondary" style="display:inline-flex;margin-bottom:32px;">Get a Quote First →</a>
+
+  <a class="social-card" href="https://t.me/realkyoku" target="_blank" rel="noopener noreferrer">
+    <div class="social-icon">✈️</div>
+    <div class="social-info">
+      <div class="platform">Telegram</div>
+      <div class="handle">@realkyoku — fastest response</div>
     </div>
+    <span class="social-arrow">→</span>
+  </a>
 
-    <div class="form-group">
-      <label>DELIVERY LINK / USERNAME</label>
-      <input type="text" id="f-link" placeholder="Profile URL or username">
+  <a class="social-card" href="https://discord.com/users/799027175436058624" target="_blank" rel="noopener noreferrer">
+    <div class="social-icon">💬</div>
+    <div class="social-info">
+      <div class="platform">Discord</div>
+      <div class="handle">kyoku</div>
     </div>
+    <span class="social-arrow">→</span>
+  </a>
 
-    <div class="form-group">
-      <label>PAYMENT METHOD</label>
-      <select id="f-method">
-        <option value="">— Select —</option>
-        <option>Cash App</option>
-        <option>PayPal F&amp;F</option>
-        <option>Venmo</option>
-        <option>Zelle</option>
-        <option>Bitcoin</option>
-        <option>Ethereum</option>
-        <option>Solana</option>
-        <option>Litecoin</option>
-        <option>TRX</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>NOTES (optional)</label>
-      <textarea id="f-notes" rows="3" placeholder="Any additional info for your order"></textarea>
-    </div>
-
-    <button type="button" class="btn btn-primary" style="width:100%;justify-content:center;" onclick="submitOrder()">Submit Order →</button>
-
-    <div class="payment-notice" id="paymentNotice" style="display:none;"></div>
-    <div class="order-success" id="orderSuccess"></div>
-  </div>
-
-  <p style="color:var(--muted);font-size:0.8rem;margin-top:16px;text-align:center;">
-    After submitting, send payment to the address shown and include your order ID as reference.
+  <p style="color:var(--muted);font-size:0.85rem;margin-top:28px;line-height:1.6;">
+    Include the service you want, quantity, and your payment method when you reach out. Average response under 10 minutes.
   </p>
 </div>
 
-<a class="mobile-cta" href="/contact/">Contact Support</a>
+<a class="mobile-cta" href="https://t.me/realkyoku" target="_blank" rel="noopener noreferrer">Message on Telegram</a>
 
 <footer>
   <div class="footer-links">
@@ -90,54 +66,5 @@
 </footer>
 
 <script src="../script.js"></script>
-<script>
-const payAddresses = {
-  "Cash App": "$ky0ku",
-  "PayPal F&F": "paypal.me/justskays",
-  "Venmo": "@Hamza-Khan-110",
-  "Zelle": "5169965497",
-  "Bitcoin": "bc1ql8mrufw0t2t2acpv0cu5kwxdst267xmed6gwzd",
-  "Ethereum": "0x7952c05673119766f9c56c78c568b4d4507721f1",
-  "Solana": "9FQLcQ7gsrA5CL79ViDrFT7sD5HYfUiXvdQXZMnTnNQY",
-  "Litecoin": "ltc1q454wk3qztj3va6zs0aa8q5rpv8j2hnh6u27xw4",
-  "TRX": "TMinxbsGm331FbiVKWtU6vBJrqJ8zaS9iM"
-};
-
-// Pre-fill from calculator
-window.addEventListener("DOMContentLoaded", () => {
-  const params = new URLSearchParams(location.search);
-  const prefill = params.get("service") || params.get("summary");
-  if (params.get("service")) document.getElementById("f-service").value = params.get("service");
-  if (params.get("quantity")) document.getElementById("f-qty").value = params.get("quantity");
-  if (params.get("sendMethod")) {
-    document.getElementById("f-service").value = `Exchange: ${params.get("sendMethod")} → ${params.get("receiveMethod")}`;
-    document.getElementById("f-qty").value = `$${params.get("sendAmount")}`;
-  }
-});
-
-function submitOrder() {
-  const service = document.getElementById("f-service").value.trim();
-  const qty = document.getElementById("f-qty").value.trim();
-  const link = document.getElementById("f-link").value.trim();
-  const method = document.getElementById("f-method").value;
-
-  if (!service || !qty || !method) {
-    alert("Please fill in service, quantity, and payment method.");
-    return;
-  }
-
-  const orderId = "NX-" + Date.now().toString(36).toUpperCase();
-  const address = payAddresses[method] || "";
-
-  const notice = document.getElementById("paymentNotice");
-  const success = document.getElementById("orderSuccess");
-
-  notice.style.display = "block";
-  notice.innerHTML = `<strong>Send payment to:</strong> ${method} — <code>${address}</code><br>Include order ID <strong>${orderId}</strong> as your payment note.`;
-
-  success.classList.add("visible");
-  success.innerHTML = `✓ Order <strong>${orderId}</strong> received. Complete payment above, then contact support if needed.`;
-}
-</script>
 </body>
 </html>
