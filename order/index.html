@@ -3,7 +3,7 @@
 <head>
 <title>Order Checkout | Nexloria</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Complete your Nexloria order checkout with service details, payment method selection, and instant order confirmation.">
+<meta name="description" content="Place your Nexloria order for game accounts, social growth, streaming services, or payment exchanges.">
 <meta name="robots" content="index,follow">
 <meta name="theme-color" content="#080a0f">
 <meta name="color-scheme" content="dark">
@@ -13,9 +13,7 @@
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-
 <a href="#main-content" class="skip-link">Skip to main content</a>
-
 <nav aria-label="Primary">
   <a href="/" class="logo">NEXLORIA</a>
   <a href="/">Home</a>
@@ -27,171 +25,60 @@
 </nav>
 
 <div class="order-wrap" id="main-content" tabindex="-1">
-  <div class="section-label" style="margin-bottom: 10px;">Checkout</div>
-  <h1>Order Form + Payment Flow</h1>
-  <p class="sub">Submit your order details, choose a payment method, and receive an instant order reference. Fields update automatically based on order type.</p>
+  <div class="section-label" style="margin-bottom: 10px;">Place your order</div>
+  <h1>Order Checkout</h1>
+  <p class="sub">Fill in your details below. You'll receive a payment address after submitting.</p>
 
-  <form id="orderForm" class="order-box">
+  <div class="order-box">
     <div class="order-grid">
       <div class="form-group">
-        <label for="customerName">YOUR NAME</label>
-        <input id="customerName" name="customerName" type="text" required placeholder="Full name">
+        <label>SERVICE / PRODUCT</label>
+        <input type="text" id="f-service" placeholder="e.g. Fortnite 50-100 Skins" autocomplete="off">
       </div>
       <div class="form-group">
-        <label for="customerEmail">EMAIL</label>
-        <input id="customerEmail" name="customerEmail" type="email" required placeholder="you@example.com">
-      </div>
-    </div>
-
-    <div class="order-grid">
-      <div class="form-group">
-        <label for="orderMode">ORDER TYPE</label>
-        <select id="orderMode" name="orderMode" required>
-          <option value="service">Service Order</option>
-          <option value="exchange">Exchange Order</option>
-          <option value="instacart">Instacart (70% off)</option>
-          <option value="visa">Prepaid Visa Gift Card (50% off)</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="paymentMethod">PAYMENT METHOD</label>
-        <select id="paymentMethod" name="paymentMethod" required>
-          <option value="">Select payment method</option>
-          <option value="Cash App">Cash App</option>
-          <option value="PayPal F&F">PayPal F&F</option>
-          <option value="Venmo">Venmo</option>
-          <option value="Zelle">Zelle</option>
-          <option value="Bitcoin">Bitcoin</option>
-          <option value="Ethereum">Ethereum</option>
-          <option value="Solana">Solana</option>
-          <option value="Monero">Monero</option>
-          <option value="Litecoin">Litecoin</option>
-          <option value="TRX">TRX</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- SERVICE FIELDS -->
-    <div id="serviceFields">
-      <div class="form-group">
-        <label for="serviceName">SERVICE</label>
-        <select id="serviceName" name="serviceName">
-          <option value="">Select a service</option>
-          <option value="Roblox Profile Followers">Roblox Profile Followers</option>
-          <option value="Roblox Group Members">Roblox Group Members</option>
-          <option value="Twitch Followers">Twitch Followers</option>
-          <option value="TikTok Followers">TikTok Followers</option>
-          <option value="TikTok Likes">TikTok Likes</option>
-          <option value="TikTok Views">TikTok Views</option>
-          <option value="TikTok Saves">TikTok Saves</option>
-          <option value="TikTok Reposts">TikTok Reposts</option>
-          <option value="Instagram Followers">Instagram Followers</option>
-          <option value="Instagram Likes">Instagram Likes</option>
-          <option value="Instagram Views">Instagram Views</option>
-          <option value="Instagram Reposts">Instagram Reposts</option>
-        </select>
-      </div>
-      <div class="order-grid">
-        <div class="form-group">
-          <label for="quantity">QUANTITY</label>
-          <input id="quantity" name="quantity" type="text" placeholder="Example: 5000">
-        </div>
-        <div class="form-group">
-          <label for="targetLink">TARGET LINK / USERNAME</label>
-          <input id="targetLink" name="targetLink" type="text" placeholder="Profile URL or username">
-        </div>
-      </div>
-    </div>
-
-    <!-- EXCHANGE FIELDS -->
-    <div id="exchangeFields" style="display:none;">
-      <div class="order-grid">
-        <div class="form-group">
-          <label for="exchangeFrom">YOU SEND</label>
-          <select id="exchangeFrom" name="exchangeFrom">
-            <option value="">Select send method</option>
-            <option value="Cash App">Cash App</option>
-            <option value="PayPal F&F">PayPal F&F</option>
-            <option value="Venmo">Venmo</option>
-            <option value="Zelle">Zelle</option>
-            <option value="Crypto">Crypto</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="exchangeTo">YOU RECEIVE</label>
-          <select id="exchangeTo" name="exchangeTo">
-            <option value="">Select receive method</option>
-            <option value="Cash App">Cash App</option>
-            <option value="PayPal F&F">PayPal F&F</option>
-            <option value="Venmo">Venmo</option>
-            <option value="Zelle">Zelle</option>
-            <option value="Crypto">Crypto</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="exchangeAmount">SEND AMOUNT (USD)</label>
-        <input id="exchangeAmount" name="exchangeAmount" type="text" placeholder="Example: 150">
-      </div>
-      <div class="form-group">
-        <label for="serviceNameExchange">EXCHANGE DETAILS</label>
-        <input id="serviceNameExchange" name="serviceNameExchange" type="text" placeholder="Example: Cash App to BTC">
-      </div>
-      <div class="form-group">
-        <label for="targetLinkExchange">RECEIVING WALLET / ACCOUNT</label>
-        <input id="targetLinkExchange" name="targetLinkExchange" type="text" placeholder="Wallet address or receiving account">
-      </div>
-    </div>
-
-    <!-- INSTACART FIELDS -->
-    <div id="instacartFields" style="display:none;">
-      <div class="form-group">
-        <label for="instacartCart">YOUR INSTACART CART TOTAL ($)</label>
-        <input id="instacartCart" name="instacartCart" type="text" placeholder="Example: 120">
-      </div>
-      <div class="form-group">
-        <label for="instacartDetails">ORDER DETAILS / STORE</label>
-        <input id="instacartDetails" name="instacartDetails" type="text" placeholder="Store name and any notes">
-      </div>
-    </div>
-
-    <!-- VISA FIELDS -->
-    <div id="visaFields" style="display:none;">
-      <div class="form-group">
-        <label for="visaAmount">GIFT CARD FACE VALUE ($)</label>
-        <input id="visaAmount" name="visaAmount" type="text" placeholder="Example: 100">
+        <label>QUANTITY OR AMOUNT</label>
+        <input type="text" id="f-qty" placeholder="e.g. 1,000 or $100 cart">
       </div>
     </div>
 
     <div class="form-group">
-      <label for="estimatedTotal">ESTIMATED TOTAL (YOU PAY)</label>
-      <input id="estimatedTotal" name="estimatedTotal" type="text" required readonly placeholder="Auto-calculated by system">
-    </div>
-    <div id="totalBreakdown" style="color: var(--muted); font-size: 0.83rem; margin-top: -8px; margin-bottom: 16px;">
-      Enter order details to calculate total automatically.
+      <label>DELIVERY LINK / USERNAME</label>
+      <input type="text" id="f-link" placeholder="Profile URL or username">
     </div>
 
     <div class="form-group">
-      <label for="txRef">PAYMENT TX ID / REF (AFTER PAYMENT)</label>
-      <input id="txRef" name="txRef" type="text" placeholder="Transaction hash or app reference">
+      <label>PAYMENT METHOD</label>
+      <select id="f-method">
+        <option value="">— Select —</option>
+        <option>Cash App</option>
+        <option>PayPal F&amp;F</option>
+        <option>Venmo</option>
+        <option>Zelle</option>
+        <option>Bitcoin</option>
+        <option>Ethereum</option>
+        <option>Solana</option>
+        <option>Litecoin</option>
+        <option>TRX</option>
+      </select>
     </div>
 
     <div class="form-group">
-      <label for="notes">NOTES</label>
-      <textarea id="notes" name="notes" rows="3" placeholder="Anything we should know before processing."></textarea>
+      <label>NOTES (optional)</label>
+      <textarea id="f-notes" rows="3" placeholder="Any additional info for your order"></textarea>
     </div>
 
-    <div class="payment-notice" id="paymentNotice">Select a payment method to view the destination address.</div>
-    <div class="calc-actions visible">
-      <button type="submit" class="btn btn-primary">Place Order</button>
-      <button type="button" class="btn btn-secondary" id="copyOrderBtn">Copy Order Details</button>
-    </div>
-  </form>
+    <button type="button" class="btn btn-primary" style="width:100%;justify-content:center;" onclick="submitOrder()">Submit Order →</button>
 
-  <div class="order-success" id="orderSuccess" aria-live="polite"></div>
+    <div class="payment-notice" id="paymentNotice" style="display:none;"></div>
+    <div class="order-success" id="orderSuccess"></div>
+  </div>
+
+  <p style="color:var(--muted);font-size:0.8rem;margin-top:16px;text-align:center;">
+    After submitting, send payment to the address shown and include your order ID as reference.
+  </p>
 </div>
 
-<a class="mobile-cta" href="/order/">Checkout</a>
+<a class="mobile-cta" href="/contact/">Contact Support</a>
 
 <footer>
   <div class="footer-links">
@@ -199,12 +86,12 @@
     <a href="/refund-policy/">Refund Policy</a>
     <a href="/terms/">Terms of Service</a>
   </div>
-  Â© 2026 Nexloria
+  © 2026 Nexloria
 </footer>
 
 <script src="../script.js"></script>
 <script>
-const paymentAddresses = {
+const payAddresses = {
   "Cash App": "$ky0ku",
   "PayPal F&F": "paypal.me/justskays",
   "Venmo": "@Hamza-Khan-110",
@@ -212,244 +99,45 @@ const paymentAddresses = {
   "Bitcoin": "bc1ql8mrufw0t2t2acpv0cu5kwxdst267xmed6gwzd",
   "Ethereum": "0x7952c05673119766f9c56c78c568b4d4507721f1",
   "Solana": "9FQLcQ7gsrA5CL79ViDrFT7sD5HYfUiXvdQXZMnTnNQY",
-  "Monero": "84yueeboSH6DKnkE9iy2oueH3JBGK8Ur63rsv6cqKznD42shMUqVEFqjaHa1fb3dw72VNxtiXozLg8BH7z3W3sj4GDsVwUT",
   "Litecoin": "ltc1q454wk3qztj3va6zs0aa8q5rpv8j2hnh6u27xw4",
   "TRX": "TMinxbsGm331FbiVKWtU6vBJrqJ8zaS9iM"
 };
 
-const ORDER_EMAIL = "orders@nexloria.com";
-const FORMSUBMIT_ENDPOINT = `https://formsubmit.co/ajax/${ORDER_EMAIL}`;
-const EXCHANGE_FEE_RATE = 0.0825;
-
-const serviceRates = {
-  "Roblox Profile Followers": { price: 6.5, per: 1000 },
-  "Roblox Group Members": { price: 6.5, per: 1000 },
-  "Twitch Followers": { price: 6.5, per: 1000 },
-  "TikTok Followers": { price: 6.5, per: 1000 },
-  "TikTok Likes": { price: 2.5, per: 1000 },
-  "TikTok Views": { price: 2.5, per: 2500 },
-  "TikTok Saves": { price: 2.5, per: 500 },
-  "TikTok Reposts": { price: 2.5, per: 250 },
-  "Instagram Followers": { price: 6.5, per: 1000 },
-  "Instagram Likes": { price: 2.5, per: 500 },
-  "Instagram Views": { price: 2.5, per: 2500 },
-  "Instagram Reposts": { price: 2.5, per: 100 }
-};
-
-function parseNumeric(value) {
-  return Number(String(value || "").replace(/[^0-9.]/g, ""));
-}
-
-function setServiceFromLabel(label) {
-  if (!label) return;
-  const select = document.getElementById("serviceName");
-  const normalized = label.trim().toLowerCase();
-  const options = Array.from(select.options);
-  const exact = options.find(opt => opt.value.toLowerCase() === normalized);
-  if (exact) { select.value = exact.value; return; }
-  const loose = options.find(opt => normalized.includes(opt.value.toLowerCase()));
-  if (loose) select.value = loose.value;
-}
-
-function hydrateOrderFromQuote() {
-  const params = new URLSearchParams(window.location.search);
-  const stored = localStorage.getItem("nexloria_order_prefill");
-  let source = {};
-  if (stored) { try { source = JSON.parse(stored); } catch(e) { source = {}; } }
-  params.forEach((value, key) => { source[key] = value; });
-
-  if (source.mode) document.getElementById("orderMode").value = source.mode;
-  if (source.service) setServiceFromLabel(source.service);
-  if (source.quantity || source.sendAmount) document.getElementById("quantity").value = source.quantity || `$${source.sendAmount}`;
-  if (source.mode === "exchange") {
-    if (source.sendMethod) document.getElementById("exchangeFrom").value = source.sendMethod;
-    if (source.receiveMethod) document.getElementById("exchangeTo").value = source.receiveMethod;
-    if (source.sendAmount) document.getElementById("exchangeAmount").value = source.sendAmount;
-    document.getElementById("serviceNameExchange").value = `${source.sendMethod || ""} to ${source.receiveMethod || ""}`.trim();
+// Pre-fill from calculator
+window.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(location.search);
+  const prefill = params.get("service") || params.get("summary");
+  if (params.get("service")) document.getElementById("f-service").value = params.get("service");
+  if (params.get("quantity")) document.getElementById("f-qty").value = params.get("quantity");
+  if (params.get("sendMethod")) {
+    document.getElementById("f-service").value = `Exchange: ${params.get("sendMethod")} → ${params.get("receiveMethod")}`;
+    document.getElementById("f-qty").value = `$${params.get("sendAmount")}`;
   }
-  if (source.summary) document.getElementById("notes").value = source.summary;
-}
+});
 
-function setModeFields() {
-  const mode = document.getElementById("orderMode").value;
-  document.getElementById("serviceFields").style.display = mode === "service" ? "block" : "none";
-  document.getElementById("exchangeFields").style.display = mode === "exchange" ? "block" : "none";
-  document.getElementById("instacartFields").style.display = mode === "instacart" ? "block" : "none";
-  document.getElementById("visaFields").style.display = mode === "visa" ? "block" : "none";
-  calculateOrderTotal();
-}
+function submitOrder() {
+  const service = document.getElementById("f-service").value.trim();
+  const qty = document.getElementById("f-qty").value.trim();
+  const link = document.getElementById("f-link").value.trim();
+  const method = document.getElementById("f-method").value;
 
-function calculateOrderTotal() {
-  const mode = document.getElementById("orderMode").value;
-  const estimatedTotal = document.getElementById("estimatedTotal");
-  const totalBreakdown = document.getElementById("totalBreakdown");
-
-  if (mode === "service") {
-    const service = document.getElementById("serviceName").value;
-    const qty = parseNumeric(document.getElementById("quantity").value);
-    const rate = serviceRates[service];
-    if (!rate || !qty || qty <= 0) {
-      estimatedTotal.value = "";
-      totalBreakdown.textContent = "Select a valid service and quantity to calculate total.";
-      return;
-    }
-    let total = (qty / rate.per) * rate.price;
-    if (total < 1) total = 1;
-    estimatedTotal.value = `$${total.toFixed(2)}`;
-    totalBreakdown.textContent = `${service}: $${rate.price.toFixed(2)} per ${rate.per.toLocaleString()} | Qty ${qty.toLocaleString()} | Total ${estimatedTotal.value}`;
+  if (!service || !qty || !method) {
+    alert("Please fill in service, quantity, and payment method.");
     return;
   }
 
-  if (mode === "exchange") {
-    const sendAmount = parseNumeric(document.getElementById("exchangeAmount").value);
-    if (!sendAmount || sendAmount <= 0) {
-      estimatedTotal.value = "";
-      totalBreakdown.textContent = "Enter exchange send amount to calculate receive total after fees.";
-      return;
-    }
-    const fee = sendAmount * EXCHANGE_FEE_RATE;
-    const receive = Math.max(sendAmount - fee, 0);
-    estimatedTotal.value = `$${receive.toFixed(2)}`;
-    totalBreakdown.textContent = `Exchange: send $${sendAmount.toFixed(2)} âˆ’ 8.25% fee ($${fee.toFixed(2)}) = receive $${receive.toFixed(2)}`;
-    return;
-  }
+  const orderId = "NX-" + Date.now().toString(36).toUpperCase();
+  const address = payAddresses[method] || "";
 
-  if (mode === "instacart") {
-    const cart = parseNumeric(document.getElementById("instacartCart").value);
-    if (!cart || cart <= 0) {
-      estimatedTotal.value = "";
-      totalBreakdown.textContent = "Enter your Instacart cart total to calculate your price.";
-      return;
-    }
-    const youPay = cart * 0.30;
-    estimatedTotal.value = `$${youPay.toFixed(2)}`;
-    totalBreakdown.textContent = `Instacart: $${cart.toFixed(2)} cart Ã— 30% = you pay $${youPay.toFixed(2)} (70% off)`;
-    return;
-  }
-
-  if (mode === "visa") {
-    const face = parseNumeric(document.getElementById("visaAmount").value);
-    if (!face || face <= 0) {
-      estimatedTotal.value = "";
-      totalBreakdown.textContent = "Enter the gift card face value to calculate your price.";
-      return;
-    }
-    const youPay = face * 0.50;
-    estimatedTotal.value = `$${youPay.toFixed(2)}`;
-    totalBreakdown.textContent = `Prepaid Visa: $${face.toFixed(2)} face value Ã— 50% = you pay $${youPay.toFixed(2)}`;
-    return;
-  }
-}
-
-function getOrderSummary(formData, orderId) {
-  const mode = formData.orderMode;
-  let details, qtyOrAmount, target;
-  if (mode === "exchange") {
-    details = formData.serviceNameExchange || `${formData.exchangeFrom} to ${formData.exchangeTo}`;
-    qtyOrAmount = `$${formData.exchangeAmount}`;
-    target = formData.targetLinkExchange;
-  } else if (mode === "instacart") {
-    details = "Instacart Order (70% off)";
-    qtyOrAmount = `$${formData.instacartCart} cart`;
-    target = formData.instacartDetails || "N/A";
-  } else if (mode === "visa") {
-    details = "Prepaid Visa Gift Card (50% off)";
-    qtyOrAmount = `$${formData.visaAmount} face value`;
-    target = "N/A";
-  } else {
-    details = formData.serviceName;
-    qtyOrAmount = formData.quantity;
-    target = formData.targetLink;
-  }
-  return [
-    `Order ID: ${orderId}`,
-    `Name: ${formData.customerName}`,
-    `Email: ${formData.customerEmail}`,
-    `Type: ${mode}`,
-    `Service/Details: ${details}`,
-    `Quantity/Amount: ${qtyOrAmount}`,
-    `Estimated Total: ${formData.estimatedTotal}`,
-    `Target: ${target}`,
-    `Payment Method: ${formData.paymentMethod}`,
-    `Payment Ref: ${formData.txRef || "Pending"}`,
-    `Notes: ${formData.notes || "None"}`
-  ].join("\n");
-}
-
-function refreshPaymentNotice() {
-  const method = document.getElementById("paymentMethod").value;
   const notice = document.getElementById("paymentNotice");
-  if (!method || !paymentAddresses[method]) {
-    notice.textContent = "Select a payment method to view the destination address.";
-    return;
-  }
-  notice.textContent = `${method} destination: ${paymentAddresses[method]}`;
-}
-
-hydrateOrderFromQuote();
-setModeFields();
-refreshPaymentNotice();
-calculateOrderTotal();
-
-document.getElementById("paymentMethod").addEventListener("change", refreshPaymentNotice);
-document.getElementById("orderMode").addEventListener("change", setModeFields);
-document.getElementById("serviceName").addEventListener("change", calculateOrderTotal);
-document.getElementById("quantity").addEventListener("input", calculateOrderTotal);
-document.getElementById("exchangeAmount").addEventListener("input", calculateOrderTotal);
-document.getElementById("instacartCart").addEventListener("input", calculateOrderTotal);
-document.getElementById("visaAmount").addEventListener("input", calculateOrderTotal);
-
-document.getElementById("copyOrderBtn").addEventListener("click", async () => {
-  const form = new FormData(document.getElementById("orderForm"));
-  const data = Object.fromEntries(form.entries());
-  const text = getOrderSummary(data, "DRAFT");
-  await navigator.clipboard.writeText(text);
-  const btn = document.getElementById("copyOrderBtn");
-  const label = btn.textContent;
-  btn.textContent = "Copied";
-  setTimeout(() => { btn.textContent = label; }, 1200);
-});
-
-document.getElementById("orderForm").addEventListener("submit", async (event) => {
-  event.preventDefault();
-  calculateOrderTotal();
-  const form = new FormData(event.currentTarget);
-  const data = Object.fromEntries(form.entries());
-  if (!data.estimatedTotal) {
-    const success = document.getElementById("orderSuccess");
-    success.classList.add("visible");
-    success.textContent = "Please complete required fields so the system can calculate the total.";
-    return;
-  }
-  const orderId = `NX-${Date.now().toString().slice(-8)}`;
-  const summary = getOrderSummary(data, orderId);
-  localStorage.setItem(`nexloria_order_${orderId}`, summary);
-  localStorage.removeItem("nexloria_order_prefill");
-
   const success = document.getElementById("orderSuccess");
+
+  notice.style.display = "block";
+  notice.innerHTML = `<strong>Send payment to:</strong> ${method} — <code>${address}</code><br>Include order ID <strong>${orderId}</strong> as your payment note.`;
+
   success.classList.add("visible");
-  success.textContent = `Submitting order ${orderId}...`;
-
-  const submitPayload = new FormData();
-  submitPayload.append("_subject", `New Nexloria Order ${orderId}`);
-  submitPayload.append("order_reference", orderId);
-  submitPayload.append("order_summary", summary);
-  submitPayload.append("customer_name", data.customerName);
-  submitPayload.append("customer_email", data.customerEmail);
-  submitPayload.append("_captcha", "false");
-  submitPayload.append("_template", "table");
-
-  try {
-    const response = await fetch(FORMSUBMIT_ENDPOINT, { method: "POST", body: submitPayload, headers: { Accept: "application/json" } });
-    if (!response.ok) throw new Error("email-provider-failed");
-    success.textContent = `Order placed successfully. Your reference is ${orderId}. A confirmation email was sent to ${ORDER_EMAIL}.`;
-  } catch (error) {
-    success.textContent = `Order placed as ${orderId}, but auto-email failed. Opening backup email draft now.`;
-    const subject = encodeURIComponent(`New Nexloria Order ${orderId}`);
-    const body = encodeURIComponent(summary);
-    window.location.href = `mailto:${ORDER_EMAIL}?subject=${subject}&body=${body}`;
-  }
-});
+  success.innerHTML = `✓ Order <strong>${orderId}</strong> received. Complete payment above, then contact support if needed.`;
+}
 </script>
 </body>
 </html>
