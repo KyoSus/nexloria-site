@@ -864,3 +864,14 @@ footer {
     opacity: 1;
   }
 }
+
+/* Order updates and guarantees */
+.referral-banner { color: var(--accent); margin: 18px auto; max-width: 620px; line-height: 1.6; padding: 0 16px; }
+.service-notices { border: 1px solid var(--border); border-radius: 12px; background: var(--surface); padding: 18px 22px; margin-bottom: 28px; line-height: 1.7; }
+.service-notices p + p { margin-top: 8px; }
+.service-notices a, .faq-item a { color: var(--accent); }
+.order-form-link { display: flex; justify-content: center; margin-bottom: 20px; }
+.backup-heading { font-size: 1.2rem; margin-bottom: 12px; }
+.order-quote { padding: 18px; margin-bottom: 24px; border: 1px solid var(--border); border-radius: 12px; line-height: 1.6; overflow-wrap: anywhere; }
+.order-quote p { margin-bottom: 12px; }
+#payment-addresses { scroll-margin-top: 100px; }

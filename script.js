@@ -19,7 +19,7 @@ document.querySelectorAll("a").forEach(link => {
     if (url && url.includes(location.hostname) && !url.includes("#") && !this.target) {
       e.preventDefault();
       document.body.classList.remove("show");
-      setTimeout(() => { window.location = url; }, 300);
+      setTimeout(() => { window.location = this.href; }, 300);
     }
   });
 });

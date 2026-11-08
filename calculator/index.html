@@ -58,23 +58,23 @@
       <select id="service" onchange="calculate()">
         <option value="">— Select a service —</option>
         <optgroup label="Roblox">
-          <option value="6.5,1000">Roblox Followers — $6.50 / 1,000</option>
-          <option value="6.5,1000">Roblox Group Members — $6.50 / 1,000</option>
+          <option value="7.75,1000">Roblox Followers — $7.75 / 1,000</option>
+          <option value="7.75,1000">Roblox Group Members — $7.75 / 1,000</option>
         </optgroup>
         <optgroup label="Twitch">
-          <option value="6.5,1000">Twitch Followers — $6.50 / 1,000</option>
+          <option value="7.75,1000">Twitch Followers — $7.75 / 1,000</option>
         </optgroup>
         <optgroup label="TikTok">
-          <option value="6.5,1000">TikTok Followers — $6.50 / 1,000</option>
-          <option value="2.5,1000">TikTok Likes — $2.50 / 1,000</option>
-          <option value="2.5,2500">TikTok Views — $2.50 / 2,500</option>
-          <option value="2.5,500">TikTok Saves — $2.50 / 500</option>
+          <option value="7.75,1000">TikTok Followers — $7.75 / 1,000</option>
+          <option value="4.5,1000">TikTok Likes — $4.50 / 1,000</option>
+          <option value="4.5,2500">TikTok Views — $4.50 / 2,500</option>
+          <option value="4.5,500">TikTok Saves — $4.50 / 500</option>
         </optgroup>
         <optgroup label="Instagram">
-          <option value="6.5,1000">Instagram Followers — $6.50 / 1,000</option>
-          <option value="2.5,2500">Instagram Views — $2.50 / 2,500</option>
-          <option value="2.5,500">Instagram Likes — $2.50 / 500</option>
-          <option value="2.5,100">Instagram Reposts — $2.50 / 100</option>
+          <option value="7.75,1000">Instagram Followers — $7.75 / 1,000</option>
+          <option value="4.5,2500">Instagram Views — $4.50 / 2,500</option>
+          <option value="4.5,500">Instagram Likes — $4.50 / 500</option>
+          <option value="4.5,100">Instagram Reposts — $4.50 / 100</option>
         </optgroup>
       </select>
     </div>
@@ -88,24 +88,26 @@
       <div class="form-group">
         <label>YOU SEND</label>
         <select id="from" onchange="calculate()">
-          <option>Cash App</option>
           <option>PayPal (F&amp;F)</option>
-          <option>Apple Pay</option>
-          <option>Venmo</option>
-          <option>Zelle</option>
-          <option>Crypto</option>
+          <option>Venmo (F&amp;F)</option>
+          <option>Bitcoin (BTC)</option>
+          <option>Ethereum (ETH)</option>
+          <option>Solana (SOL)</option>
+          <option>Litecoin (LTC)</option>
+          <option>TRX</option>
         </select>
       </div>
 
       <div class="form-group">
         <label>YOU RECEIVE</label>
         <select id="to" onchange="calculate()">
-          <option>Cash App</option>
           <option>PayPal (F&amp;F)</option>
-          <option>Apple Pay</option>
-          <option>Venmo</option>
-          <option>Zelle</option>
-          <option>Crypto</option>
+          <option>Venmo (F&amp;F)</option>
+          <option>Bitcoin (BTC)</option>
+          <option>Ethereum (ETH)</option>
+          <option>Solana (SOL)</option>
+          <option>Litecoin (LTC)</option>
+          <option>TRX</option>
         </select>
       </div>
     </div>
@@ -126,7 +128,7 @@
     </div>
     <div class="calc-actions" id="quoteActions">
       <button type="button" class="btn btn-secondary" id="copyQuoteBtn">Copy Quote</button>
-      <a href="/order/" class="btn btn-primary" id="continueOrderBtn">Auto-Fill Order Form</a>
+      <a href="/order/" class="btn btn-primary" id="continueOrderBtn">Continue to Order Form</a>
     </div>
 
   </div>
@@ -143,6 +145,8 @@
     <a href="/how-it-works/">How It Works</a>
     <a href="/refund-policy/">Refund Policy</a>
     <a href="/terms/">Terms of Service</a>
+    <a href="https://www.instagram.com/nexloria.shop/" target="_blank" rel="noopener noreferrer">Instagram @nexloria.shop</a>
+    <a href="https://www.instagram.com/nexloria.shop/reels/" target="_blank" rel="noopener noreferrer">Proof Reels</a>
   </div>
   © 2026 Nexloria
 </footer>
@@ -166,12 +170,13 @@ function fee(a) {
 }
 
 const icons = {
-  "Cash App": "💵",
   "PayPal (F&F)": "🅿️",
-  "Apple Pay": "🍎",
-  "Venmo": "💙",
-  "Zelle": "🏦",
-  "Crypto": "🔗"
+  "Venmo (F&F)": "💙",
+  "Bitcoin (BTC)": "₿",
+  "Ethereum (ETH)": "Ξ",
+  "Solana (SOL)": "◎",
+  "Litecoin (LTC)": "Ł",
+  "TRX": "🔺"
 };
 
 let currentQuoteText = "";
