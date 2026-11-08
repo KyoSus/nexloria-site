@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Order | Nexloria</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Place your Nexloria order through our Google Form. Telegram and Discord are available for backup contact.">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#080a0f">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://nexloria.com/order/">
+<link rel="icon" type="image/png" href="/cat.png">
+<link rel="apple-touch-icon" href="/cat.png">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<nav aria-label="Primary">
+  <a href="/" class="logo">NEXLORIA</a>
+  <a href="/">Home</a>
+  <a href="/services/">Services</a>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSdYnDzu1PjEe6LkFcWVDqSXRIgcCM0zK9Or8XQKJQTaJRj64A/viewform" class="btn btn-primary order-form-link" target="_blank" rel="noopener noreferrer">Open Order Form →</a>
+  <div id="order-quote" class="order-quote" hidden>
+    <p>Your calculator quote — copy and paste it into the Google Form:</p>
+    <p id="order-quote-text"></p>
+    <button class="btn btn-secondary" type="button" id="copy-order-quote">Copy Quote</button>
+  </div>
+  <a href="/calculator/">Calculator</a>
+  <a href="/how-it-works/">How It Works</a>
+  <a href="/order/">Order</a>
+  <a href="/contact/">Contact</a>
+</nav>
+
+<div class="contact-wrap" id="main-content" tabindex="-1">
+  <div class="section-label" style="margin-bottom: 12px;">Ready to order?</div>
+  <h1>Start an Order</h1>
+  <p class="sub">Place your order using the Google Form below. Include your service, quantity, payment method, and delivery details.</p>
+
+  <a href="/calculator/" class="btn btn-secondary" style="display:inline-flex;margin-bottom:32px;">Get a Quote First →</a>
+
+  <h2 class="backup-heading">Backup contact</h2>
+  <p class="sub">Need help with the form? Contact us on Telegram or Discord.</p>
+  <a class="social-card" href="https://t.me/realkyoku" target="_blank" rel="noopener noreferrer">
+    <div class="social-icon">✈️</div>
+    <div class="social-info">
+      <div class="platform">Telegram</div>
+      <div class="handle">@realkyoku — fastest response</div>
+    </div>
+    <span class="social-arrow">→</span>
+  </a>
+
+  <a class="social-card" href="https://discord.com/users/799027175436058624" target="_blank" rel="noopener noreferrer">
+    <div class="social-icon">💬</div>
+    <div class="social-info">
+      <div class="platform">Discord</div>
+      <div class="handle">.kyoku_</div>
+    </div>
+    <span class="social-arrow">→</span>
+  </a>
+
+  <p style="color:var(--muted);font-size:0.85rem;margin-top:28px;line-height:1.6;">
+    Include the service you want, quantity, and your payment method when you reach out. Fast response. Orders usually fulfilled within 12 hours.
+  </p>
+</div>
+
+<a class="mobile-cta" href="https://docs.google.com/forms/d/e/1FAIpQLSdYnDzu1PjEe6LkFcWVDqSXRIgcCM0zK9Or8XQKJQTaJRj64A/viewform" target="_blank" rel="noopener noreferrer">Open Order Form</a>
+
+<footer>
+  <div class="footer-links">
+    <a href="/how-it-works/">How It Works</a>
+    <a href="/refund-policy/">Refund Policy</a>
+    <a href="/terms/">Terms of Service</a>
+    <a href="https://www.instagram.com/nexloria.shop/" target="_blank" rel="noopener noreferrer">Instagram @nexloria.shop</a>
+    <a href="https://www.instagram.com/nexloria.shop/reels/" target="_blank" rel="noopener noreferrer">Proof Reels</a>
+  </div>
+  © 2026 Nexloria
+</footer>
+
+<script src="../script.js"></script>
+<script>
+const summary = new URLSearchParams(location.search).get("summary");
+if (summary) {
+  document.getElementById("order-quote-text").textContent = summary;
+  document.getElementById("order-quote").hidden = false;
+  document.getElementById("copy-order-quote").addEventListener("click", async function () {
+    try {
+      await navigator.clipboard.writeText(summary);
+      this.textContent = "Copied!";
+    } catch {
+      this.textContent = "Select and copy the quote above";
+    }
+  });
+}
+</script>
+</body>
+</html>
